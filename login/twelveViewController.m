@@ -107,7 +107,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     else{
          _text2.frame=CGRectMake(300, 288, 97, 30);
         _twoArray=[[NSMutableArray alloc] initWithObjects:@"由内向外画圈",@"由外向内画圈",@"一次性向上/下擦涂皮肤表面",@"反复涂抹",@"非以上，请描述",nil];
-        _threeArray=[[NSMutableArray alloc] initWithObjects:@"<5cm",@"5-10cm",@">10cm",nil];
+        _threeArray=[[NSMutableArray alloc] initWithObjects:@"<5cm",@"5-10cm",@">10cm",@"导管采血，不适用",nil];
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"TAB3"ofType:@"png"];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
@@ -172,7 +172,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-70 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+80, Button_Width-50, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-70 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+80, Button_Width-30, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_threeArray objectAtIndex:i];
         
         [cb setText:a1];

@@ -99,16 +99,16 @@
                 
             
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"＜30度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"<30degrees"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"＜30度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"<30degrees"]  ) {
-                ++_a;
+                //++_a;
             }
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"30-45度"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"30-45degrees"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"30-45度"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"30-45degrees"] ) {
-                ++_b;
+                //++_b;
             }
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"45-90度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"45-90degrees"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"45-90度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"45-90degrees"]  ) {
-                ++_c;
+                //++_c;
             }
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"90度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-4] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"90degrees"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"90度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-5] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"90degrees"] ) {
-                ++_d;
+                //++_d;
             }
                 
                 
@@ -209,7 +209,19 @@
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"42"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"42"] objectForKey:@"choose"]containsObject:@"NO"] ) {
                 ++_f;
             }
-           
+            
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"＜30度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"YES"] ) {
+                           ++_a;
+                       }
+                       if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"30-45度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"NO"] ) {
+                           ++_b;
+                       }
+           if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"45-90度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"YES"] ) {
+               ++_c;
+           }
+           if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"90度"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"41"] objectForKey:@"choose"]containsObject:@"NO"] ) {
+               ++_d;
+           }
             
             
             
@@ -247,13 +259,13 @@
     _barChart.isShowSeparate = YES;
     _barChart.tag=101;
    
-    [self.view addSubview:_barChart];
+//    [self.view addSubview:_barChart];
+//
+//    [_barChart strokePath];
     
-    [_barChart strokePath];
     
-    
-    _barChart3 = [[ZFBarChart alloc] initWithFrame:CGRectMake(300, 228, 235, 150)];
-    _barChart3.topicLabel.text = @"肱动脉";
+    _barChart3 = [[ZFBarChart alloc] initWithFrame:CGRectMake(250, 228, 300, 200)];
+    _barChart3.topicLabel.text = @"穿刺角度";
     
     
     _barChart3.dataSource = self;
@@ -288,9 +300,9 @@
     _barChart4.isShowSeparate = YES;
     _barChart4.tag=104;
     
-    [self.view addSubview:_barChart4];
-    
-    [_barChart4 strokePath];
+//    [self.view addSubview:_barChart4];
+//
+//    [_barChart4 strokePath];
     
     _barChart5 = [[ZFBarChart alloc] initWithFrame:CGRectMake(65, 470, 235, 150)];
     _barChart5.topicLabel.text = @"足背动脉";
@@ -307,9 +319,9 @@
     _barChart5.isShowSeparate = YES;
     _barChart5.tag=105;
     
-    [self.view addSubview:_barChart5];
-    
-    [_barChart5 strokePath];
+//    [self.view addSubview:_barChart5];
+//
+//    [_barChart5 strokePath];
     
     
     _barChart6 = [[ZFBarChart alloc] initWithFrame:CGRectMake(300, 470, 235, 150)];
@@ -327,18 +339,18 @@
     _barChart6.isShowSeparate = YES;
     _barChart6.tag=106;
     
-    [self.view addSubview:_barChart6];
-    
-    [_barChart6 strokePath];
+//    [self.view addSubview:_barChart6];
+//
+//    [_barChart6 strokePath];
 
     
     
     
     
     
-    _barChart2 = [[ZFBarChart alloc] initWithFrame:CGRectMake(535, 470, 160, 150)];
+    _barChart2 = [[ZFBarChart alloc] initWithFrame:CGRectMake(270, 470, 200, 160)];
     _barChart2.topicLabel.text = @"一针穿刺成功";
-    _barChart2.topicLabel.textAlignment = UITextAlignmentRight;
+    _barChart2.topicLabel.textAlignment = UITextAlignmentCenter;
     _barChart2.dataSource = self;
     _barChart2.delegate = self;
     //_barChart2.unit = @"人";
@@ -381,6 +393,9 @@
     long a4=0;
     long a5=0;
     long a6=0;
+    
+    long a7=0;
+
    
     
     
@@ -390,6 +405,8 @@
      a4=_a3+_b3+_c3+_d3;
      a5=_a4+_b4+_c4+_d4;
      a6=_a5+_b5+_c5+_d5;
+    
+
   
     
     
@@ -402,6 +419,7 @@
         _f=_f*1.0/a1*100;
     
     }
+   
     if (a2==0) {
         _a=0;
         _b=0;
@@ -497,6 +515,7 @@
     NSString*id21=[[NSString stringWithFormat:@"%ld",(long)_c5] stringByAppendingString:@"%"];
     NSString*id22=[[NSString stringWithFormat:@"%ld",(long)_d5] stringByAppendingString:@"%"];
 
+
     
     //现场观察中,一 针穿刺成功率 为% (是否需要根据 采血部位进行拆 分?)
     NSString*str=[[@"现场观察中,一针穿刺成功率为" stringByAppendingString:id5] stringByAppendingString:@""];
@@ -507,12 +526,12 @@
 
     
     
-    if (chart.tag==101) {
+    if (chart.tag==103) {
         return @[id1,id2,id3,id4];
         
         
     }
-    else if (chart.tag==103) {
+    else if (chart.tag==101) {
         return @[id7,id8,id9,id10];
         
         

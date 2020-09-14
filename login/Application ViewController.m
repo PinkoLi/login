@@ -18,6 +18,7 @@
 #import "QuestionViewController.h"
 #import "PPTableViewCell.h"
 #import "InfoViewController.h"
+#import "LXF_OpenUDID.h"
 
 @interface Application_ViewController ()<UITextFieldDelegate, STPickerDateDelegate,STPickerAreaDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIButton *typeBtn;
@@ -54,6 +55,7 @@
 @property(nonatomic,strong)NSString*quest;
 @property(nonatomic,strong)NSString*type;
 @property(nonatomic,strong)NSString*optionTitle;
+
 @property(nonatomic,assign)int id;
 @property(nonatomic,assign)NSInteger indexPathRow;
 @property(nonatomic,strong)NSMutableArray *arr1;
@@ -88,37 +90,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     _mutableArray2=[[NSMutableArray alloc]init];
     _arr1=[[NSMutableArray alloc]init];
     _arr3=[NSMutableArray arrayWithCapacity:10];
-//    //1.获得数据库文件的路径
-//    NSString *doc =[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)  lastObject];
-//    
-//    NSString *fileName = [doc stringByAppendingPathComponent:@"question.sqlite"];
-//    
-//    //2.获得数据库
-//    FMDatabase *db = [FMDatabase databaseWithPath:fileName];
-//    
-//    //3.使用如下语句，如果打开失败，可能是权限不足或者资源不足。通常打开完操作操作后，需要调用 close 方法来关闭数据库。在和数据库交互 之前，数据库必须是打开的。如果资源或权限不足无法打开或创建数据库，都会导致打开失败。
-//    if ([db open])
-//    {
-//        //创建表（FMDB中只有update和query操作，出了查询其他都是update操作）
-//        [db executeUpdate:@"create table if not exists user(quest text,option text,id integer) "];
-////         BOOL result = [db executeUpdate:@"insert into user values(?,?,?)",@"11",@"11",@"11"];
-////        if (result)
-////        {
-////            NSLog(@"创建表成功");
-////        }
-//    }
-//    
-//    FMResultSet *resultSet = [db executeQuery:@"select * from user"];
-//    while ([resultSet next]) {
-//        _quest = [resultSet stringForColumn:@"quest"];
-//        _optionTitle = [resultSet stringForColumn:@"option"];
-//        _id = [resultSet intForColumn:@"id"];
-//        NSLog(@"Quest:%@,Option:%@,Id:%d",_quest,_optionTitle,_id);
-//    }
-//    
-//
-//    [db close];
-    // Do any additional setup after loading the view.
+
     
     _start.delegate=self;
     _end.delegate=self;
@@ -130,28 +102,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     
     NSLog(@"%@",[user objectForKey:@"msd"]);
+    NSLog(@"%@",[user objectForKey:@"token"]);
+
     
-//    if ([[user objectForKey:@"msd"]isEqualToString:@"1"]) {
-//        NSLog(@"111");
-//        NSArray *segmentedData = [[NSArray alloc]initWithObjects:@"开展新调研",@"调研批复情况",@"下级审核批复",nil];
-//        //_seg= [[UISegmentedControl alloc]initWithItems:segmentedData];
-//        _seg=[[UISegmentedControl alloc] initWithItems:segmentedData];
-//        
-//        _seg.frame = CGRectMake(198, 77,628, 29);
-//        [self.view addSubview:_seg];
-//        [_seg addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
-//
-//    }
-//    else{
-//    
-//        NSArray *segmentedData = [[NSArray alloc]initWithObjects:@"开展新调研",@"调研批复情况",nil];
-//        //_seg= [[UISegmentedControl alloc]initWithItems:segmentedData];
-//        _seg=[[UISegmentedControl alloc] initWithItems:segmentedData];
-//        
-//        _seg.frame = CGRectMake(198, 77,628, 29);
-//        [self.view addSubview:_seg];
-//        [_seg addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
-//    }
+
     if ([user objectForKey:@"name"]) {
         _name.text=[user objectForKey:@"name"];
     }
@@ -176,78 +130,53 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
 
     //[self addkeshi];
+    
+        [self networking];
+    
       NSUserDefaults *list = [NSUserDefaults standardUserDefaults];
     
-    AFNetworkReachabilityManager *manger = [AFNetworkReachabilityManager sharedManager];
-    //开启监听，记得开启，不然不走block
-    [manger startMonitoring];
-    //2.监听改变
-    [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        /*
-         AFNetworkReachabilityStatusUnknown = -1,
-         AFNetworkReachabilityStatusNotReachable = 0,
-         AFNetworkReachabilityStatusReachableViaWWAN = 1,
-         AFNetworkReachabilityStatusReachableViaWiFi = 2,
-         */
-        switch (status) {
-            case AFNetworkReachabilityStatusUnknown:
-                NSLog(@"未知");
-                break;
-            case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"没有网络");
-                
-                _arr=[list objectForKey:@"list"];
-                NSLog(@"%@",_arr);
-                
-                [_table3 reloadData];
-                
-                break;
-            case AFNetworkReachabilityStatusReachableViaWWAN:
-                NSLog(@"3G|4G");
-                break;
-            case AFNetworkReachabilityStatusReachableViaWiFi:
-                NSLog(@"WiFi");
-            {
-            
-                AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-                sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-                
-                NSDictionary *parameters =@{@"name":[user objectForKey:@"name"]};
-                
-                [sessionManager POST:@"http://netkq.webbsn.com/Bd/index.php/Hissurvey/details/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-                    NSLog(@"%lld", downloadProgress.totalUnitCount);
-                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    NSLog(@"%@",responseObject);
-                    _arr=[responseObject objectForKey:@"0"];
-                    
-                     NSLog(@"%@",_arr);
-                   
-                    [list setObject:_arr forKey:@"list"];
-                    [list synchronize];
-                    
-                    [_table3 reloadData];
-                    
-                  
-                   
-                    
-                    
-                    
-                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    NSLog(@"%@",error);
-                }];
-                
-               
-               
-                
-            
-            }
-                
-                break;
-            default:
-                break;
-        }
-    }];
-    
+   
+   
+       AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+       sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+       [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+       
+       
+       NSLog(@"%@",[user objectForKey:@"name"]);
+
+       NSDictionary *parameters =@{@"page":@1,@"page_size":@50};
+       
+       
+
+       [sessionManager POST:[url stringByAppendingString:researchList] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+           NSLog(@"%lld", downloadProgress.totalUnitCount);
+       } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           NSLog(@"%@",responseObject);
+           
+           
+           _arr=[[responseObject objectForKey:@"data"] objectForKey:@"list"];
+           
+            NSLog(@"%@",_arr);
+          
+           [list setObject:_arr forKey:@"list"];
+           [list synchronize];
+           
+           [_table3 reloadData];
+           
+         
+          
+           
+           
+           
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           NSLog(@"%@",error);
+       }];
+       
+      
+      
+       
+   
+   
 
     
     
@@ -406,6 +335,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (IBAction)cancel:(id)sender {
     
+    
+    
+    
     }
 - (IBAction)into:(id)sender {
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -525,7 +457,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
         NSDictionary *parameters =@{@"hos":_host.text,@"name":[user objectForKey:@"name"],@"keshi":_mutableArray,@"start":_start.text,@"end":_end.text};
-        [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Mail/check/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+        [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/index.php/Mail/check/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
             NSLog(@"%lld", downloadProgress.totalUnitCount);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"%@", responseObject);
@@ -596,7 +528,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
             
             NSDictionary *parameters =@{@"flag":@"100"};
-            [sessionManager GET:@"http://netkq.webbsn.com/jpush/examples/push_example.php" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+            [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/jpush/examples/push_example.php" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
                 NSLog(@"%lld", downloadProgress.totalUnitCount);
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSLog(@"1111111");
@@ -677,7 +609,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
             NSDictionary *parameters =@{@"name":[user objectForKey:@"name"]};
             
-            [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Mail/details/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+            [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/index.php/Mail/details/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
                 NSLog(@"%lld", downloadProgress.totalUnitCount);
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSLog(@"%@",responseObject);
@@ -714,7 +646,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSDictionary *parameters =@{@"user":[user objectForKey:@"name"]};
             NSLog(@"%@",[user objectForKey:@"name"]);
             
-            [sessionManager GET:@"http://netkq.webbsn.com/BD/index.php/Index/main11" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+            [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/BD/index.php/Index/main11" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
                 NSLog(@"%lld", downloadProgress.totalUnitCount);
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
@@ -990,7 +922,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
       if (!cell) {
           cell = [[PPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier] ;
         }
-      if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"isok"]isEqualToString:@"1"]){
+      if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status_text"]isEqualToString:@"结束"]){
       
           NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
           if ([user objectForKey:@"english"]) {
@@ -1006,14 +938,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
           
           if ([user objectForKey:@"english"]) {
               
-              if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status"]isEqualToString:@"尚未开始"]) {
+              if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status_text"]isEqualToString:@"尚未开始"]) {
                    cell.type.text=@"Not started yet";
               }
-            else  if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status"]isEqualToString:@"已过期"]) {
+            else  if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status_text"]isEqualToString:@"已过期"]) {
                   cell.type.text=@"Expired";
               }
             else{
-                if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status"]isEqualToString:@"进行中"]) {
+                if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"status_text"]isEqualToString:@"进行中"]) {
                     cell.type.text=@"Execute";
                 }
             
@@ -1023,22 +955,59 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
           
           }else{
           
-      cell.type.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"status"];
+      cell.type.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"status_text"];
           }
       }
       
       
       
       
-      cell.host.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"hos"];
-      //cell.title.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"number"];
+      cell.host.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"hospital"];
+    //  cell.typeText.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"is_mine"];
+      if ([[[_arr objectAtIndex:indexPath.row]objectForKey:@"is_mine"]intValue]==1) {
+          
+          cell.typeText.text=@"主";
+          // 字体大小
+          cell.typeText.font = [UIFont systemFontOfSize:20.f];
+          cell.typeText.font = [UIFont boldSystemFontOfSize:20.f];
+          cell.typeText.font = [UIFont italicSystemFontOfSize:20.f];
+          // 文字颜色
+          cell.typeText.textColor = [UIColor redColor];
+          // 设置阴影
+          cell.typeText.shadowColor = [UIColor redColor];
+          //cell.typeText.shadowOffset = CGSizeMake(-2, 1)
+          
+          // 行数 0为自动换行
+          cell.typeText.numberOfLines = 0;
+          // 显示模式
+          cell.typeText.lineBreakMode = NSLineBreakByWordWrapping;
+         
+      }else{
+          
+          cell.typeText.text=@"辅";
+          // 字体大小
+          cell.typeText.font = [UIFont systemFontOfSize:20.f];
+          cell.typeText.font = [UIFont boldSystemFontOfSize:20.f];
+          cell.typeText.font = [UIFont italicSystemFontOfSize:20.f];
+          // 文字颜色
+          cell.typeText.textColor = [UIColor blueColor];
+          // 设置阴影
+          cell.typeText.shadowColor = [UIColor blueColor];
+          //cell.typeText.shadowOffset = CGSizeMake(-2, 1);
+          // 行数 0为自动换行
+          cell.typeText.numberOfLines = 0;
+          // 显示模式
+          cell.typeText.lineBreakMode = NSLineBreakByWordWrapping;
+      }
+      
+      
       NSString*start=[[NSString alloc]init];
       NSString*end=[[NSString alloc]init];
       start=[[_arr objectAtIndex:indexPath.row]objectForKey:@"start"];
       end=[[_arr objectAtIndex:indexPath.row]objectForKey:@"end"];
       cell.time.text=[start stringByAppendingString:[@"~" stringByAppendingString:end]];
-      cell.keshi.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"keshi"];
-      cell.bianhao.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"number"];
+      cell.keshi.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"department"];
+      cell.bianhao.text=[[_arr objectAtIndex:indexPath.row]objectForKey:@"assist_number"];
       
       
       
@@ -1109,7 +1078,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
             
             
-            [sessionManager GET:@"http://netkq.webbsn.com/roche/index.php/Api/xedni" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+            [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/roche/index.php/Api/xedni" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
                 NSLog(@"%lld", downloadProgress.totalUnitCount);
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
@@ -1201,7 +1170,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSDictionary *parameters =@{@"user":[user objectForKey:@"name"],@"id":cell.final.text};
     NSLog(@"%@",parameters);
     
-    [sessionManager GET:@"http://netkq.webbsn.com/BD/index.php/Index/pass1" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/BD/index.php/Index/pass1" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -1211,7 +1180,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
         NSDictionary *parameters =@{@"flag":@"300"};
-        [sessionManager GET:@"http://netkq.webbsn.com/jpush/examples/push_example.php" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+        [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/jpush/examples/push_example.php" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
             NSLog(@"%lld", downloadProgress.totalUnitCount);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"1111111");
@@ -1254,7 +1223,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSDictionary *parameters =@{@"user":[user objectForKey:@"name"],@"id":cell.final.text};
     NSLog(@"%@",[user objectForKey:@"name"]);
     
-    [sessionManager GET:@"http://netkq.webbsn.com/BD/index.php/Index/nopass1" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/BD/index.php/Index/nopass1" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -1264,7 +1233,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
         NSDictionary *parameters =@{@"flag":@"400"};
-        [sessionManager GET:@"http://netkq.webbsn.com/jpush/examples/push_example.php" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+        [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/jpush/examples/push_example.php" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
             NSLog(@"%lld", downloadProgress.totalUnitCount);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"1111111");
@@ -1297,6 +1266,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     //NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [self networking];
+
+    
+    
      NSIndexPath *selectIndexPath = [self.table3 indexPathForSelectedRow];
     
        
@@ -1311,24 +1284,28 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         InfoViewController *receive = segue.destinationViewController;
         
-        if ([_name.text isEqualToString:[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"name"]]) {
-            receive.diaoyanrenyuan=@"1";
-        }
-        else{
+//        if ([[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"is_mine"] isEqualToString:@"1"]) {
+//            receive.diaoyanrenyuan=@"1";
+//        }
+//        else{
+//
+//            receive.diaoyanrenyuan=@"2";
+//        }
         
-            receive.diaoyanrenyuan=@"2";
-        }
-        
-        
-        receive.name=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"hos"];
-         receive.zhuangtai=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"status"];
-        receive.bianhao=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"number"];
+        receive.diaoyanrenyuan=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"is_mine"];
+
+        receive.name=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"hospital"];
+         receive.zhuangtai=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"status_text"];
+        receive.research_id=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"research_id"];
         
         receive.startStr=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"start"];
         receive.endStr=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"end"];
-        receive.qitaStr=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"beizhu"];
-        receive.numberStr=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"xznumber"];
-        receive.numberStr2=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"number"];
+        receive.qitaStr=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"remark"];
+        receive.numberStr=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"assist_number"];
+        receive.numberStr2=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"nurse_qrcode_url"];
+        receive.bianhao=[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"bd_number"];
+
+        
 //        _arr3=[NSMutableArray arrayWithObjects:[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"keshi"],@"其他" ,nil];
         
        
@@ -1355,7 +1332,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
        
         
         NSUserDefaults *keshi = [NSUserDefaults standardUserDefaults];
-        [keshi setObject:_arr3 forKey:@"keshi"];
+        [keshi setObject:[[_arr objectAtIndex:selectIndexPath.row]objectForKey:@"department"] forKey:@"keshi"];
         [keshi synchronize];
         
         
@@ -1369,7 +1346,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         [user removeObjectForKey:@"update"];
         [user removeObjectForKey:@"zip"];
-        [user removeObjectForKey:@"wenjuan"];
+        [user removeObjectForKey:@"wenj uan"];
         [user synchronize];
         [_table reloadData];
         [_table3 reloadData];
@@ -1403,7 +1380,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [_table reloadData];
             break;
         }
-        case 2:{
+        case 2:{    
             
              NSLog(@"%@",_arr);
             
@@ -1562,38 +1539,53 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
 }
 - (IBAction)shuaxin:(id)sender {
-     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    NSDictionary *parameters =@{@"name":[user objectForKey:@"name"]};
     
-    [sessionManager POST:@"http://netkq.webbsn.com/Bd/index.php/Hissurvey/details/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"%lld", downloadProgress.totalUnitCount);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
-        _arr=[responseObject objectForKey:@"0"];
-        [_table3 reloadData];
-        
-        NSLog(@"%@", _arr);
-        
-        
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
+    [self networking];
+    
+    NSUserDefaults *list = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+
+
+    
+      AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+                    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+                    [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+                    
+                    
+                    NSLog(@"%@",[user objectForKey:@"name"]);
+
+                    NSDictionary *parameters =@{@"page":@1,@"page_size":@50};
+                    
+                    
+
+                    [sessionManager POST:[url stringByAppendingString:researchList] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+                        NSLog(@"%lld", downloadProgress.totalUnitCount);
+                    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                        NSLog(@"%@",responseObject);
+                        
+                        
+                        _arr=[[responseObject objectForKey:@"data"] objectForKey:@"list"];
+                        
+                         NSLog(@"%@",_arr);
+                       
+                        [list setObject:_arr forKey:@"list"];
+                        [list synchronize];
+                        
+                        [_table3 reloadData];
+                        
+                      
+                       
+                        
+                        
+                        
+                    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                        NSLog(@"%@",error);
+                    }];
     
     
    
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    
-//    [formatter setDateFormat:@"YY-MM-dd HH:mm:ss"];
-//    
-//    NSString *timestamp = [formatter stringFromDate:[NSDate date]];
-    
-    
-//    _resetLabel.text= [[NSString stringWithFormat:@"上一次刷新时间:" ]stringByAppendingString:timestamp];
+
 }
 
 
@@ -1654,67 +1646,42 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (IBAction)xzPost:(id)sender {
     
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [self networking];
+    
+
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-   sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters =@{@"xznumber":_xztext.text,@"xzname":_name.text};
+   sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+      [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+    
+    NSDictionary *parameters =@{@"assist_number":_xztext.text};
     NSLog(@"%@",parameters);
     
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Hissurvey/xzdiaoyan" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager POST:[url stringByAppendingString:assistanceResearch] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
       //  NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%d",[[responseObject objectForKey:@"ok"] intValue]);
-        
-        if ([[responseObject objectForKey:@"ok"] intValue]==3) {
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            if (![user objectForKey:@"english"]) {
-            
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误信息" message:@"无需协助本人的调研问卷" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-            [alert show];
-            }else{
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@" No need to assist my research questionnaire " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
-            
-            }
-            
-        }
-        else if ([[responseObject objectForKey:@"ok"] intValue]==4){
-        
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            if (![user objectForKey:@"english"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误信息" message:@"没有此调研编号" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-            [alert show];
-            }
-            else{
-            
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"There is no such survey code" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
-            }
-        
-        }
-        else{
-            
-             [_table3 reloadData];
-            
-            
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            if (![user objectForKey:@"english"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"申请成功 请刷新列表" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-            [alert show];
-            }else{
-            
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@" Please refresh the application list " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
 
-            }
-        
-        }
-
-        
-        
-//        InfoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"listPage"];
-//        
-//        [self.navigationController pushViewController:receive animated:YES];
-        
+                UIColor *color = [UIColor cyanColor];
+                           
+               _hud = [[MBProgressHUD alloc] initWithView:self.view];
+               _hud.mode = MBProgressHUDModeText;
+             
+                _hud.labelText = [responseObject objectForKey:@"msg"];
+               
+               _hud.labelFont = [UIFont systemFontOfSize:17];
+               _hud.labelColor = color; //设置文本颜色；默认为白色
+               _hud.detailsLabelText = @"^_^";
+               _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+               _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+               [self.view addSubview:_hud];
+               
+               [_hud showAnimated:YES
+              whileExecutingBlock:^{
+                  [self taskOfText];
+              } completionBlock:^{
+                  NSLog(@"showHUDByText 执行完成");
+              }];
+    
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -1724,4 +1691,168 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
 }
 
+- (IBAction)zhuxiaoAct:(id)sender {
+    
+    
+    [self networking];
+
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+
+    
+    
+    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+    //sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+       [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+
+    
+    [sessionManager POST:[url stringByAppendingString:loginOut] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"%lld", downloadProgress.totalUnitCount);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+      
+        
+        
+        [self performSegueWithIdentifier:@"modal" sender:self];
+
+        
+        
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        
+        
+    }];
+    
+    
+    
+}
+
+
+-(void)networking{
+    
+    
+    NSUserDefaults *list = [NSUserDefaults standardUserDefaults];
+
+    AFNetworkReachabilityManager *manger = [AFNetworkReachabilityManager sharedManager];
+    //开启监听，记得开启，不然不走block
+    [manger startMonitoring];
+    //2.监听改变
+    [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        /*
+         AFNetworkReachabilityStatusUnknown = -1,
+         AFNetworkReachabilityStatusNotReachable = 0,
+         AFNetworkReachabilityStatusReachableViaWWAN = 1,
+         AFNetworkReachabilityStatusReachableViaWiFi = 2,
+         */
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"未知");
+                
+            {
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                UIColor *color = [UIColor cyanColor];
+                
+                _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                _hud.mode = MBProgressHUDModeText;
+                if ([user objectForKey:@"english"]) {
+                    
+                    _hud.labelText = @"live without the Internet";
+                    
+                }else{
+                    _hud.labelText = @"当前网络状态不佳,请稍后再试哦";
+                }
+                
+                _hud.labelFont = [UIFont systemFontOfSize:17];
+                _hud.labelColor = color; //设置文本颜色；默认为白色
+                // _hud.detailsLabelText = @"^_^";
+                _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                [self.view addSubview:_hud];
+                
+                _arr=[list objectForKey:@"list"];
+                              
+                               NSLog(@"%@",_arr);
+                   
+                              [_table3 reloadData];
+                
+                [_hud showAnimated:YES
+               whileExecutingBlock:^{
+                   [self taskOfText];
+               } completionBlock:^{
+                   NSLog(@"showHUDByText 执行完成");
+               }];
+                
+                
+            }
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"没有网络");
+            {
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                UIColor *color = [UIColor cyanColor];
+                
+                _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                _hud.mode = MBProgressHUDModeText;
+                if ([user objectForKey:@"english"]) {
+                    
+                    _hud.labelText = @"live without the Internet";
+                    
+                }else{
+                    _hud.labelText = @"当前网络状态不佳,请稍后再试哦";
+                }
+                
+                _hud.labelFont = [UIFont systemFontOfSize:17];
+                _hud.labelColor = color; //设置文本颜色；默认为白色
+                // _hud.detailsLabelText = @"^_^";
+                _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                [self.view addSubview:_hud];
+                
+
+
+                 _arr=[list objectForKey:@"list"];
+                 
+                  NSLog(@"%@",_arr);
+      
+                 [_table3 reloadData];
+                
+                [_hud showAnimated:YES
+               whileExecutingBlock:^{
+                   [self taskOfText];
+               } completionBlock:^{
+                   NSLog(@"showHUDByText 执行完成");
+               }];
+                
+                
+            }
+                
+                
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"3G|4G");
+                _arr=[list objectForKey:@"list"];
+                              
+                               NSLog(@"%@",_arr);
+                   
+                              [_table3 reloadData];
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+            {
+                NSLog(@"WiFi");
+                _arr=[list objectForKey:@"list"];
+                              
+                               NSLog(@"%@",_arr);
+                   
+                              [_table3 reloadData];
+
+            }
+                
+                break;
+            default:
+                break;
+        }
+    }];
+}
 @end

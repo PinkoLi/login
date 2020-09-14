@@ -384,6 +384,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSMutableArray*Q2=[[NSMutableArray alloc] init];
        
          NSString*str=[[NSString alloc] init];
+        NSString*str2=[[NSString alloc] init];
+
         
         for(int i=0;i<[_chooseArray1 count];i++)
         {
@@ -398,7 +400,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 isok1=1;
                 [Q1 addObject:pp.textLabel.text];
                 
-                
+                str2=pp.textLabel.text;
               }
             
            else if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray lastObject]]) {
@@ -407,6 +409,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                
                 str=[[pp.textLabel.text stringByAppendingString:@"(" ] stringByAppendingString:_text1.text];
                 [Q1 addObject:str];
+               str2=pp.textLabel.text;
+
             }
 
             
@@ -441,6 +445,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
             }
         }
+        
+        if (isok1==1) {
+                   if ([str2 isEqualToString:[_oneArray lastObject]]) {
+                       if (_text1.text==nil||[_text1.text isEqualToString:@""]) {
+                           isok1=0;
+                       }
+                   }
+               }
         
         if (!isok1||!isok2){
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -750,25 +762,31 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (_a==0) {
       
         
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
         
-        
-       _str=[[@"32-" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
+       _str=[[@"32-" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     else if (_a==1){
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
         
-        
-        _str=[[@"33_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
+        _str=[[@"33_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     else{
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
         
-        
-        _str=[[@"34_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        _str=[[@"34_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
 
     }
     

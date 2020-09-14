@@ -434,6 +434,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (IBAction)nextBtn:(id)sender {
     
+    NSUserDefaults *choose = [NSUserDefaults standardUserDefaults];
+    [choose removeObjectForKey:@"choose"];
+    [choose synchronize];
+
+    
     int isok1=0;
     int isok2=0;
     
@@ -583,8 +588,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSDictionary *q3 =@{@"choose":Q2};
         NSDictionary *q2 =@{@"text":_textLb2.text};
         NSDictionary*num2=@{@"2":q2};
-        NSDictionary*num3=@{@"3-1":q4};
-        NSDictionary*num4=@{@"3-2":q3};
+        NSDictionary*num3=@{@"3.1":q4};
+        NSDictionary*num4=@{@"3.2":q3};
         
 //        NSMutableArray*arr=[[NSMutableArray alloc] init];
 //        [arr addObject:num2];
@@ -621,12 +626,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [discardedItems addObject:kk];
                    
                 }
-                if ([kk objectForKey:@"3-1"]) {
+                if ([kk objectForKey:@"3.1"]) {
                     
                     [discardedItems addObject:kk];
                    
                 }
-                if ([kk objectForKey:@"3-2"]) {
+                if ([kk objectForKey:@"3.2"]) {
                     
                    [discardedItems addObject:kk];
                 }
@@ -768,11 +773,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //获取Documents文件夹目录
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
-     NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-    NSString*photoName=[NSString stringWithFormat:@"%ld",[[photoList objectForKey:@"photoList"] integerValue]];
+    // NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
     
     
-    NSString*str=[[@"3_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+    
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *date = [formatter stringFromDate:[NSDate date]];
+    NSString*str=[[@"3_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
+    
+    NSLog(@"%@",str);
+    
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [path objectAtIndex:0];

@@ -40,13 +40,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
       NSUserDefaults *keshiArr = [NSUserDefaults standardUserDefaults];
      NSUserDefaults *thisArr = [NSUserDefaults standardUserDefaults];
     //NSLog(@"%@",[thisArr objectForKey:@"thisArr"]);
-    NSLog(@"%@",[keshiArr objectForKey:@"keshiArr"]);
     
     
-    NSLog(@"%@",[thisArr objectForKey:@"thisArr"]);
-    
+
+    _ksArr=[[NSMutableArray alloc] init];
+
     _keshi=[[NSMutableArray alloc] init];
     _keshi2=[[NSMutableArray alloc] init];
+    _keshi3=[[NSMutableArray alloc] init];
+
      _dongmaiArr=[[NSMutableArray alloc] init];
     _dongmaiArr2=[[NSMutableArray alloc] init];
      _dongmaiArr3=[[NSMutableArray alloc] init];
@@ -65,88 +67,92 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
      _pinlvArr3=[[NSMutableArray alloc] init];
      _pinlvArr4=[[NSMutableArray alloc] init];
     
+    _ksArr=[NSMutableArray arrayWithArray:[keshiArr objectForKey:@"keshiArr"]];
+  //  [_ksArr addObject:@"其他"];
+    
+    
+    
+    
+    
+    for (int i=0; i<[_ksArr count]; i++) {
+        
+            
+            if ([[_ksArr objectAtIndex:i] isEqualToString:@"重症"]||[[_ksArr objectAtIndex:i] isEqualToString:@"急症"]||[[_ksArr objectAtIndex:i] isEqualToString:@"呼吸"]||[[_ksArr objectAtIndex:i] isEqualToString:@"麻醉"]||[[_ksArr objectAtIndex:i] isEqualToString:@"其他"]) {
+                
+                [_keshi2 addObject:[_ksArr objectAtIndex:i]];
+            }
+        }
+    
+    
+    
+    
+    NSArray *result = [_keshi2 valueForKeyPath:@"@distinctUnionOfObjects.self"];
+        
+       //[_keshi2 addObjectsFromArray:_keshi];
+    _keshi3=[NSMutableArray arrayWithArray:result];
+    [_keshi3 addObject:@"其他"];
+
+
+    
+    
+  
+    
 #pragma 第一个问题
     
    
     int a=0;
     
-    for (int i=0; i<[[thisArr objectForKey:@"thisArr"] count]; i++) {
+//    for (int i=0; i<[[thisArr objectForKey:@"thisArr"] count]; i++) {
+//
+//
+//
+//        for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
+//
+//
+//            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]) {
+//
+//                [_keshi addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]];
+//            }
+//
+//
+//
+//
+//
+//
+//        }
+//    }
+//
+//     NSLog(@"%@",_keshi);
+//
+//
+//    for (NSString*str in _keshi) {
+//
+//        if (![str isEqualToString:@"重症"]&&![str isEqualToString:@"急症"]&&![str isEqualToString:@"呼吸"]&&![str isEqualToString:@"麻醉"]) {
+//            [_keshi2 addObject:@"其他"];
+//        }
+//    }
+//
+//    [_keshi2 addObjectsFromArray:_keshi];
+//
+//    NSLog(@"%@",_keshi2);
+    
+    
+    
+    for (int i=0; i<[_keshi3 count ]; i++) {
         
-        
-        
-        for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
+  
             
-            
-            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]) {
-                
-                [_keshi addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]];
-            }
-            
-            
-            
-            
-          
-
-        }
-    }
-    
-     NSLog(@"%@",_keshi);
-    
-    
-    for (NSString*str in _keshi) {
-        
-        if (![str isEqualToString:@"重症"]&&![str isEqualToString:@"急症"]&&![str isEqualToString:@"呼吸"]&&![str isEqualToString:@"麻醉"]) {
-            [_keshi2 addObject:@"其他"];
-        }
-    }
-    
-    [_keshi2 addObjectsFromArray:_keshi];
-    
-    NSLog(@"%@",_keshi2);
-    
-    
-    
-    for (int i=0; i<[[keshiArr objectForKey:@"keshiArr"]count ]; i++) {
-        
-        //        float x = i%5;
-        //
-        //        float y = i/5;
-        
-        
-        
-                
-       // NSLog(@"%@",[_keshi2 objectAtIndex:i]);
-        
-        
-//            if (![[_keshi lastObject] containsString:[[keshiArr objectForKey:@"keshiArr"] objectAtIndex:i]]) {
+//            if ([_keshi2 containsObject:[[keshiArr objectForKey:@"keshiArr"] objectAtIndex:i]]) {
 //                a=1;
 //            }
-            
-            if ([_keshi2 containsObject:[[keshiArr objectForKey:@"keshiArr"] objectAtIndex:i]]) {
-                a=1;
-            }
-            else{
-            
-            
-                a=0;
-            
-            }
+//            else{
+//
+//
+//                a=0;
+//
+//            }
         
-        
-       
-        
-        
-        
-            
-        
-        
-//        if ([[_keshi lastObject] containsString:[[keshiArr objectForKey:@"keshiArr"] objectAtIndex:i]]) {
-//            a=1;
-//        }
-//        else{
-//            a=0;
-//        }
-        
+
         
         
         
@@ -155,52 +161,60 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width-130 + Width_Space) + 169, page* (Button_Height + Height_Space+20)+276, Button_Width-130, Button_Height) style:kSSCheckBoxViewStyleGlossy checked:a];
-        NSString *a1 = [[keshiArr objectForKey:@"keshiArr"] objectAtIndex:i];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width-130 + Width_Space) + 169, page* (Button_Height + Height_Space+20)+276, Button_Width-130, Button_Height) style:kSSCheckBoxViewStyleMono checked:0];
+        NSString *a1 = [_keshi3 objectAtIndex:i];
         
 //        a1=[a1 stringByReplacingOccurrencesOfString:@"重症"withString:@"ICU"];
 //        a1=[a1 stringByReplacingOccurrencesOfString:@"急症"withString:@"Emergency"];
 //        a1=[a1 stringByReplacingOccurrencesOfString:@"呼吸"withString:@"Respiratory"];
 //        a1=[a1 stringByReplacingOccurrencesOfString:@"麻醉"withString:@"Anaesthesia"];
         
-        if ([a1 isEqualToString:@"ICU"]) {
-            a1=@"重症";
-            [cb setText:a1];
-        }
-        else if([a1 isEqualToString:@"Emergency"]){
-        
-        a1=@"急症";
-            [cb setText:a1];
-        }
-        else if([a1 isEqualToString:@"Respiratory"]){
-            
-            a1=@"呼吸";
-            [cb setText:a1];
-        }
-        else if([a1 isEqualToString:@"Anesthesiology"]){
-            
-            a1=@"麻醉";
-            [cb setText:a1];
-        }
-        else if([a1 isEqualToString:@"Other"]){
-            
-            a1=@"其他";
-            [cb setText:a1];
-        }
-        else{
+//        if ([a1 isEqualToString:@"重症"]) {
+//            a1=@"重症";
+//            [cb setText:a1];
+//
+//        }
+//        else if([a1 isEqualToString:@"急症"]){
+//
+//        a1=@"急症";
+//            [cb setText:a1];
+//
+//        }
+//        else if([a1 isEqualToString:@"呼吸"]){
+//
+//            a1=@"呼吸";
+//            [cb setText:a1];
+//
+//        }
+//        else if([a1 isEqualToString:@"麻醉"]){
+//
+//            a1=@"麻醉";
+//            [cb setText:a1];
+//
+//        }
+//        else if([a1 isEqualToString:@"其他"]){
+//
+//            a1=@"其他";
+//            [cb setText:a1];
+//
+//        }
+//        else{
+//
+//
+//        }
+       
         [cb setText:a1];
-        
-        }
-        
+
         
         cb.enabled=NO;
         
-        
+        [self.view addSubview:cb];
+
         
         
        // [cb setStateChangedTarget:self selector:@selector(change6:)];
        
-        [self.view addSubview:cb];
+       // [self.view addSubview:cb];
         
         
         
@@ -220,12 +234,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
-            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-2"] objectForKey:@"choose"]) {
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.2"] objectForKey:@"choose"]) {
                 
-                NSLog(@"%@",[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-2"] objectForKey:@"choose"]);
+                NSLog(@"%@",[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.2"] objectForKey:@"choose"]);
                 
                 
-                [_dongmaiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-2"] objectForKey:@"choose"]];
+                [_dongmaiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.2"] objectForKey:@"choose"]];
             }
             
             
@@ -348,9 +362,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
-            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-1"] objectForKey:@"choose"]) {
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.1"] objectForKey:@"choose"]) {
                 
-                [_zhusheArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-1"] objectForKey:@"choose"]];
+                [_zhusheArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.1"] objectForKey:@"choose"]];
             }
             
             
@@ -425,12 +439,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
-            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-1"] objectForKey:@"choose"]) {
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.1"] objectForKey:@"choose"]) {
                 
                 
                 
                 
-                [_typeArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-1"] objectForKey:@"choose"]];
+                [_typeArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.1"] objectForKey:@"choose"]];
             }
             
             
@@ -564,9 +578,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
-            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-2"] objectForKey:@"choose"]) {
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.2"] objectForKey:@"choose"]) {
                 
-                [_fangshiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-2"] objectForKey:@"choose"]];
+                [_fangshiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.2"] objectForKey:@"choose"]];
             }
             
             
@@ -580,9 +594,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
-            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-3"] objectForKey:@"choose"]) {
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.3"] objectForKey:@"choose"]) {
                 
-                [_pinlvArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-3"] objectForKey:@"choose"]];
+                [_pinlvArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.3"] objectForKey:@"choose"]];
             }
             
             

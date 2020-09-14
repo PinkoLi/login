@@ -9,11 +9,13 @@
 #import "TwentyOneViewController.h"
 #import "MBProgressHUD.h"
 #import "SSCheckBoxView.h"
-#import "TwentyTwoViewController.h"
+#import "TwentyTwo1ViewController.h"
 @interface TwentyOneViewController ()
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn2;
-@property(nonatomic,strong)TwentyTwoViewController*twentytwo;
+@property(nonatomic,strong)SSCheckBoxView *tmpBtn3;
+
+@property(nonatomic,strong)TwentyTwo1ViewController*twentyone1;
 @property(nonatomic)bool isFullScreen;
 
 @end
@@ -53,6 +55,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
    // [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
     [_lb1 setTextColor:UIColorFromRGB(0x034f9a)];
     [_lb2 setTextColor:UIColorFromRGB(0x034f9a)];
+    [_lb3 setTextColor:UIColorFromRGB(0x034f9a)];
+
     
     
     
@@ -60,6 +64,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     _chooseArray1=[[NSMutableArray alloc] init];
     _chooseArray2=[[NSMutableArray alloc] init];
+    _chooseArray3=[[NSMutableArray alloc] init];
+
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     if ([user objectForKey:@"english"]) {
@@ -93,6 +99,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _twoArray=[[NSMutableArray alloc] initWithObjects:@"≤4天",@">4天",nil];
         
         _oneArray=[[NSMutableArray alloc] initWithObjects:@"开放式",@"封闭式",nil];
+        _threeArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+
         
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"TAB3"ofType:@"png"];
@@ -154,7 +162,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+0, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_twoArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -164,6 +172,42 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [_chooseArray2 addObject:cb];
         [_view2 addSubview:cb];
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    #pragma 第三个问题
+    
+    
+    
+    
+    
+    
+    for (int i=0; i<_threeArray.count; i++) {
+        
+        //        float x = i%5;
+        //
+        //        float y = i/5;
+        
+        
+        
+        
+        
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+170, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        NSString *a1 = [_threeArray objectAtIndex:i];
+        
+        [cb setText:a1];
+        
+        
+        [cb setStateChangedTarget:self selector:@selector(change49:)];
+        
+        [_chooseArray3 addObject:cb];
+       // [_view2 addSubview:cb];
         
         
         
@@ -208,7 +252,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
 }
 
-
+-(void)change49:(SSCheckBoxView*)cbv{
+    
+    NSLog(@"复选框状态: %@",cbv.checked ? @"选中" : @"没选中");
+    
+    if(_tmpBtn3== cbv) {
+        //上次点击过的按钮，不做处理
+    } else{
+        //本次点击的按钮设为红色
+        cbv.checked=YES;
+        //将上次点击过的按钮设为黑色
+        _tmpBtn3.checked=NO;
+    }
+    _tmpBtn3= cbv;
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -231,12 +289,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     int isok1=0;
     int isok2=0;
+   // int isok3=0;
+
     
     
     
     
     NSMutableArray*Q1=[[NSMutableArray alloc] init];
     NSMutableArray*Q2=[[NSMutableArray alloc] init];
+   // NSMutableArray*Q3=[[NSMutableArray alloc] init];
+
     
     
     for(int i=0;i<[_chooseArray1 count];i++)
@@ -281,6 +343,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
         }
     }
+//    for(int i=0;i<[_chooseArray3 count];i++)
+//    {
+//
+//        SSCheckBoxView* pp=[_chooseArray3 objectAtIndex:i];
+//
+//        if(pp.checked==1)
+//        {
+//
+//            isok3=1;
+//            [Q3 addObject:pp.textLabel.text];
+//
+//        }
+//    }
     
     if (!isok1||!isok2) {
         
@@ -307,10 +382,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         NSDictionary *q1 =@{@"choose":Q1};
         NSDictionary *q2 =@{@"choose":Q2};
+     //   NSDictionary *q3 =@{@"choose":Q3};
+
        
         
         NSDictionary*num1=@{@"47":q1};
         NSDictionary*num2=@{@"48":q2};
+        //NSDictionary*num3=@{@"49":q3};
+
      
         
         
@@ -340,6 +419,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [discardedItems addObject:kk];
                 
             }
+            if ([kk objectForKey:@"49"]) {
+                           
+                           NSLog(@"%@",kk);
+                           
+                           [discardedItems addObject:kk];
+                           
+                       }
             
             
             
@@ -369,19 +455,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
         
         
-        TwentyOneViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"22Page"];
-        
-        [self.navigationController pushViewController:receive animated:YES];
+//        TwentyOneViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"22-1Page"];
+//
+//        [self.navigationController pushViewController:receive animated:YES];
 
         
-//        if (!_twentytwo) {
-//            
-//            _twentytwo= [self.storyboard instantiateViewControllerWithIdentifier:@"22Page"];
-//        }
-//        
-//        
-//        
-//        [self.navigationController pushViewController:_twentytwo animated:YES];
+        if (!_twentyone1) {
+            
+            _twentyone1= [self.storyboard instantiateViewControllerWithIdentifier:@"21-1Page"];
+        }
+        
+        
+        
+        [self.navigationController pushViewController:_twentyone1 animated:YES];
     }
     
 }
@@ -409,11 +495,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //获取Documents文件夹目录
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
-    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *date = [formatter stringFromDate:[NSDate date]];
     
-    
-    NSString*str=[[@"47_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+    NSString*str=[[@"47_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [path objectAtIndex:0];

@@ -97,7 +97,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     else{
          [_photoBtn setImage:[UIImage imageNamed:@"建议拍照.png"] forState:UIControlStateNormal];
-        _twoArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+        _twoArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",@"导管采血，不适用",nil];
        _threeArray=[[NSMutableArray alloc] initWithObjects:@"注射器",@"动脉采血器",nil];        _oneArray=[[NSMutableArray alloc] initWithObjects:@"≥30秒",@"<30秒",nil];
     
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
@@ -161,7 +161,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y-100, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y-100, Button_Width, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_twoArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -385,19 +385,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray firstObject]]) {
             NSUserDefaults *zhushe = [NSUserDefaults standardUserDefaults];
             [zhushe setObject:@"1" forKey:@"zhushe"];
-            [zhushe synchronize];
-            NSUserDefaults *dongmai = [NSUserDefaults standardUserDefaults];
-            [dongmai removeObjectForKey:@"dongmai"];
-            [dongmai synchronize];
-        }
-        else if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray lastObject]]){
-            NSUserDefaults *zhushe = [NSUserDefaults standardUserDefaults];
-            [zhushe removeObjectForKey:@"zhushe"];
+            [zhushe removeObjectForKey:@"dongmai"];
             [zhushe synchronize];
             
-            NSUserDefaults *dongmai = [NSUserDefaults standardUserDefaults];
-            [dongmai setObject:@"1" forKey:@"dongmai"];
-            [dongmai synchronize];
+            NSUserDefaults *gongju = [NSUserDefaults standardUserDefaults];
+            [gongju setObject:@"0" forKey:@"zhushe"];
+            [gongju synchronize];
+        }
+        else if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray lastObject]]){
+         NSUserDefaults *zhushe = [NSUserDefaults standardUserDefaults];
+            [zhushe setObject:@"1" forKey:@"dongmai"];
+            [zhushe removeObjectForKey:@"zhushe"];
+            [zhushe synchronize];
+
+            
+            NSUserDefaults *gongju = [NSUserDefaults standardUserDefaults];
+                       [gongju setObject:@"1" forKey:@"zhushe"];
+                       [gongju synchronize];
             
         }
 
@@ -517,6 +521,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [choose synchronize];
         NSLog(@"111111111111111%@",arr);
         
+        NSUserDefaults *anquan = [NSUserDefaults standardUserDefaults];
+        [anquan removeObjectForKey:@"anquan"];
+        [anquan synchronize];
+        
+        
         ThirteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"fourteenPage"];
         
         
@@ -561,11 +570,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //获取Documents文件夹目录
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
-    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *date = [formatter stringFromDate:[NSDate date]];
     
-    
-    NSString*str=[[@"30_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+    NSString*str=[[@"30_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [path objectAtIndex:0];

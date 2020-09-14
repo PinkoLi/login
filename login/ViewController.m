@@ -72,7 +72,7 @@
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     NSDictionary *parameters =@{@"email":_email.text};
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Mail/sendMail/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/index.php/Mail/sendMail/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@", responseObject);
@@ -103,6 +103,10 @@
         else{
             
             _pw=[NSString stringWithFormat:@"%d",[[[responseObject objectForKey:@"0"]objectForKey:@"pw"]intValue]];
+            
+            NSLog(@"%@",_pw);
+            
+            
             _name=[[responseObject objectForKey:@"0"] objectForKey:@"name"];
             NSLog(@"%@",_pw);
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];

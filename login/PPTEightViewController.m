@@ -67,15 +67,8 @@
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"穿刺采血"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"Puncture"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"动脉穿刺采血"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"静脉穿刺采血"] ) {
                 ++_a;
-//                if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"桡动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Radial artery"]  ) {
-//                    ++_h;
-//                }
-//                else{
-//                    
-//                    ++_i;
-//                }
 
                 
                 if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"桡动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Radial artery"] ) {
@@ -90,10 +83,9 @@
                 if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"足背动脉"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Arteria dorsalis pedis"]) {
                     ++_k;
                 }
-                if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"其他"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]lastObject]containsString:@"Other"]) {
+                if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"其他"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"头皮动脉"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"股静脉"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"PICC"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"静脉留置针"]  ) {
                     ++_l;
                 }
-
                 
             }
             
@@ -101,7 +93,7 @@
          
 
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"导管采血"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"By catheter"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"动脉导管采血"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"静脉导管采血"] ) {
                 ++_b;
                 
                 
@@ -120,7 +112,7 @@
                 if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"足背动脉"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Arteria dorsalis pedis"]) {
                     ++_f;
                 }
-                if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"其他"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]lastObject]containsString:@"Other"]) {
+                if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"其他"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"头皮动脉"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"股静脉"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"PICC"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"静脉留置针"]  ) {
                     ++_g;
                 }
 

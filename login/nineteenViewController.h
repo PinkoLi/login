@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *next;
 @property (weak, nonatomic) IBOutlet UILabel *lb1;
 @property (weak, nonatomic) IBOutlet UILabel *lb2;
+@property (weak, nonatomic) IBOutlet UILabel *lb3;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *seg;
 
 - (IBAction)seg:(id)sender;
@@ -30,7 +32,11 @@
 
 @property(strong ,nonatomic )NSMutableArray*chooseArray1;
 @property(strong ,nonatomic )NSMutableArray*chooseArray2;
+@property(strong ,nonatomic )NSMutableArray*chooseArray3;
+
 @property(strong ,nonatomic )NSMutableArray*oneArray;
 @property(strong ,nonatomic )NSMutableArray*twoArray;
+@property(strong ,nonatomic )NSMutableArray*threeArray;
+
 
 @end

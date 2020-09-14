@@ -109,6 +109,8 @@
 		CB3FDA9C1DA56453000F7AD7 /* TwentyEightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB3FDA9B1DA56453000F7AD7 /* TwentyEightViewController.m */; };
 		CB3FDA9F1DA573E6000F7AD7 /* TwentyNineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB3FDA9E1DA573E6000F7AD7 /* TwentyNineViewController.m */; };
 		CB3FDAA21DA57AEF000F7AD7 /* ThirtyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB3FDAA11DA57AEF000F7AD7 /* ThirtyViewController.m */; };
+		CB47AD6F1F20B98E00343ED9 /* 修改密码_7.20(2).jpg in Resources */ = {isa = PBXBuildFile; fileRef = CB47AD6E1F20B98E00343ED9 /* 修改密码_7.20(2).jpg */; };
+		CB50DB4E1F173E8100B01043 /* ChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB50DB4D1F173E8100B01043 /* ChangePwViewController.m */; };
 		CB6BFB0D1DDD89DC00A524F3 /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = CB6BFB0C1DDD89DC00A524F3 /* Confirm.png */; };
 		CB84EF9F1DDAB92200E238C8 /* 英文2.png in Resources */ = {isa = PBXBuildFile; fileRef = CB84EF9D1DDAB92200E238C8 /* 英文2.png */; };
 		CB84EFA01DDAB92200E238C8 /* 英文3.png in Resources */ = {isa = PBXBuildFile; fileRef = CB84EF9E1DDAB92200E238C8 /* 英文3.png */; };
@@ -240,6 +242,14 @@
 		CBF6C3761DE4072000AA6E34 /* 建议拍照英文.png in Resources */ = {isa = PBXBuildFile; fileRef = CBF6C3741DE4072000AA6E34 /* 建议拍照英文.png */; };
 		CBFCB5F01E39F23600FA01E9 /* 2框1.png in Resources */ = {isa = PBXBuildFile; fileRef = CBFCB5EE1E39F23600FA01E9 /* 2框1.png */; };
 		CBFCB5F11E39F23600FA01E9 /* 40(1).png in Resources */ = {isa = PBXBuildFile; fileRef = CBFCB5EF1E39F23600FA01E9 /* 40(1).png */; };
+		ED0FBF4320BE4A5500274411 /* LXF_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0FBF4220BE4A5500274411 /* LXF_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ED457F0B24A3416400B445E7 /* TwentyTwo2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED457F0A24A3416400B445E7 /* TwentyTwo2ViewController.m */; };
+		EDA1A8E024C14C3400D0BDF7 /* 修改密码.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EDA1A8DF24C14C3400D0BDF7 /* 修改密码.jpg */; };
+		EDB8A70224A31B1900EB89E3 /* eighteen1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB8A70124A31B1900EB89E3 /* eighteen1ViewController.m */; };
+		EDB8A70524A32E1A00EB89E3 /* TwentyTwo1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB8A70424A32E1A00EB89E3 /* TwentyTwo1ViewController.m */; };
+		EDB8A70924A334CD00EB89E3 /* 肝素帽.png in Resources */ = {isa = PBXBuildFile; fileRef = EDB8A70624A334CB00EB89E3 /* 肝素帽.png */; };
+		EDB8A70A24A334CD00EB89E3 /* 机械接头.png in Resources */ = {isa = PBXBuildFile; fileRef = EDB8A70724A334CC00EB89E3 /* 机械接头.png */; };
+		EDB8A70B24A334CD00EB89E3 /* 分隔膜接头.png in Resources */ = {isa = PBXBuildFile; fileRef = EDB8A70824A334CC00EB89E3 /* 分隔膜接头.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -407,6 +417,9 @@
 		CB3FDA9E1DA573E6000F7AD7 /* TwentyNineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyNineViewController.m; sourceTree = "<group>"; };
 		CB3FDAA01DA57AEF000F7AD7 /* ThirtyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirtyViewController.h; sourceTree = "<group>"; };
 		CB3FDAA11DA57AEF000F7AD7 /* ThirtyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirtyViewController.m; sourceTree = "<group>"; };
+		CB47AD6E1F20B98E00343ED9 /* 修改密码_7.20(2).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "修改密码_7.20(2).jpg"; sourceTree = "<group>"; };
+		CB50DB4C1F173E8100B01043 /* ChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePwViewController.h; sourceTree = "<group>"; };
+		CB50DB4D1F173E8100B01043 /* ChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePwViewController.m; sourceTree = "<group>"; };
 		CB6BFB0C1DDD89DC00A524F3 /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
 		CB84EF9D1DDAB92200E238C8 /* 英文2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "英文2.png"; sourceTree = "<group>"; };
 		CB84EF9E1DDAB92200E238C8 /* 英文3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "英文3.png"; sourceTree = "<group>"; };
@@ -524,7 +537,7 @@
 		CBEF6CB01D6D8A3600D2B004 /* 记住密码E.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "记住密码E.png"; sourceTree = "<group>"; };
 		CBEF6CB31D6D93AE00D2B004 /* 忘记密码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "忘记密码.png"; sourceTree = "<group>"; };
 		CBEF6CB41D6D93AE00D2B004 /* 记住密码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "记住密码.png"; sourceTree = "<group>"; };
-		CBEFC2551D23AFC600B47D52 /* login.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = login.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBEFC2551D23AFC600B47D52 /* NEW PAQC ABG .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NEW PAQC ABG .app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEFC2591D23AFC600B47D52 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CBEFC25B1D23AFC600B47D52 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CBEFC25C1D23AFC600B47D52 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -608,6 +621,18 @@
 		CBFCB5EE1E39F23600FA01E9 /* 2框1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2框1.png"; sourceTree = "<group>"; };
 		CBFCB5EF1E39F23600FA01E9 /* 40(1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "40(1).png"; sourceTree = "<group>"; };
 		D5F81DB7BEB6B023E60B8694 /* Pods_login.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_login.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED0FBF4120BE4A5400274411 /* LXF_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXF_OpenUDID.h; sourceTree = "<group>"; };
+		ED0FBF4220BE4A5500274411 /* LXF_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXF_OpenUDID.m; sourceTree = "<group>"; };
+		ED457F0924A3416400B445E7 /* TwentyTwo2ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwentyTwo2ViewController.h; sourceTree = "<group>"; };
+		ED457F0A24A3416400B445E7 /* TwentyTwo2ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwentyTwo2ViewController.m; sourceTree = "<group>"; };
+		EDA1A8DF24C14C3400D0BDF7 /* 修改密码.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "修改密码.jpg"; sourceTree = "<group>"; };
+		EDB8A70024A31B1800EB89E3 /* eighteen1ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = eighteen1ViewController.h; sourceTree = "<group>"; };
+		EDB8A70124A31B1900EB89E3 /* eighteen1ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eighteen1ViewController.m; sourceTree = "<group>"; };
+		EDB8A70324A32E1A00EB89E3 /* TwentyTwo1ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwentyTwo1ViewController.h; sourceTree = "<group>"; };
+		EDB8A70424A32E1A00EB89E3 /* TwentyTwo1ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwentyTwo1ViewController.m; sourceTree = "<group>"; };
+		EDB8A70624A334CB00EB89E3 /* 肝素帽.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "肝素帽.png"; sourceTree = "<group>"; };
+		EDB8A70724A334CC00EB89E3 /* 机械接头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "机械接头.png"; sourceTree = "<group>"; };
+		EDB8A70824A334CC00EB89E3 /* 分隔膜接头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分隔膜接头.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -674,6 +699,7 @@
 		CB1E6BBE1D9D0AE300EB4E61 /* 问卷详情 */ = {
 			isa = PBXGroup;
 			children = (
+				EDA1A8DF24C14C3400D0BDF7 /* 修改密码.jpg */,
 				CBFCB5EE1E39F23600FA01E9 /* 2框1.png */,
 				CBFCB5EF1E39F23600FA01E9 /* 40(1).png */,
 				CB9ACCDF1DE6E2B100F070F3 /* 生成调研_big.png */,
@@ -935,6 +961,9 @@
 		CBEF6CA01D6D445A00D2B004 /* 登陆页面背景 */ = {
 			isa = PBXGroup;
 			children = (
+				EDB8A70824A334CC00EB89E3 /* 分隔膜接头.png */,
+				EDB8A70624A334CB00EB89E3 /* 肝素帽.png */,
+				EDB8A70724A334CC00EB89E3 /* 机械接头.png */,
 				CBB8B4071D7D866400800458 /* ying.png */,
 				CBB8B4081D7D866400800458 /* zhong.png */,
 				CBEF6CAF1D6D8A3600D2B004 /* 忘记密码E.png */,
@@ -964,6 +993,7 @@
 				CBB1B9B21D519AD200F53347 /* down_dark0.png */,
 				CBEF6C9C1D6ADE4600D2B004 /* choose2.png */,
 				CBEF6C9D1D6ADE4600D2B004 /* chosse1.png */,
+				CB47AD6E1F20B98E00343ED9 /* 修改密码_7.20(2).jpg */,
 				CB1EBE041D3622E900025F09 /* lib */,
 				CBEFC2ED1D2A2AC100B47D52 /* LMComBox */,
 				CBEFC2BB1D2A146C00B47D52 /* SSCheckBoxView */,
@@ -982,7 +1012,7 @@
 		CBEFC2561D23AFC600B47D52 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CBEFC2551D23AFC600B47D52 /* login.app */,
+				CBEFC2551D23AFC600B47D52 /* NEW PAQC ABG .app */,
 				CBEFC26E1D23AFC700B47D52 /* loginTests.xctest */,
 				CBEFC2791D23AFC700B47D52 /* loginUITests.xctest */,
 			);
@@ -992,12 +1022,16 @@
 		CBEFC2571D23AFC600B47D52 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				ED0FBF4120BE4A5400274411 /* LXF_OpenUDID.h */,
+				ED0FBF4220BE4A5500274411 /* LXF_OpenUDID.m */,
 				CBEFC25B1D23AFC600B47D52 /* AppDelegate.h */,
 				CBEFC25C1D23AFC600B47D52 /* AppDelegate.m */,
 				CBEFC25E1D23AFC600B47D52 /* ViewController.h */,
 				CBEFC25F1D23AFC600B47D52 /* ViewController.m */,
 				CBEFC2931D23B4B000B47D52 /* SecondViewController.h */,
 				CBEFC2941D23B4B000B47D52 /* SecondViewController.m */,
+				CB50DB4C1F173E8100B01043 /* ChangePwViewController.h */,
+				CB50DB4D1F173E8100B01043 /* ChangePwViewController.m */,
 				CBF511281E56D5D200335319 /* ShuomingViewController.h */,
 				CBF511291E56D5D200335319 /* ShuomingViewController.m */,
 				CBEFC2961D24CDCD00B47D52 /* Application ViewController.h */,
@@ -1054,6 +1088,8 @@
 				CB3FDA641DA2E2BE000F7AD7 /* seventeenViewController.m */,
 				CB3FDA7C1DA2E66F000F7AD7 /* eighteenViewController.h */,
 				CB3FDA7D1DA2E66F000F7AD7 /* eighteenViewController.m */,
+				EDB8A70024A31B1800EB89E3 /* eighteen1ViewController.h */,
+				EDB8A70124A31B1900EB89E3 /* eighteen1ViewController.m */,
 				CB3FDA7F1DA2E91D000F7AD7 /* nineteenViewController.h */,
 				CB3FDA801DA2E91D000F7AD7 /* nineteenViewController.m */,
 				CB3FDA821DA2EB3C000F7AD7 /* TwentyViewController.h */,
@@ -1062,6 +1098,10 @@
 				CB3FDA861DA2F006000F7AD7 /* TwentyOneViewController.m */,
 				CB3FDA881DA2F301000F7AD7 /* TwentyTwoViewController.h */,
 				CB3FDA891DA2F301000F7AD7 /* TwentyTwoViewController.m */,
+				EDB8A70324A32E1A00EB89E3 /* TwentyTwo1ViewController.h */,
+				EDB8A70424A32E1A00EB89E3 /* TwentyTwo1ViewController.m */,
+				ED457F0924A3416400B445E7 /* TwentyTwo2ViewController.h */,
+				ED457F0A24A3416400B445E7 /* TwentyTwo2ViewController.m */,
 				CB3FDA8B1DA2F4F3000F7AD7 /* TwentyThreeViewController.h */,
 				CB3FDA8C1DA2F4F3000F7AD7 /* TwentyThreeViewController.m */,
 				CB3FDA8E1DA2F6DA000F7AD7 /* TwentyFourViewController.h */,
@@ -1267,12 +1307,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CBEFC2821D23AFC700B47D52 /* Build configuration list for PBXNativeTarget "login" */;
 			buildPhases = (
+				3143717F53B28F6A8CC9526B /* [CP] Check Pods Manifest.lock */,
 				3FAF1E596654815F02320753 /* 📦 Check Pods Manifest.lock */,
 				CBEFC2511D23AFC600B47D52 /* Sources */,
 				CBEFC2521D23AFC600B47D52 /* Frameworks */,
 				CBEFC2531D23AFC600B47D52 /* Resources */,
 				9B68B425E9E1D29C58A2A72A /* 📦 Embed Pods Frameworks */,
-				6552B3A7DCF51C32FF15327F /* 📦 Copy Pods Resources */,
+				D5FB86D58F038EA6FD0DA2B3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1280,7 +1321,7 @@
 			);
 			name = login;
 			productName = login;
-			productReference = CBEFC2551D23AFC600B47D52 /* login.app */;
+			productReference = CBEFC2551D23AFC600B47D52 /* NEW PAQC ABG .app */;
 			productType = "com.apple.product-type.application";
 		};
 		CBEFC26D1D23AFC700B47D52 /* loginTests */ = {
@@ -1353,6 +1394,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1376,6 +1418,7 @@
 				CBF6C3701DE403F500AA6E34 /* 继续答题英文.png in Resources */,
 				CB3A1C851DABD2C7001EBD9C /* 30.png in Resources */,
 				CBB8B40A1D7D866400800458 /* zhong.png in Resources */,
+				EDA1A8E024C14C3400D0BDF7 /* 修改密码.jpg in Resources */,
 				CB2898861DB0EC74005211B4 /* icon.png in Resources */,
 				CB264DDF1D70535000A7C028 /* 1_on.png in Resources */,
 				CB3A1C911DABD2C7001EBD9C /* 46.3.png in Resources */,
@@ -1399,6 +1442,7 @@
 				CB264DE01D70535000A7C028 /* 1_off.png in Resources */,
 				CBB8B4061D7D853A00800458 /* 查看详情.png in Resources */,
 				CBEF6CB21D6D8A3600D2B004 /* 记住密码E.png in Resources */,
+				CB47AD6F1F20B98E00343ED9 /* 修改密码_7.20(2).jpg in Resources */,
 				CBEF6CA41D6D505C00D2B004 /* 组-6.png in Resources */,
 				CBEFC2E41D2A146C00B47D52 /* cb_green_off@2x.png in Resources */,
 				CBEFC2E21D2A146C00B47D52 /* cb_glossy_on@2x.png in Resources */,
@@ -1434,6 +1478,7 @@
 				CB6BFB0D1DDD89DC00A524F3 /* Confirm.png in Resources */,
 				CB9AE9921DDC364F00757444 /* log out.png in Resources */,
 				CBEE9F441DE5CBD3006E0271 /* 36-d.jpg in Resources */,
+				EDB8A70924A334CD00EB89E3 /* 肝素帽.png in Resources */,
 				CBB8B3FE1D7D7F5800800458 /* 生成调研问卷.png in Resources */,
 				CBEF6CA81D6D51A400D2B004 /* iconfont-zhuxiao.png in Resources */,
 				CB3A1C8B1DABD2C7001EBD9C /* 46.7.png in Resources */,
@@ -1457,6 +1502,7 @@
 				CB1E6BCA1D9D130400EB4E61 /* 继续答题.png in Resources */,
 				CB3A1C8E1DABD2C7001EBD9C /* 46.2.png in Resources */,
 				CB3A1C841DABD2C7001EBD9C /* 淤青.jpg in Resources */,
+				EDB8A70B24A334CD00EB89E3 /* 分隔膜接头.png in Resources */,
 				CB1EBE031D33660C00025F09 /* RightCell.xib in Resources */,
 				CB1E6BC91D9D130400EB4E61 /* 采血耗材-检测仪器.png in Resources */,
 				CB1E6BC61D9D0AFB00EB4E61 /* TAB3.png in Resources */,
@@ -1465,6 +1511,7 @@
 				CB9AE9931DDC364F00757444 /* refresh.png in Resources */,
 				CB1E6BC41D9D0AFB00EB4E61 /* TAB1.png in Resources */,
 				CBB1B9B31D519AD200F53347 /* down_dark0.png in Resources */,
+				EDB8A70A24A334CD00EB89E3 /* 机械接头.png in Resources */,
 				CBB8B4021D7D7F6500800458 /* icon2.png in Resources */,
 				CBCFB2A71D4619A700344867 /* 72E3F6C7EED69A9B612C2CB4425CBFA8.png in Resources */,
 				CB31B1FB1DAF582300AD7B71 /* 下一页.png in Resources */,
@@ -1506,6 +1553,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3143717F53B28F6A8CC9526B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-login-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3FAF1E596654815F02320753 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1521,21 +1586,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6552B3A7DCF51C32FF15327F /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-login/Pods-login-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9B68B425E9E1D29C58A2A72A /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1545,6 +1595,28 @@
 			);
 			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-login/Pods-login-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5FB86D58F038EA6FD0DA2B3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-login/Pods-login-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1576,6 +1648,7 @@
 				CB901E441DAB9FAD00B78155 /* ZFCircle.m in Sources */,
 				CB3FDA8D1DA2F4F3000F7AD7 /* TwentyThreeViewController.m in Sources */,
 				CB901E3B1DAB9FAD00B78155 /* ZFConst.m in Sources */,
+				EDB8A70524A32E1A00EB89E3 /* TwentyTwo1ViewController.m in Sources */,
 				CBCFB2AA1D4B2B4300344867 /* PPTableViewCell.m in Sources */,
 				CB901E4C1DAB9FAD00B78155 /* ZFRadarChart.m in Sources */,
 				CB901E3A1DAB9FAD00B78155 /* ZFYAxisLine.m in Sources */,
@@ -1605,7 +1678,9 @@
 				CB3A1CA81DACD2B2001EBD9C /* PPTNineViewController.m in Sources */,
 				CB901E3D1DAB9FAD00B78155 /* ZFBar.m in Sources */,
 				CB3FDA461DA24D57000F7AD7 /* tenViewController.m in Sources */,
+				CB50DB4E1F173E8100B01043 /* ChangePwViewController.m in Sources */,
 				CB3FDA8A1DA2F301000F7AD7 /* TwentyTwoViewController.m in Sources */,
+				EDB8A70224A31B1900EB89E3 /* eighteen1ViewController.m in Sources */,
 				CB901E381DAB9FAD00B78155 /* ZFPopoverLabel.m in Sources */,
 				CB901E3F1DAB9FAD00B78155 /* ZFGenericAxis.m in Sources */,
 				CB1E6BCF1DA0A73500EB4E61 /* OnePageViewController.m in Sources */,
@@ -1638,6 +1713,7 @@
 				CB8662A61DA0EEA000ABE339 /* FiveViewController.m in Sources */,
 				CBEFC29E1D24DBAA00B47D52 /* NSCalendar+ST.m in Sources */,
 				CB901E471DAB9FAD00B78155 /* ZFPie.m in Sources */,
+				ED457F0B24A3416400B445E7 /* TwentyTwo2ViewController.m in Sources */,
 				CBEFC2EC1D2A146C00B47D52 /* SSCheckBoxView.m in Sources */,
 				CBEFC2F31D2A2AC100B47D52 /* LMContainsLMComboxScrollView.m in Sources */,
 				CB901E4B1DAB9FAD00B78155 /* ZFRadar.m in Sources */,
@@ -1657,6 +1733,7 @@
 				CB3FDA991DA55ADB000F7AD7 /* TwentySevenViewController.m in Sources */,
 				CB8662A91DA0F90E00ABE339 /* SixViewController.m in Sources */,
 				CB901E341DAB9FAD00B78155 /* UIBezierPath+Zirkfied.m in Sources */,
+				ED0FBF4320BE4A5500274411 /* LXF_OpenUDID.m in Sources */,
 				CB3A1CC01DACE940001EBD9C /* PPTEighteenViewController.m in Sources */,
 				CB3A1CAE1DACDBCB001EBD9C /* PPTTwelveViewController.m in Sources */,
 				CB3FDA841DA2EB3C000F7AD7 /* TwentyViewController.m in Sources */,
@@ -1814,6 +1891,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Banson Exhibition & Event Service Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MUHF44C2Y5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1827,11 +1905,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Bd.bansonevents;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "NEW PAQC ABG ";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -1842,6 +1921,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Banson Exhibition & Event Service Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MUHF44C2Y5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1855,11 +1935,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Bd.bansonevents;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "NEW PAQC ABG ";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

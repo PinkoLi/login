@@ -67,16 +67,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     _chooseArray3=[[NSMutableArray alloc] init];
     
     
-    [_view2 bringSubviewToFront:_text1];
-    [_view2 bringSubviewToFront:_text2];
-    [_view2 bringSubviewToFront:_text3];
-    [_view2 bringSubviewToFront:_text4];
-
-    
-    [_text1 addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [_text2 addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [_text3 addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [_text4 addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -98,7 +88,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         _threeArray=[[NSMutableArray alloc] initWithObjects:@"YES",@"NO",nil];
         
-        _oneArray=[[NSMutableArray alloc] initWithObjects:@"Total number of samples randomly inspected",@"≤15minutes",@"15-30minutes",@"≥30minutes",nil];
+        _oneArray=[[NSMutableArray alloc] initWithObjects:@"≤15minutes",@"15-30minutes",@"≥30minutes",nil];
         [_next setImage:[UIImage imageNamed:@"继续答题英文.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"采血耗材-检测仪器"ofType:@"png"];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
@@ -118,7 +108,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         _threeArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
         
-        _oneArray=[[NSMutableArray alloc] initWithObjects:@"抽查样本总数",@"≤15分钟",@"15-30分钟",@"≥30分钟",nil];
+        _oneArray=[[NSMutableArray alloc] initWithObjects:@"≤15分钟",@"15-30分钟",@"≥30分钟",nil];
         
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"采血耗材-检测仪器"ofType:@"png"];
@@ -144,10 +134,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width + Width_Space+100) + Start_X+100,  page*(Button_Height + Height_Space)+Start_Y-240, Button_Width+250, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width + Width_Space) + Start_X,  page*(Button_Height + Height_Space)+Start_Y-220, Button_Width+250, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_oneArray objectAtIndex:i];
         
         [cb setText:a1];
+        
         
         
         [cb setStateChangedTarget:self selector:@selector(change68:)];
@@ -236,34 +227,47 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
     }
+    
+    
+    [_view2 bringSubviewToFront:_text1];
+    [_view2 bringSubviewToFront:_text2];
+    [_view2 bringSubviewToFront:_text3];
+    [_view2 bringSubviewToFront:_text4];
+    
+    
+    [_text1 addTarget:self action:@selector(textFieldDidChange1:) forControlEvents:UIControlEventEditingChanged];
+    [_text2 addTarget:self action:@selector(textFieldDidChange1:) forControlEvents:UIControlEventEditingChanged];
+    [_text3 addTarget:self action:@selector(textFieldDidChange1:) forControlEvents:UIControlEventEditingChanged];
+    [_text4 addTarget:self action:@selector(textFieldDidChange1:) forControlEvents:UIControlEventEditingChanged];
+
 
 }
 
 
--(void)textFieldDidChange :(UITextField *)theTextField{
-    if (_text1.text.length>0) {
-        
-        
-        for (SSCheckBoxView*cb in _chooseArray1) {
-            
-            if (cb.tag==1) {
-                cb.checked=YES;
-            }
-        }
-    }
-    else{
-        
-        for (SSCheckBoxView*cb in _chooseArray1) {
-            
-            if (cb.tag==1) {
-                cb.checked=NO;
-            }
-        }
-    }
+-(void)textFieldDidChange1 :(UITextField *)theTextField{
+//    if (_text1.text.length>0) {
+//        
+//        
+//        for (SSCheckBoxView*cb in _chooseArray1) {
+//            
+//            if (cb.tag==1) {
+//                cb.checked=YES;
+//            }
+//        }
+//    }
+//    else{
+//        
+//        for (SSCheckBoxView*cb in _chooseArray1) {
+//            
+//            if (cb.tag==1) {
+//                cb.checked=NO;
+//            }
+//        }
+//    }
     if (_text2.text.length>0) {
         for (SSCheckBoxView*cb in _chooseArray1) {
             
-            if (cb.tag==2) {
+            if (cb.tag==1) {
                 cb.checked=YES;
             }
         }
@@ -272,7 +276,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         for (SSCheckBoxView*cb in _chooseArray1) {
             
-            if (cb.tag==2) {
+            if (cb.tag==1) {
                 cb.checked=NO;
             }
         }
@@ -281,7 +285,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (_text3.text.length>0) {
         for (SSCheckBoxView*cb in _chooseArray1) {
             
-            if (cb.tag==3) {
+            if (cb.tag==2) {
                 cb.checked=YES;
             }
         }
@@ -290,7 +294,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         for (SSCheckBoxView*cb in _chooseArray1) {
             
-            if (cb.tag==3) {
+            if (cb.tag==2) {
                 cb.checked=NO;
             }
         }
@@ -299,7 +303,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (_text4.text.length>0) {
         for (SSCheckBoxView*cb in _chooseArray1) {
             
-            if (cb.tag==4) {
+            if (cb.tag==3) {
                 cb.checked=YES;
                 
                 for (SSCheckBoxView*pp in _chooseArray2) {
@@ -316,7 +320,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         for (SSCheckBoxView*cb in _chooseArray1) {
             
-            if (cb.tag==4) {
+            if (cb.tag==3) {
                 cb.checked=NO;
                 
                 for (SSCheckBoxView*pp in _chooseArray2) {
@@ -526,18 +530,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
     if (_a==0) {
-       NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList2"] integerValue]];
+//       NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList2"] integerValue]];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
         
-        
-        _str=[[@"70_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        _str=[[@"70_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     else{
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList2"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList2"] integerValue]];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
         
-        
-        _str=[[@"68_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];    }
+        _str=[[@"68_" stringByAppendingString:date] stringByAppendingString:@".jpg"];    }
     
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -701,16 +709,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         SSCheckBoxView* pp=[_chooseArray1 objectAtIndex:i];
         
-        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray firstObject]])
-        {
-            
-            str2=@"抽查样本总数";
-            str=[[str2 stringByAppendingString:@"("] stringByAppendingString:_text1.text];
-            isok1=1;
-            [Q1 addObject:str];
-            _chooseStr=pp.textLabel.text;
-        }
-        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:1]])
+//        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray firstObject]])
+//        {
+//            
+//            str2=@"抽查样本总数";
+//            str=[[str2 stringByAppendingString:@"("] stringByAppendingString:_text1.text];
+//            isok1=1;
+//            [Q1 addObject:str];
+//            _chooseStr=pp.textLabel.text;
+//        }
+        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:0]])
         {
             
             str2=@"≤15分钟";
@@ -719,7 +727,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [Q1 addObject:str];
             _chooseStr=pp.textLabel.text;
         }
-        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:2]])
+        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:1]])
         {
             
             str2=@"15至30分钟";
@@ -728,7 +736,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [Q1 addObject:str];
             _chooseStr=pp.textLabel.text;
         }
-        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:3]])
+        if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:2]])
         {
             
             str2=@"≥30分钟";
@@ -740,28 +748,29 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
     }
     
+    
     if (isok1==1) {
-        
+//        
+//        if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:0]]) {
+//            if (_text1.text==nil||[_text1.text isEqualToString:@""]) {
+//                isok1=0;
+//                
+//            }
+//        }
         if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:0]]) {
-            if (_text1.text==nil||[_text1.text isEqualToString:@""]) {
-                isok1=0;
-                
-            }
-        }
-        if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:1]]) {
             if (_text2.text==nil||[_text2.text isEqualToString:@""]) {
                 isok1=0;
                 
             }
         }
         
-        if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:2]]) {
+        if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:1]]) {
             if (_text3.text==nil||[_text3.text isEqualToString:@""]) {
                 isok1=0;
                 
             }
         }
-        if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:3]]) {
+        if ([_chooseStr isEqualToString:[_oneArray objectAtIndex:2]]) {
             if (_text4.text==nil||[_text4.text isEqualToString:@""]) {
                 isok1=0;
                 
@@ -803,6 +812,61 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
         }
     }
+    
+    int a=0;
+    
+    for(int i=0;i<[_chooseArray1 count];i++)
+    {
+        
+        SSCheckBoxView* pp=[_chooseArray1 objectAtIndex:i];
+        
+        if (pp.checked==YES&&[pp.textLabel.text isEqualToString:[_oneArray objectAtIndex:2]]) {
+            
+            
+            a=1;
+            
+            for(int i=0;i<[_chooseArray2 count];i++)
+            {
+                
+                SSCheckBoxView* pp2=[_chooseArray2 objectAtIndex:i];
+                
+                if(pp2.checked==1)
+                {
+                    
+                    isok2=1;
+                    
+                    [Q2 addObject:pp2.textLabel.text];
+                    
+                    
+                    
+                }
+            }
+            
+        }
+    }
+    if (a==1) {
+        
+        
+        if (!isok2) {
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            if (![user objectForKey:@"english"]) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请填写完整" message:@"请选择对应的选项" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                [alert show];
+            }else{
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Please complete the form" message:@"Please select the option" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];
+            }
+            
+            return;
+
+        }
+        
+        
+    }
+    
+    
+    
     if (!isok1||!isok3) {
         
         
@@ -819,8 +883,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [alert show];
         }
         
+        
+        
     }
+    
+    
     else{
+        
+        NSString*str2=[[NSString alloc] init];
+        NSString*str=[[NSString alloc] init];
+        
+        str2=@"抽查样本总数";
+                    str=[[str2 stringByAppendingString:@"("] stringByAppendingString:_text1.text];
+        
+                    [Q1 addObject:str];
+        
         
         
         //NSDictionary *q2 =@{@"text":_textLb2.text};

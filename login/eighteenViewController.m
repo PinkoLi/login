@@ -9,12 +9,15 @@
 #import "eighteenViewController.h"
 #import "MBProgressHUD.h"
 #import "SSCheckBoxView.h"
+#import "eighteen1ViewController.h"
 #import "nineteenViewController.h"
 @interface eighteenViewController ()
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn2;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn3;
-@property(nonatomic,strong)nineteenViewController*ninteen;
+@property(nonatomic,strong)eighteen1ViewController*eighteen1;
+@property(nonatomic,strong)eighteen1ViewController*nineteen;
+
 @end
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -466,16 +469,29 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //        
 //        [self.navigationController pushViewController:receive animated:YES];
 
+        if ([[Q2 objectAtIndex:0] isEqualToString:@"是"]) {
+             if (!_nineteen) {
+                       
+                       _nineteen= [self.storyboard instantiateViewControllerWithIdentifier:@"nineteenPage"];
+                   }
+                   
+                   
+                   
+                   [self.navigationController pushViewController:_nineteen animated:YES];
+        }
         
-        if (!_ninteen) {
+        else{
+        
+        
+        if (!_eighteen1) {
             
-            _ninteen= [self.storyboard instantiateViewControllerWithIdentifier:@"nineteenPage"];
+            _eighteen1= [self.storyboard instantiateViewControllerWithIdentifier:@"eighteen1Page"];
         }
         
         
         
-        [self.navigationController pushViewController:_ninteen animated:YES];
+        [self.navigationController pushViewController:_eighteen1 animated:YES];
     }
-    
+    }
 }
 @end

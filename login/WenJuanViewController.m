@@ -61,7 +61,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define Button_Width2 200.0f      // 宽
 
 
-#define URLStr @"http://netkq.webbsn.com/BD/Public/OptionIMG/"
+#define URLStr @"https://paqcabg.chinacloudsites.cn/BD/Public/OptionIMG/"
 @implementation WenJuanViewController
 
 - (void)viewDidLoad {
@@ -102,7 +102,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
  
     
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/main.php/Survey" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/main.php/Survey" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -316,6 +316,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSLog(@"%@",error);
     }];
 
+    
     
     _view1.layer.masksToBounds = YES;
     _view1.layer.cornerRadius = 4.0;

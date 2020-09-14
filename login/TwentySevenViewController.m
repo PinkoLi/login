@@ -35,6 +35,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //    NSUserDefaults *keshi = [NSUserDefaults standardUserDefaults];
 //    _keshi.text=[keshi objectForKey:@"keshi"];
     
+   
+
+    
+    
     _seg.selectedSegmentIndex=1;
     
     _view1.layer.masksToBounds = YES;
@@ -133,6 +137,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [_chooseArray1 addObject:cb];
         [_view2 addSubview:cb];
+        [_view2 addSubview:_text1];
+
         
         
         
@@ -169,6 +175,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [_chooseArray2 addObject:cb];
         [_view2 addSubview:cb];
+        [_view2 addSubview:_text2];
+
         
         
         
@@ -202,6 +210,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _tmpBtn.checked=NO;
     }
     _tmpBtn= cbv;
+    if (cbv.checked==YES&&[cbv.textLabel.text isEqualToString:[_oneArray lastObject]]) {
+           _text1.enabled = YES;
+       }
+       else if (cbv.checked==NO&&[cbv.textLabel.text isEqualToString:[_oneArray lastObject]]){
+           
+           _text1.enabled = NO;
+           _text1.text=@"";
+       }
+       else{
+           
+           _text1.text=@"";
+           
+       }
     
 }
 
@@ -218,7 +239,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //        _tmpBtn2.checked=NO;
 //    }
 //    _tmpBtn2= cbv;
-    
+    if (cbv.checked==YES&&[cbv.textLabel.text isEqualToString:[_twoArray lastObject]]) {
+        _text2.enabled = YES;
+    }
+    else if (cbv.checked==NO&&[cbv.textLabel.text isEqualToString:[_twoArray lastObject]]){
+        
+        _text2.enabled = NO;
+        _text2.text=@"";
+    }
+    else{
+        
+        _text2.text=@"";
+        
+    }
 }
 
 
@@ -286,6 +319,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (IBAction)nextBtn:(id)sender {
     
+    
+    
+    
     int isok1=0;
     int isok2=0;
    
@@ -296,6 +332,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSMutableArray*Q2=[[NSMutableArray alloc] init];
     
      NSString*str=[[NSString alloc] init];
+    NSString*str2=[[NSString alloc] init];
+    NSString*str3=[[NSString alloc] init];
+
     for(int i=0;i<[_chooseArray1 count];i++)
     {
         
@@ -314,6 +353,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             isok1=1;
             [Q1 addObject:pp.textLabel.text];
+            str2=pp.textLabel.text;
             
             
         }
@@ -324,10 +364,18 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             str=[[pp.textLabel.text stringByAppendingString:@"(" ] stringByAppendingString:_text1.text];
             [Q1 addObject:str];
+          str2=pp.textLabel.text;
+
         }
 
     }
-    
+    if (isok1==1) {
+           if ([str2 isEqualToString:[_oneArray lastObject]]) {
+               if (_text1.text==nil||[_text1.text isEqualToString:@""]) {
+                   isok1=0;
+               }
+           }
+       }
     
     
     for(int i=0;i<[_chooseArray2 count];i++)
@@ -349,7 +397,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             isok2=1;
             [Q2 addObject:pp.textLabel.text];
             
-            
+            str3=pp.textLabel.text;
+
         }
         
         else  if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_twoArray lastObject]]) {
@@ -358,9 +407,18 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             str=[[pp.textLabel.text stringByAppendingString:@"(" ] stringByAppendingString:_text2.text];
             [Q2 addObject:str];
+            str3=pp.textLabel.text;
+
         }
 
     }
+    if (isok2==1) {
+           if ([str3 isEqualToString:[_twoArray lastObject]]) {
+               if (_text2.text==nil||[_text2.text isEqualToString:@""]) {
+                   isok2=0;
+               }
+           }
+       }
     
    
     if (!isok1||!isok2) {
@@ -388,7 +446,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSDictionary *q1 =@{@"choose":Q1};
         NSDictionary *q2 =@{@"choose":Q2};
        
-        NSDictionary*num1=@{@"65":q1};
+        NSDictionary*num1=@{@"9":q1};
         NSDictionary*num2=@{@"66":q2};
         
         
@@ -420,7 +478,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             for (NSDictionary*kk in lex) {
                 
-                if ([kk objectForKey:@"65"]) {
+                if ([kk objectForKey:@"9"]) {
                     
                     NSLog(@"%@",kk);
                     

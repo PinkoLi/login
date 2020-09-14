@@ -64,6 +64,8 @@
     _xinXiArr=[[NSMutableArray alloc] init];
     _pianshaoArr=[[NSMutableArray alloc] init];
     _shijianArr=[[NSMutableArray alloc] init];
+    _zongshu=[[NSMutableArray alloc] init];
+
     
     
     
@@ -96,7 +98,7 @@
             
             
             if ([[[[[thisArr2 objectForKey:@"thisArr2"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"67"] objectForKey:@"text1"] ) {
-                [_yangbenArr addObject:[[[[[thisArr2 objectForKey:@"thisArr2"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"67"] objectForKey:@"text1"]];
+                [_yangbenArr addObject:[[[[[thisArr2 objectForKey:@"thisArr2"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"67"] objectForKey:@"text"]];
             }
             
            
@@ -130,6 +132,15 @@
         for (int j=0; j<[[_chooseArr objectAtIndex:i] count]; j++) {
    
         chooseStr=[[_chooseArr objectAtIndex:i] objectAtIndex:j];
+            
+            if([chooseStr rangeOfString:@"抽查样本总数"].location !=NSNotFound)//_roaldSearchText
+                   {
+                       subfixString = [chooseStr substringFromIndex:7];
+                       
+                       [_zongshu addObject:subfixString];
+                       
+                       
+                   }
         
         if([chooseStr rangeOfString:@"不合格样本气泡"].location !=NSNotFound)//_roaldSearchText
         {
@@ -197,7 +208,7 @@
     NSLog(@"%@",_yangbenArr);
     
     
-    NSNumber *sum = [_yangbenArr valueForKeyPath:@"@sum.floatValue"];
+    NSNumber *sum = [_zongshu valueForKeyPath:@"@sum.floatValue"];
     
   
     NSLog(@"%@",sum);

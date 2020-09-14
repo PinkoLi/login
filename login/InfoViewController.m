@@ -13,6 +13,7 @@
 #import "SSCheckBoxView.h"
 #import "WenJuanViewController.h"
 #import "OnePageViewController.h"
+#import "LXF_OpenUDID.h"
 
 #import <QuartzCore/QuartzCore.h>
 @interface InfoViewController ()<UITableViewDelegate,UITableViewDataSource>{
@@ -41,6 +42,8 @@ UITableViewCellEditingStyle _editingStyle;
 @property(nonatomic,assign)NSInteger add;
 @property(nonatomic,assign)NSInteger add2;
 @property(nonatomic,assign)NSInteger add3;
+@property(nonatomic,assign)NSInteger add10;
+
 @property(nonatomic,strong)SSCheckBoxView *cb;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn;
 @property(nonatomic,strong)UITextField*textField;
@@ -55,8 +58,16 @@ UITableViewCellEditingStyle _editingStyle;
     //[self.view setBackgroundColor:[UIColor whiteColor]];
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    
+        [_generateBtn.layer setMasksToBounds:YES];
+        [_generateBtn.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
+         //边框宽度
+        //[_generateBtn.layer setBorderWidth:1.0];
+    
     _thisArr=[[NSMutableArray alloc] init];
   _thisArr2=[[NSMutableArray alloc] init];
+    _ksArr=[[NSMutableArray alloc] init];
+
    
     _qitaArr=[[NSMutableArray alloc] init];
     
@@ -65,7 +76,7 @@ UITableViewCellEditingStyle _editingStyle;
 //            [button setTitle:@"返回" forState:UIControlStateNormal];
 //           [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //            [button addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-//  
+//
 //           self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     
     
@@ -129,9 +140,9 @@ UITableViewCellEditingStyle _editingStyle;
     // 2.恢复默认
     [filter setDefaults];
     // 3.给过滤器添加数据(正则表达式/账号和密码)
-    NSString *dataString = [@"http://netkq.webbsn.com/BD/admin.php/Nurse/index/number/" stringByAppendingString:_numberStr2];
-    NSLog(@"%@",dataString);
-    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+   // NSString *dataString = [@"http://paqcabg.bectondickinson.cn/BD/admin.php/Nurse/index/number/" stringByAppendingString:_numberStr2];
+    //NSLog(@"%@",dataString);
+    NSData *data = [_numberStr2 dataUsingEncoding:NSUTF8StringEncoding];
     [filter setValue:data forKeyPath:@"inputMessage"];
     [filter setValue:@"M" forKey:@"inputCorrectionLevel"];
     // 4.获取输出的二维码
@@ -140,27 +151,51 @@ UITableViewCellEditingStyle _editingStyle;
     _erweimaimg.image = [self createNonInterpolatedUIImageFormCIImage:outputImage withSize:200];
 
     
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters =@{@"number":_numberStr2};
-    NSLog(@"%@",parameters);
     
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/admin.php/Nurse/nursecount" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        //  NSLog(@"%lld", downloadProgress.totalUnitCount);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject );
-        
-        
-        if ([user objectForKey:@"english"]) {
-             _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"copies"];
-        }
-        else{
-        _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"份"];
-        }
-        
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         NSLog(@"%@",error);
-     }];
+    
+    
+    
+    
+//    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+//    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    NSDictionary *parameters =@{@"number":_numberStr2};
+//    NSLog(@"%@",parameters);
+//    
+//    [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/admin.php/Nurse/nursecount" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+//        //  NSLog(@"%lld", downloadProgress.totalUnitCount);
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@",responseObject );
+//        
+//        
+////        if ([user objectForKey:@"english"]) {
+////             _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"copies"];
+////        }
+////        else{
+////        _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"份"];
+////        }
+//        
+//        [user setObject:[responseObject objectForKey:@"0"] forKey:@"nurse"];
+//        [user synchronize];
+//        
+//        
+//     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//         NSLog(@"%@",error);
+//         
+//         if ([user objectForKey:@"nurse"]) {
+//
+//             _hushiText.text=[[user objectForKey:@"nurse"] stringByAppendingString:@"份"];
+//
+//         }
+//         else{
+//
+//             _hushiText.text=[@"0" stringByAppendingString:@"份"];
+//
+//
+//         }
+//         
+//
+//         
+//     }];
     
     
     _chooseArray1=[[NSMutableArray alloc] init];
@@ -215,12 +250,28 @@ UITableViewCellEditingStyle _editingStyle;
     NSArray*arrKeshi=[NSArray arrayWithArray:arr2];
     [keshiArr setObject:arrKeshi forKey:@"keshiArr"];
     [keshiArr synchronize];
+
     
     
-    NSLog(@"%@",arr2);
-    for (int i=0; i<arr2.count; i++) {
+    NSUserDefaults *keshi = [NSUserDefaults standardUserDefaults];
+    NSArray*ksArr=[NSArray new];
+    ksArr=[keshi objectForKey:@"keshi"];
+    
+    NSMutableArray*arr3=[[NSMutableArray alloc] init];
+      arr3=[NSMutableArray arrayWithArray:ksArr];
+    
+
+    if (![ksArr containsObject:@"其他"]) {
+        [arr3 addObject:@"其他"];
+    }
+    ksArr=[NSArray arrayWithArray:arr3];
+    
+   
+    
+    NSLog(@"%@",ksArr);
+    for (int i=0; i<ksArr.count; i++) {
         _cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake(10, 55+i*45, 288, 55) style:kSSCheckBoxViewStyleMono checked:NO];
-         NSString *a3 = [arr2 objectAtIndex:i];
+         NSString *a3 = [ksArr objectAtIndex:i];
         [_cb setText:a3];
         
         
@@ -232,7 +283,7 @@ UITableViewCellEditingStyle _editingStyle;
        NSNumber *number =[NSNumber numberWithInt:i];
        
         [_tagArr addObject:number];
-        if ([[arr2 objectAtIndex:i]isEqualToString:@"其他"]||[[arr2 objectAtIndex:i]isEqualToString:@"Other"]) {
+        if ([[ksArr objectAtIndex:i]isEqualToString:@"其他"]||[[arr3 objectAtIndex:i]isEqualToString:@"Other"]) {
             _textField = [[UITextField alloc] initWithFrame:CGRectMake(125, 62+i*45, 100, 30)];
             // 设置UITextField的样式
             _textField.delegate=self;
@@ -261,7 +312,7 @@ UITableViewCellEditingStyle _editingStyle;
     
     
     NSLog(@"%@",_bianhao);
-   // _bianhao2=[_bianhao copy];
+    _bianhao2=[_bianhao copy];
    
     _mutableArray= [@[@"开始调研"] mutableCopy];
     _mutableArray2=[NSMutableArray arrayWithCapacity:10];
@@ -280,7 +331,9 @@ UITableViewCellEditingStyle _editingStyle;
   
      NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
     [user setInteger:1 forKey:@"int"];
-    //[user removeObjectForKey:@"diaoyan"];
+//    [user removeObjectForKey:@"diaoyan"];
+//    [shiyanshi removeObjectForKey:@"shiyanshi"];
+    
     [user synchronize];
  
     NSLog(@"%@",_zhuangtai);
@@ -291,15 +344,15 @@ UITableViewCellEditingStyle _editingStyle;
     
     
 //    NSLog(@"%@",[[[[user objectForKey:@"wenjuan"]objectAtIndex:0]objectAtIndex:65]valueForKey:@"bianhao"] );
-//    
+//
 //    for (int i=0; i<[[user objectForKey:@"wenjuan"]  count]; i++) {
 //        if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[user objectForKey:@"wenjuan"]objectAtIndex:i]objectAtIndex:65]valueForKey:@"bianhao"]]]) {
-//           
+//
 //            _add++;
 //        }
 //        NSLog(@"%@",[NSString stringWithFormat:@"%@",[[[[user valueForKey:@"wenjuan"]objectAtIndex:i]objectAtIndex:65]valueForKey:@"bianhao"]]);
 //
-//        
+//
 //    }
 //    NSLog(@"add=========%ld",(long)_add);
     //NSString*b=[NSString stringWithFormat:@"%lu",[[user objectForKey:@"diaoyan"] count]];
@@ -311,57 +364,6 @@ UITableViewCellEditingStyle _editingStyle;
     _add2=0;
     _add3=0;
 
-    
-    
-    
-    for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
-        
-        for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-            
-//            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-            
-            if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-                
-                ++_add;
-                
-                //NSLog(@"%@",[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]);
-                
-                [_thisArr addObject:[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]];
-                
-               
-            }
-            
-        }
-        
-    }
-    
-    NSLog(@"%ld",(long)_add);
-   
-   
-    
-    
-    for (int i=0; i<[[shiyanshi objectForKey:@"shiyanshi"]  count]; i++) {
-        
-        for (int j=0; j<[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-            
-            //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-            
-            if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-                
-              ++_add2;
-                
-                //NSLog(@"%@",[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]);
-                
-                [_thisArr2 addObject:[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0]];
-                
-                
-               
-            }
-            
-        }
-        
-    }
-
     NSLog(@"%@",_thisArr2);
    
     NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
@@ -369,6 +371,42 @@ UITableViewCellEditingStyle _editingStyle;
     [photoList setInteger:_add forKey:@"photoList"];
     [photoList setInteger:_add2 forKey:@"photoList2"];
     [photoList synchronize];
+    
+   
+       NSArray*department=[NSArray arrayWithArray: [user objectForKey:@"diaoyan"]];
+       NSArray*laboratory=[NSArray arrayWithArray: [shiyanshi objectForKey:@"shiyanshi"]];
+
+       NSMutableArray*depa=[NSMutableArray new];
+       NSMutableArray*lab=[NSMutableArray new];
+       
+       
+       for (int i=0; i<department.count; i++) {
+           
+          
+               if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                   
+                   NSArray*arr=[department objectAtIndex:i];
+                              [depa addObject:arr];
+                   
+               
+              
+           }
+       }
+       for (int i=0; i<laboratory.count; i++) {
+           
+         
+                if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+               NSArray*arr=[laboratory objectAtIndex:i];
+               [lab addObject:arr];
+                    
+                
+           }
+       }
+       
+           _add=[depa count];
+             _add2=[lab count];
+    
+    
    
     if ([user objectForKey:@"english"]) {
     _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add ] stringByAppendingString:@"copies"];
@@ -391,14 +429,64 @@ UITableViewCellEditingStyle _editingStyle;
     
     
     
-    if (_add==0&&_add2==0) {
+   // if (_add==0&&_add2==0) {
         [self doSomething];
-    }
+        
+    //}
 
     
-   //NSLog(@"%@",[user objectForKey:@"diaoyan"]);
+   NSLog(@"%@",[user objectForKey:@"diaoyan"]);
+    
+    
     
 }
+-(void)loadInfo{
+    
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+      NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
+    NSArray*department=[NSArray arrayWithArray: [user objectForKey:@"diaoyan"]];
+    NSArray*laboratory=[NSArray arrayWithArray: [shiyanshi objectForKey:@"shiyanshi"]];
+
+    NSMutableArray*depa=[NSMutableArray new];
+    NSMutableArray*lab=[NSMutableArray new];
+    
+    
+    for (int i=0; i<department.count; i++) {
+        
+        if ([[[department objectAtIndex:i] objectForKey:@"local"]isEqual:@"0"]) {
+            if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                
+                NSArray*arr=[department objectAtIndex:i];
+                           [depa addObject:arr];
+                
+            }
+           
+        }
+    }
+    for (int i=0; i<laboratory.count; i++) {
+        
+        if ([[[laboratory objectAtIndex:i] objectForKey:@"local"]isEqual:@"0"]) {
+             if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+            NSArray*arr=[laboratory objectAtIndex:i];
+            [lab addObject:arr];
+                 
+             }
+        }
+    }
+    
+        _add=[depa count];
+          _add2=[lab count];
+    
+    
+}
+
+
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -539,11 +627,11 @@ UITableViewCellEditingStyle _editingStyle;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
 
 //    if ([segue.identifier isEqualToString:@"go"]) {
-//    
+//
 //        WenJuanViewController *receive = [segue destinationViewController];
 //        receive.keshiLb=_chooseStr;
 //        NSLog(@"%@",receive.keshiLb);
-//    
+//
 //    }
 
 
@@ -568,539 +656,758 @@ UITableViewCellEditingStyle _editingStyle;
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
-    
-    
-    
+ 
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters =@{@"number":_numberStr2};
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+     [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+    NSDictionary *parameters =@{@"research_id":_research_id};
     //        NSLog(@"%@",_numberStr2);
-    NSLog(@"%@",[user objectForKey:@"diaoyan"]);
+    //NSLog(@"%@",[user objectForKey:@"diaoyan"]);
     
     
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/admin.php/Survey/tongbu" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager POST:[url stringByAppendingString:getResearchInfo] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         //  NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+  
+
         
-        _add=0;
-        NSLog(@"%@",responseObject);
         
+        
+        
+        
+        NSArray*department=[NSArray arrayWithArray: [user objectForKey:@"diaoyan"]];
+        NSArray*laboratory=[NSArray arrayWithArray: [shiyanshi objectForKey:@"shiyanshi"]];
+
+        NSMutableArray*depa=[NSMutableArray new];
+        NSMutableArray*lab=[NSMutableArray new];
+        
+        
+        for (int i=0; i<department.count; i++) {
+            
+            if ([[[department objectAtIndex:i] objectForKey:@"local"]isEqual:@"0"]) {
+                if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                    
+                    NSArray*arr=[department objectAtIndex:i];
+                               [depa addObject:arr];
+                    
+                }
+               
+            }
+        }
+        for (int i=0; i<laboratory.count; i++) {
+            
+            if ([[[laboratory objectAtIndex:i] objectForKey:@"local"]isEqual:@"0"]) {
+                 if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                NSArray*arr=[laboratory objectAtIndex:i];
+                [lab addObject:arr];
+                     
+                 }
+            }
+        }
+        
+        
+        
+        NSMutableArray*allArr=[NSMutableArray new];
+        NSMutableArray*allArr2=[NSMutableArray new];
+        allArr2=[NSMutableArray arrayWithArray:depa];
+        
+                     
+        
+     
+//department数据
+        for (int i=0; i<[[[responseObject objectForKey:@"data"] objectForKey:@"department"]count] ; i++) {
+        
+            
+            //[allArr addObject:dict];
+            NSArray*arr=[[[[responseObject objectForKey:@"data"] objectForKey:@"department"]objectAtIndex:i] objectForKey:@"survey_data"] ;
+
+            
+            NSString*department_txt=[[[[responseObject objectForKey:@"data"] objectForKey:@"department"]objectAtIndex:i] objectForKey:@"department_txt"];
+            NSString*number=[[responseObject objectForKey:@"data"] objectForKey:@"bd_number"] ;
+            NSString*uino=[[[[responseObject objectForKey:@"data"] objectForKey:@"department"]objectAtIndex:i] objectForKey:@"uino"] ;
+
+            
+
+            NSString*local=@"1";
+            NSString*userid=[user objectForKey:@"userid"];
+            NSDictionary*data=@{@"number":number,@"keshi":department_txt,@"uino":uino,@"local":local,@"userid":userid,@"survey_data":arr};
+            
+            [allArr addObject:data];
+            
+            
+            
+        }
+        
+  
+        if (department.count!=0) {
+//            for (int i=0; i<depa.count; i++) {
+//
+//                NSDictionary *obj = depa[i];
+//
+//                if ([[obj objectForKey:@"local"]isEqual:@"1"]) {
+//                    [allArr2 removeObject:obj];
+//                }
+//
+//           }
+            
+            [allArr addObjectsFromArray:allArr2];
+            NSArray*department2=[NSArray arrayWithArray:allArr];
+           //  [user setObject:department2 forKey:@"diaoyan"];
+            
+            
+        }else{
+            NSArray*department2=[NSArray arrayWithArray:allArr];
+         //   [user setObject:department2 forKey:@"diaoyan"];
+            
+            
+        }
         
       
-        NSMutableArray*arr=[[NSMutableArray alloc] initWithArray:responseObject];
-        NSMutableArray*arr2=[[NSMutableArray alloc] init];
-        
-        NSLog(@"%@",arr);
-        
-        
-        
-        for (int i=0; i<arr.count; i++) {
-            
-            for (int j=0; j<[[arr objectAtIndex:i] count]; j++) {
+
+                NSMutableArray*allArr3=[NSMutableArray new];
+                NSMutableArray*allArr4=[NSMutableArray new];
+                allArr4=[NSMutableArray arrayWithArray:lab];
+
+             
+        //laboratory数据
+                for (int i=0; i<[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]count] ; i++) {
                 
-                //NSLog(@"%@",[arr objectAtIndex:i]);
-                // NSLog(@"%@",[[arr objectAtIndex:i] objectAtIndex:j]);
-                
-                
-                for (NSString*key in [[[arr objectAtIndex:i] objectAtIndex:j] allKeys]) {
                     
-                    NSArray* arr3=[[arr objectAtIndex:i] objectAtIndex:j][key];
+                    //[allArr addObject:dict];
+                    NSArray*arr=[[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]objectAtIndex:i] objectForKey:@"survey_data"] ;
+
                     
-                    // NSLog(@"%@",arr3);
+                    NSString*department_txt=[[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]objectAtIndex:i] objectForKey:@"department_txt"];
+                    NSString*number=[[responseObject objectForKey:@"data"] objectForKey:@"bd_number"] ;
+                    NSString*uino=[[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]objectAtIndex:i] objectForKey:@"uino"] ;
+
                     
-                    [arr2 addObject:arr3 ];
+
+                    NSString*local=@"1";
+                    NSString*userid=[user objectForKey:@"userid"];
+                    NSDictionary*data=@{@"number":number,@"keshi":department_txt,@"uino":uino,@"local":local,@"userid":userid,@"survey_data":arr};
+                    
+                    [allArr3 addObject:data];
+                    
+                    
+                    
+                }
+        
+
+          
+                if (laboratory.count!=0) {
+//                    for (int i=0; i<laboratory.count; i++) {
+//
+//                        NSDictionary *obj = laboratory[i];
+//
+//                        if ([[obj objectForKey:@"local"]isEqual:@"1"]) {
+//                            [allArr4 removeObject:obj];
+//                        }
+//
+//                   }
+                    
+                    [allArr3 addObjectsFromArray:allArr4];
+                    
+                    NSArray*department2=[NSArray arrayWithArray:allArr3];
+                     //[shiyanshi setObject:department2 forKey:@"shiyanshi"];
+                    
+                    
+                }else{
+                    NSArray*department2=[NSArray arrayWithArray:allArr3];
+                   // [shiyanshi setObject:department2 forKey:@"shiyanshi"];
+                    
                     
                 }
                 
-                
-            }
-            
-            
-        }
-        NSArray*arr4=[NSArray arrayWithArray:arr2];
-        
-        NSLog(@"%@",arr4);
-        
-        
-       
-        
-        [user setObject:arr4 forKey:@"diaoyan"];
+    
         [user synchronize];
-        
-        NSLog(@"%@",[user objectForKey:@"diaoyan"]);
-        
+        [shiyanshi synchronize];
         
         
-        for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
-            
-            for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-                
-                //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-                
-                
-                
-                if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-                    
-                    ++_add;
-                    
-                    
-                    
-                    
-                }
-                
-            }
-            
-        }
         
-        NSLog(@"%ld",(long)_add);
         
+        _add=[allArr count];
+        _add2=[allArr3 count];
+        NSString*str=[[responseObject objectForKey:@"data"] objectForKey:@"nurse_num"];
+        _add3=[str intValue];
         
         if ([user objectForKey:@"english"]) {
             
              _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add ] stringByAppendingString:@"copies"];
             
+            
         }
         else{
         _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add ] stringByAppendingString:@"份"];
-        
+        _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)_add2 ] stringByAppendingString:@"份"];
+            _hushiText.text=[[NSString stringWithFormat:@"%ld",(long)_add3 ] stringByAppendingString:@"份"];
+                  
+                
         }
         
-   
-        
-        
-        
-        
-        
-        
+ 
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
-    
-    
-    AFHTTPSessionManager *sessionManager2 = [AFHTTPSessionManager manager];
-    sessionManager2.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters2 =@{@"number":_numberStr2};
-    //        NSLog(@"%@",_numberStr2);
-    NSLog(@"%@",[shiyanshi objectForKey:@"shiyanshi"]);
-    
-    [sessionManager2 POST:@"http://netkq.webbsn.com/BD/admin.php/Survey/tongbusys" parameters:parameters2 progress:^(NSProgress * _Nonnull downloadProgress) {
-        //  NSLog(@"%lld", downloadProgress.totalUnitCount);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSLog(@"%@",responseObject);
-      
-        _add2=0;
-        
-//        if (![responseObject containsObject:@"<null>"]) {
-        
-            NSMutableArray*arr=[[NSMutableArray alloc] initWithArray:responseObject];
-            //  [arr removeLastObject];
-            
-            NSMutableArray*arr2=[[NSMutableArray alloc] init];
-            
-            NSLog(@"%@",arr);
-            
-            
-            for (int i=0; i<arr.count; i++) {
-                
-                for (int j=0; j<[[arr objectAtIndex:i] count]; j++) {
-                    
-                    //NSLog(@"%@",[arr objectAtIndex:i]);
-                    // NSLog(@"%@",[[arr objectAtIndex:i] objectAtIndex:j]);
-                    
-                    
-                    for (NSString*key in [[[arr objectAtIndex:i] objectAtIndex:j] allKeys]) {
-                        
-                        NSArray* arr3=[[arr objectAtIndex:i] objectAtIndex:j][key];
-                        
-                        // NSLog(@"%@",arr3);
-                        
-                        [arr2 addObject:arr3 ];
-                        
-                    }
-                    
-                    
-                }
-                
-                
-            }
-            NSArray*arr4=[NSArray arrayWithArray:arr2];
-            
-            [shiyanshi setObject:arr4 forKey:@"shiyanshi"];
-            [shiyanshi synchronize];
-            
-            
-            for (int i=0; i<[[shiyanshi objectForKey:@"shiyanshi"]  count]; i++) {
-                
-                for (int j=0; j<[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-                    
-                    //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-                    
-                    if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-                        
-                        ++_add2;
-                        
-                        
-                        
-                        
-                    }
-                    
-                }
-                
-            }
-        NSLog(@"%ld",(long)_add2);
 
-        
-            //             _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)[[shiyanshi objectForKey:@"shiyanshi"]count] ] stringByAppendingString:@"份"];
-            //
-            //            _add2=[[shiyanshi objectForKey:@"shiyanshi"] count];
-        
-        
-         if ([user objectForKey:@"english"]) {
-            _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)_add2 ] stringByAppendingString:@"copies"];
-             
-         }
-         else{
-         
-            _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)_add2 ] stringByAppendingString:@"份"];
-         }
-       // }
-
-        
-        
-        
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
 
     
 }
 
 
+- (NSString *)shuffledAlphabet {
+    NSString *alphabet = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+    // Get the characters into a C array for efficient shuffling
+    NSUInteger numberOfCharacters = [alphabet length];
+    unichar *characters = calloc(numberOfCharacters, sizeof(unichar));
+    [alphabet getCharacters:characters range:NSMakeRange(0, numberOfCharacters)];
+    
+    // Perform a Fisher-Yates shuffle
+    for (NSUInteger i = 0; i < numberOfCharacters; ++i) {
+        NSUInteger j = (arc4random_uniform(numberOfCharacters - i) + i);
+        unichar c = characters[i];
+        characters[i] = characters[j];
+        characters[j] = c;
+    }
+    
+    // Turn the result back into a string
+    NSString *result = [NSString stringWithCharacters:characters length:numberOfCharacters];
+    free(characters);
+    return result;
+}
+
 - (IBAction)post:(id)sender {
+    
+    
+    
     
     
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
     
-    //[self doSomething];
- 
-    
-// if (![shiyanshi objectForKey:@"shiyanshi"]&&![user objectForKey:@"diaoyan"]) {
- 
-    
-    
-    
-    
-    
+    NSArray*department =[NSArray arrayWithArray:[user objectForKey:@"diaoyan"]];
+    NSArray*laboratory =[NSArray arrayWithArray:[shiyanshi objectForKey:@"shiyanshi"]];
 
+    NSMutableArray*depa=[NSMutableArray new];
+    NSMutableArray*lab=[NSMutableArray new];
     
     
-    
-     // return;
-//}
-    
-    
-
-
-    
-    
-
-//    if (_add==0) {
-//        
-//        
-//        UIColor *color = [UIColor cyanColor];
-//        
-//        _hud = [[MBProgressHUD alloc] initWithView:self.view];
-//        _hud.mode = MBProgressHUDModeText;
-//        
-//        
-//        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//        if (![user objectForKey:@"english"]) {
-//           _hud.labelText = @"您还没有完成至少一份问卷";
-//        }else{
-//            _hud.labelText = @"You have not completed at least one questionnaire";
-//            
-//        }
-//        
-//        
-//        _hud.labelFont = [UIFont systemFontOfSize:17];
-//        _hud.labelColor = color; //设置文本颜色；默认为白色
-//        _hud.detailsLabelText = @"^_^";
-//        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-//        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-//        [self.view addSubview:_hud];
-//        
-//        [_hud showAnimated:YES
-//       whileExecutingBlock:^{
-//           [self taskOfText];
-//       } completionBlock:^{
-//           NSLog(@"showHUDByText 执行完成");
-//       }];
-//        
-//        return;
-//
-//    }
-//    else
-//        
-//        if (_add2==0) {
-//            
-//            
-//            UIColor *color = [UIColor cyanColor];
-//            
-//            _hud = [[MBProgressHUD alloc] initWithView:self.view];
-//            _hud.mode = MBProgressHUDModeText;
-//            
-//            
-//            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//            if (![user objectForKey:@"english"]) {
-//                _hud.labelText = @"您还没有完成至少一份实验室问卷";
-//            }else{
-//                _hud.labelText = @"You have not completed at least one lab questionnaire";
-//                
-//            }
-//            
-//            _hud.labelFont = [UIFont systemFontOfSize:17];
-//            _hud.labelColor = color; //设置文本颜色；默认为白色
-//            _hud.detailsLabelText = @"^_^";
-//            _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-//            _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-//            [self.view addSubview:_hud];
-//            
-//            [_hud showAnimated:YES
-//           whileExecutingBlock:^{
-//               [self taskOfText];
-//           } completionBlock:^{
-//               NSLog(@"showHUDByText 执行完成");
-//           }];
-//            
-//            return;
-//            
-//        }
-    
-//        else{
-    
-            NSLog(@"%@",[user objectForKey:@"shiyanshi"]);
-            
-            
-            NSMutableArray*allArr2=[[NSMutableArray alloc] init];
-            
-            
-            NSMutableArray*bianhaoArray2=[[NSMutableArray alloc]init];
-            for (int i=0; i<[[user objectForKey:@"shiyanshi"]  count]; i++) {
+    for (int i=0; i<department.count; i++) {
+        
+        if ([[[department objectAtIndex:i] objectForKey:@"local"]isEqual:@"0"]) {
+            if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
                 
-                for (int j=0; j<[[[[user objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-                    
-                    //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-                    
-                    
-                    
-                    if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+                NSArray*arr=[department objectAtIndex:i];
+                           [depa addObject:arr];
+                
+            }
+           
+        }
+    }
+    for (int i=0; i<laboratory.count; i++) {
+        
+        if ([[[laboratory objectAtIndex:i] objectForKey:@"local"]isEqual:@"0"]) {
+             if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+            NSArray*arr=[laboratory objectAtIndex:i];
+            [lab addObject:arr];
+                 
+             }
+        }
+    }
+    
+
+    
+    
+    NSDictionary *parameters =@{@"department":depa,@"laboratory":lab,@"userid":[user objectForKey:@"userid"],@"bdnumber":_bianhao};
+
+    
+     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
+    
+                NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                    str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+
+    
+                        NSDictionary *parameters1 =@{@"research_data":str};
+    
+    
+
+    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+       [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+    
+
+      [sessionManager POST:[url stringByAppendingString:syncData] parameters:parameters1 progress:^(NSProgress * _Nonnull downloadProgress) {
+          //  NSLog(@"%lld", downloadProgress.totalUnitCount);
+      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+          
+                     NSLog(@"%@", responseObject);
+          
+          if ([[responseObject objectForKey:@"code"] intValue]==1) {
+
+          
+          NSArray*department =[NSArray arrayWithArray:[user objectForKey:@"diaoyan"]];
+             NSArray*laboratory =[NSArray arrayWithArray:[shiyanshi objectForKey:@"shiyanshi"]];
+          NSMutableArray*depa=[NSMutableArray arrayWithArray:department];
+          NSMutableArray*lab=[NSMutableArray arrayWithArray:laboratory];
+          
+          if (department.count!=0) {
+              for (int i=0; i<department.count; i++) {
                         
-                        [bianhaoArray2 addObject:[[user objectForKey:@"shiyanshi"] objectAtIndex:i] ];
+                  NSDictionary *obj = department[i];
+
+                  if ([[obj objectForKey:@"number"]isEqual:_bianhao]) {
+                      [depa removeObject:obj];
+                  }
+                  
+             }
+          }else{
+              
+              
+              
+          }
+              
+          if (laboratory.count!=0) {
+              for (int i=0; i<laboratory.count; i++) {
                         
-                        
-                        
-                    }
+                  NSDictionary *obj = laboratory[i];
+
+                  if ([[obj objectForKey:@"number"]isEqual:_bianhao]) {
+                      [lab removeObject:obj];
+                  }
+                  
+             }
+          }else{
+              
+              
+              
+          }
+          
+          
+          NSMutableArray*allArr=[NSMutableArray new];
+
+          
+          //department数据
+          for (int i=0; i<[[[responseObject objectForKey:@"data"] objectForKey:@"department"]count] ; i++) {
+          
+              
+              //[allArr addObject:dict];
+              NSArray*arr=[[[[responseObject objectForKey:@"data"] objectForKey:@"department"]objectAtIndex:i] objectForKey:@"survey_data"] ;
+
+              
+              NSString*department_txt=[[[[responseObject objectForKey:@"data"] objectForKey:@"department"]objectAtIndex:i] objectForKey:@"department_txt"];
+              NSString*number=[[responseObject objectForKey:@"data"] objectForKey:@"bd_number"] ;
+              NSString*uino=[[[[responseObject objectForKey:@"data"] objectForKey:@"department"]objectAtIndex:i] objectForKey:@"uino"] ;
+
+              
+
+              NSString*local=@"1";
+              NSString*userid=[user objectForKey:@"userid"];
+              NSDictionary*data=@{@"number":number,@"keshi":department_txt,@"uino":uino,@"local":local,@"userid":userid,@"survey_data":arr};
+              
+              [allArr addObject:data];
+              
+              
+              
+          }
+          
+          if (department.count!=0) {
+                     
+                     [allArr addObjectsFromArray:depa];
+
+                     NSArray*department2=[NSArray arrayWithArray:allArr];
+                      [user setObject:department2 forKey:@"diaoyan"];
+                     
+                     
+                 }else{
+                     NSArray*department2=[NSArray arrayWithArray:allArr];
+                     [user setObject:department2 forKey:@"diaoyan"];
+                     
+                     
+                 }
+              
+              NSMutableArray*depa2=[NSMutableArray new];
+              NSMutableArray*lab2=[NSMutableArray new];
+              
+              
+              for (int i=0; i<department.count; i++) {
+                  
+                      if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                          
+                          NSArray*arr=[department objectAtIndex:i];
+                                     [depa2 addObject:arr];
+                          
+                      
+                     
+                  }
+              }
+             
+          
+          
+          
+          //laboratory数据
+          
+          NSMutableArray*allArr2=[NSMutableArray new];
+
+                         for (int i=0; i<[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]count] ; i++) {
+                         
+                             
+                             //[allArr addObject:dict];
+                             NSArray*arr=[[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]objectAtIndex:i] objectForKey:@"survey_data"] ;
+
+                             
+                             NSString*department_txt=[[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]objectAtIndex:i] objectForKey:@"department_txt"];
+                             NSString*number=[[responseObject objectForKey:@"data"] objectForKey:@"bd_number"] ;
+                             NSString*uino=[[[[responseObject objectForKey:@"data"] objectForKey:@"laboratory"]objectAtIndex:i] objectForKey:@"uino"] ;
+
+                             
+
+                             NSString*local=@"1";
+                             NSString*userid=[user objectForKey:@"userid"];
+                             NSDictionary*data=@{@"number":number,@"keshi":department_txt,@"uino":uino,@"local":local,@"userid":userid,@"survey_data":arr};
+                             
+                             [allArr2 addObject:data];
+                             
+                             
+                             
+                         }
+                   
+                          if (laboratory.count!=0) {
+                                            
+                    [allArr2 addObjectsFromArray:lab];
+
+                    NSArray*department2=[NSArray arrayWithArray:allArr2];
+                     [shiyanshi setObject:department2 forKey:@"shiyanshi"];
+                    
+                    
+                }else{
+                    NSArray*department2=[NSArray arrayWithArray:allArr2];
+                    [shiyanshi setObject:department2 forKey:@"shiyanshi"];
+                    
                     
                 }
-                
-            }
-            
-            NSLog(@"%@",bianhaoArray2);
-            
-            
-            
-            
-            
-            
-            
-            NSEnumerator *enumerator = [bianhaoArray2 reverseObjectEnumerator];
-            
-            NSArray*array=[[NSArray alloc] initWithArray:[enumerator allObjects]];
-            NSLog(@"%@",[enumerator allObjects]);
-            
-            int i=0;
-            
-            
-            for (NSArray*arr in array) {
-                
-                NSDictionary*dict=@{[NSString stringWithFormat:@"%d",++i]:arr};
-                
-                [allArr2 addObject:dict];
-                
-            }
-            NSLog(@"%@",allArr2);
-            
-            
-            
-            AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-            sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-            sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
-            
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allArr2 options:NSJSONWritingPrettyPrinted error:nil];
-            
-            NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            NSMutableDictionary *params = [NSMutableDictionary dictionary];
-            //        NSDictionary *parameters=[[NSDictionary alloc]init];
-            //        [parameters setValue:[NSString JSONStringWithNSDictionary:self.orderModel.cartCids] forKey:@"cids"];
-            //    NSDictionary *parameters2=@{@"1":[user objectForKey:@"wenjuan"][0],@"2":[user objectForKey:@"wenjuan"][1],@"3":[user objectForKey:@"wenjuan"][2],@"4":[user objectForKey:@"wenjuan"][3],@"5":[user objectForKey:@"wenjuan"][4]};
-            
-            params[@"wenjuan"] = str;
-            
-            NSLog(@"%@",params[@"wenjuan"]);
-            
-            
-            
-            [sessionManager POST:@"http://netkq.webbsn.com/BD/main.php/AcceptData/sys" parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-                NSLog(@"%lld", downloadProgress.totalUnitCount);
-            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                NSLog(@"%@", responseObject);
-                
-                
-                
-                
-                
-                
-                
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              for (int i=0; i<laboratory.count; i++) {
+                               
+                              
+                                    if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                                   NSArray*arr=[laboratory objectAtIndex:i];
+                                   [lab2 addObject:arr];
+                                        
+                                    
+                               }
+                           }
+          
+          
+          
+          
+          
+          
+          _add=[depa2 count];
+                 _add2=[lab2 count];
+                 NSString*str=[[responseObject objectForKey:@"data"] objectForKey:@"nurse_num"];
+                 _add3=[str intValue];
+          
+          if ([user objectForKey:@"english"]) {
+              
+               _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add ] stringByAppendingString:@"copies"];
+              
+              
+          }
+          else{
+          _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add ] stringByAppendingString:@"份"];
+          _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)_add2 ] stringByAppendingString:@"份"];
+              _hushiText.text=[[NSString stringWithFormat:@"%ld",(long)_add3 ] stringByAppendingString:@"份"];
+                    
+                  
+          }
+             
+              
+              UIColor *color = [UIColor cyanColor];
+                             
+                             _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                             _hud.mode = MBProgressHUDModeText;
+                             if ([user objectForKey:@"english"]) {
+                                 
+                                 _hud.labelText = @"Password or email address does not match";
+                                 
+                             }else{
+                                 _hud.labelText = [responseObject objectForKey:@"msg"];
+                             }
+                             
+                             _hud.labelFont = [UIFont systemFontOfSize:17];
+                             _hud.labelColor = color; //设置文本颜色；默认为白色
+                             _hud.detailsLabelText = @"^_^";
+                             _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                             _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                             [self.view addSubview:_hud];
+                             
+                             [_hud showAnimated:YES
+                            whileExecutingBlock:^{
+                                [self taskOfText];
+                            } completionBlock:^{
+                                NSLog(@"showHUDByText 执行完成");
+                            }];
+              
+              
+              
+          }
+          else{
+              
+              
+              UIColor *color = [UIColor cyanColor];
+                             
+                             _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                             _hud.mode = MBProgressHUDModeText;
+                             if ([user objectForKey:@"english"]) {
+                                 
+                                 _hud.labelText = @"Password or email address does not match";
+                                 
+                             }else{
+                                 _hud.labelText = [responseObject objectForKey:@"msg"];
+                             }
+                             
+                             _hud.labelFont = [UIFont systemFontOfSize:17];
+                             _hud.labelColor = color; //设置文本颜色；默认为白色
+                             _hud.detailsLabelText = @"^_^";
+                             _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                             _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                             [self.view addSubview:_hud];
+                             
+                             [_hud showAnimated:YES
+                            whileExecutingBlock:^{
+                                [self taskOfText];
+                            } completionBlock:^{
+                                NSLog(@"showHUDByText 执行完成");
+                            }];
+              
+              
+          }
+          
+          
+
+    
+
+      
+      
+      
+      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"%@",error);
                 
-                
+                UIColor *color = [UIColor cyanColor];
+                 
+                 _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                 _hud.mode = MBProgressHUDModeText;
+                 if ([user objectForKey:@"english"]) {
+                     
+                     _hud.labelText = @"Password or email address does not match";
+                     
+                 }else{
+                     _hud.labelText = @"请连接网络后重试";
+                 }
+                 
+                 _hud.labelFont = [UIFont systemFontOfSize:17];
+                 _hud.labelColor = color; //设置文本颜色；默认为白色
+                 _hud.detailsLabelText = @"^_^";
+                 _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                 _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                 [self.view addSubview:_hud];
+                 
+                 [_hud showAnimated:YES
+                whileExecutingBlock:^{
+                    [self taskOfText];
+                } completionBlock:^{
+                    NSLog(@"showHUDByText 执行完成");
+                }];
                 
             }];
             
         
 
         
-        
-         _allArr=[[NSMutableArray alloc] init];
-            
-            NSMutableArray*bianhaoArray=[[NSMutableArray alloc]init];
-            for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
-                
-                for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-                    
-                    //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-                    
-                    
-                    
-                    if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-                        
-                        [bianhaoArray addObject:[[user objectForKey:@"diaoyan"] objectAtIndex:i] ];
-                        
-                        
-                        
-                    }
-                    
-                }
-                
-            }
-
-            NSLog(@"%@",bianhaoArray);
-            
-            
-       
-        
-        NSEnumerator *enumerator2 = [bianhaoArray reverseObjectEnumerator];
-        
-          NSArray*array2=[[NSArray alloc] initWithArray:[enumerator2 allObjects]];
-        NSLog(@"%@",[enumerator2 allObjects]);
-        
-        
-        
-        int a=0;
-        
-        
-        for (NSArray*arr in array2) {
-           
-            NSDictionary*dict=@{[NSString stringWithFormat:@"%d",++a]:arr};
-            
-            [_allArr addObject:dict];
-            
-        }
-        NSLog(@"%@",_allArr);
-        
-        
-        
-    AFHTTPSessionManager *sessionManager2 = [AFHTTPSessionManager manager];
-    sessionManager2.responseSerializer = [AFHTTPResponseSerializer serializer];
-    sessionManager2.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
-
-        NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:_allArr options:NSJSONWritingPrettyPrinted error:nil];
-        
-        NSString *str2 = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
-  NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
-//        NSDictionary *parameters=[[NSDictionary alloc]init];
-//        [parameters setValue:[NSString JSONStringWithNSDictionary:self.orderModel.cartCids] forKey:@"cids"];
-//    NSDictionary *parameters2=@{@"1":[user objectForKey:@"wenjuan"][0],@"2":[user objectForKey:@"wenjuan"][1],@"3":[user objectForKey:@"wenjuan"][2],@"4":[user objectForKey:@"wenjuan"][3],@"5":[user objectForKey:@"wenjuan"][4]};
-      
-       params2[@"wenjuan"] = str2;
-        
-        
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/main.php/AcceptData" parameters:params2 progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"%lld", downloadProgress.totalUnitCount);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
-        
-        
-        
-        
-        UIColor *color = [UIColor cyanColor];
-        
-        _hud = [[MBProgressHUD alloc] initWithView:self.view];
-        _hud.mode = MBProgressHUDModeText;
-        
-        
-        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-        if (![user objectForKey:@"english"]) {
-            _hud.labelText = @"上传/同步成功";
-        }else{
-            _hud.labelText = @"uploaded";
-            
-        }
-        
-        _hud.labelFont = [UIFont systemFontOfSize:17];
-        _hud.labelColor = color; //设置文本颜色；默认为白色
-        _hud.detailsLabelText = @"^_^";
-        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-        [self.view addSubview:_hud];
-        
-        [_hud showAnimated:YES
-       whileExecutingBlock:^{
-           [self taskOfText];
-       } completionBlock:^{
-           NSLog(@"showHUDByText 执行完成");
-       }];
-        
-       
-        [self doSomething];
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
-
-    
-            
-            
-          
-            
-            
-//}
-    
-
     
     
-    
-    
-    
-    [self photo];
+//         _allArr=[[NSMutableArray alloc] init];
+//
+//            NSMutableArray*bianhaoArray=[[NSMutableArray alloc]init];
+//            for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
+//
+//                for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
+//
+//                    //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
+//
+//
+//
+//                    if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+//
+//                        [bianhaoArray addObject:[[user objectForKey:@"diaoyan"] objectAtIndex:i] ];
+//
+//
+//
+//                    }
+//
+//                }
+//
+//            }
+//
+//            NSLog(@"%@",bianhaoArray);
+//
+//
+//
+//
+//        NSEnumerator *enumerator2 = [bianhaoArray reverseObjectEnumerator];
+//
+//          NSArray*array2=[[NSArray alloc] initWithArray:[enumerator2 allObjects]];
+//        NSLog(@"%@",[enumerator2 allObjects]);
+//
+//
+//
+//       // int a=0;
+//
+//
+//
+//
+//        for (NSArray*arr in array2) {
+//
+//             NSString*b=[self shuffledAlphabet];
+//
+//            NSDictionary*dict=@{[NSString stringWithFormat:@"%@",b]:arr};
+//
+//            [_allArr addObject:dict];
+//
+//        }
+//        NSLog(@"%@",_allArr);
+//
+        
+        
+//    AFHTTPSessionManager *sessionManager2 = [AFHTTPSessionManager manager];
+//    sessionManager2.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    sessionManager2.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
+//
+//        NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:_allArr options:NSJSONWritingPrettyPrinted error:nil];
+//
+//        NSString *str2 = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
+//  NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
+////        NSDictionary *parameters=[[NSDictionary alloc]init];
+////        [parameters setValue:[NSString JSONStringWithNSDictionary:self.orderModel.cartCids] forKey:@"cids"];
+////    NSDictionary *parameters2=@{@"1":[user objectForKey:@"wenjuan"][0],@"2":[user objectForKey:@"wenjuan"][1],@"3":[user objectForKey:@"wenjuan"][2],@"4":[user objectForKey:@"wenjuan"][3],@"5":[user objectForKey:@"wenjuan"][4]};
+//
+//       params2[@"wenjuan"] = str2;
+//
+//
+//    [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/main.php/AcceptData" parameters:params2 progress:^(NSProgress * _Nonnull downloadProgress) {
+//        NSLog(@"%lld", downloadProgress.totalUnitCount);
+//
+//
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@", responseObject);
+//
+//
+//
+//
+//        UIColor *color = [UIColor cyanColor];
+//
+//        _hud = [[MBProgressHUD alloc] initWithView:self.view];
+//        _hud.mode = MBProgressHUDModeText;
+//
+//
+//        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//        if (![user objectForKey:@"english"]) {
+//            _hud.labelText = @"上传/同步成功";
+//        }else{
+//            _hud.labelText = @"uploaded";
+//
+//        }
+//
+////        _hud.labelFont = [UIFont systemFontOfSize:17];
+////        _hud.labelColor = color; //设置文本颜色；默认为白色
+////        _hud.detailsLabelText = @"^_^";
+////        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+////        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+////        [self.view addSubview:_hud];
+////
+////        [_hud showAnimated:YES
+////       whileExecutingBlock:^{
+////           [self taskOfText];
+////       } completionBlock:^{
+////           NSLog(@"showHUDByText 执行完成");
+////       }];
+//
+//
+//        AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+//        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//        NSDictionary *parameters =@{@"number":_numberStr2};
+//        NSLog(@"%@",parameters);
+//
+//        [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/admin.php/Nurse/nursecount" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+//            //  NSLog(@"%lld", downloadProgress.totalUnitCount);
+//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//            NSLog(@"%@",responseObject );
+//
+//            //        _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"份"];
+//            if ([user objectForKey:@"english"]) {
+//                _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"copies"];
+//            }
+//            else{
+//                _hushiText.text=[[responseObject objectForKey:@"0"] stringByAppendingString:@"份"];
+//            }
+//
+//            [user setObject:[responseObject objectForKey:@"0"] forKey:@"nurse"];
+//            [user synchronize];
+//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//            NSLog(@"%@",error);
+//
+//            if ([user objectForKey:@"nurse"]) {
+//
+//                _hushiText.text=[[user objectForKey:@"nurse"] stringByAppendingString:@"份"];
+//
+//            }
+//            else{
+//
+//                _hushiText.text=[@"0" stringByAppendingString:@"份"];
+//
+//
+//            }
+//        }];
+//
+//
+//
+//
+//        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:_hud.labelText message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alertview show];
+//
+//
+//
+//         [self doSomething];
+//
+//
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"%@",error);
+//
+//
+//
+//
+//        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"同步失败,请重试" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alertview show];
+//
+//    }];
+//
+//
+//
+//
+//
+//
+//
+////}
+//
+//
+//
+//
+//
+//
+//
+//    [self photo];
     
     
 }
@@ -1117,24 +1424,24 @@ UITableViewCellEditingStyle _editingStyle;
         
         
 //        for (int i=0; i<[[thisArr objectForKey:@"thisArr"] count]; i++) {
-//            
-//            
-//            
+//
+//
+//
 //            for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
-//                
-//                
+//
+//
 //                if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]) {
-//                    
+//
 //                    [_qitaArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]];
-//                    
-//                    
+//
+//
 //                }
-//                
-//                
-//                
-//                
-//                
-//                
+//
+//
+//
+//
+//
+//
 //            }
 //        }
         
@@ -1143,98 +1450,165 @@ UITableViewCellEditingStyle _editingStyle;
        
         
 //        NSMutableArray *discardedItems = [NSMutableArray array];
-//        
+//
 //        for (NSString*kk in _qitaArr) {
-//            
+//
 //            if ([kk isEqualToString:@"Anaesthesia"]||[kk isEqualToString:@"重症"]||[kk isEqualToString:@"ICU"]||[kk isEqualToString:@"急症"]||[kk isEqualToString:@"Emergency"]||[kk isEqualToString:@"呼吸"]||[kk isEqualToString:@"Respiratory"]||[kk isEqualToString:@"麻醉"]) {
-//                
+//
 //                NSLog(@"%@",kk);
-//                
+//
 //                [discardedItems addObject:kk];
-//                
+//
 //            }
-//            
-//            
-//            
-//            
-//            
+//
+//
+//
+//
+//
 //        }
-//        
+//
 //        [_qitaArr removeObjectsInArray:discardedItems];
-//        
-//     
-//        
-//        
-//        
-//        
+//
+//
+//
+//
+//
+//
 //        NSUserDefaults *keshiArr = [NSUserDefaults standardUserDefaults];
 //        NSArray*arrKeshi=[NSArray arrayWithArray:[keshiArr objectForKey:@"keshiArr"]];
 //        [_qitaArr addObjectsFromArray:arrKeshi];
 //        NSLog(@"%@",_qitaArr);
 //        NSArray*arrKeshi2=[NSArray arrayWithArray:_qitaArr];
-//        
+//
 //        [keshiArr setObject:arrKeshi2 forKey:@"keshiArr"];
 //        [keshiArr synchronize];
         
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
+        NSUserDefaults *keshiArr = [NSUserDefaults standardUserDefaults];
+
         
-        NSLog(@"%@",[user objectForKey:@"diaoyan"]);
-        
+            
+        NSArray*department=[NSArray arrayWithArray: [user objectForKey:@"diaoyan"]];
+        NSArray*laboratory=[NSArray arrayWithArray: [shiyanshi objectForKey:@"shiyanshi"]];
+
        
         [_thisArr removeAllObjects];
         [_thisArr2 removeAllObjects];
+        [_ksArr removeAllObjects];
+
        
             
         
-        
-        for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
-            
-            for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-                
-                //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-                
-                if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+        //department数据
+                 for (int i=0; i<[department count] ; i++) {
+                 
+                     
+                     //[allArr addObject:dict];
+
+                   if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                         
+                         NSArray*arr=[[department objectAtIndex:i] objectForKey:@"survey_data"];
+                        [_thisArr addObject:arr];
+                         
+                     }
+
+                     
+                     
+                 }
+        //laboratory数据
+                        for (int i=0; i<[laboratory count] ; i++) {
+                        
+                            
+                            //[allArr addObject:dict];
+
+              if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
                     
-                  
-                    
-                    //NSLog(@"%@",[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]);
-                    
-                    [_thisArr addObject:[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]];
-                    
-                    
-                }
-                
-            }
-            
-        }
-        
-     
-        
-        
-        
-        
-        for (int i=0; i<[[shiyanshi objectForKey:@"shiyanshi"]  count]; i++) {
-            
-            for (int j=0; j<[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-                
-                //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-                
-                if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-                    
-              
-                    
-                    //NSLog(@"%@",[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]);
-                    
-                    [_thisArr2 addObject:[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0]];
-                    
-                    
+                    NSArray*arr=[[laboratory objectAtIndex:i] objectForKey:@"survey_data"];
+                   [_thisArr2 addObject:arr];
                     
                 }
-                
-            }
-            
+
+  }
+        //科室数据
+                              for (int i=0; i<[department count] ; i++) {
+                              
+                                  
+                                  //[allArr addObject:dict];
+
+                    if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                          
+                          NSArray*arr=[[department objectAtIndex:i] objectForKey:@"keshi"];
+                         [_ksArr addObject:arr];
+                          
+                      }
+
         }
+        for (int i=0; i<[laboratory count] ; i++) {
+                              
+                                  
+                                  //[allArr addObject:dict];
+
+                    if ([[[laboratory objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
+                          
+                          NSArray*arr=[[laboratory objectAtIndex:i] objectForKey:@"keshi"];
+                         [_ksArr addObject:arr];
+                          
+                      }
+
+        }
+        
+        
+//
+//
+//
+//        for (int i=0; i<[department count]; i++) {
+//
+//            for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
+//
+//                //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
+//
+//                if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+//
+//
+//
+//                    //NSLog(@"%@",[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]);
+//
+//                    [_thisArr addObject:[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]];
+//
+//
+//                }
+//
+//            }
+//
+//        }
+//
+//
+//
+//
+//
+//
+//        for (int i=0; i<[[shiyanshi objectForKey:@"shiyanshi"]  count]; i++) {
+//
+//            for (int j=0; j<[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
+//
+//                //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
+//
+//                if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+//
+//
+//
+//                    //NSLog(@"%@",[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]);
+//
+//                    [_thisArr2 addObject:[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0]];
+//
+//
+//
+//                }
+//
+//            }
+//
+//        }
             
             
 
@@ -1249,6 +1623,11 @@ UITableViewCellEditingStyle _editingStyle;
         NSArray*arr2=[NSArray arrayWithArray:_thisArr2];
         [thisArr2 setObject:arr2 forKey:@"thisArr2"];
         [thisArr2 synchronize];
+        
+        NSArray*arr3=[NSArray arrayWithArray:_ksArr];
+       [keshiArr setObject:arr3 forKey:@"keshiArr"];
+       [keshiArr synchronize];
+        
 
         [time setObject:_startStr forKey:@"time"];
         [time synchronize];
@@ -1314,11 +1693,12 @@ UITableViewCellEditingStyle _editingStyle;
     int isok1=0;
     int isok2=0;
     
+    NSLog(@"%@",_zhuangtai);
     
     
     if ([_zhuangtai isEqualToString:@"结束"]||[_zhuangtai isEqualToString:@"已过期"]) {
         
-        if ([_diaoyanrenyuan isEqualToString:@"2"]) {
+        if ([_diaoyanrenyuan intValue]==0) {
             
             isok2=1;
         }
@@ -1372,7 +1752,7 @@ UITableViewCellEditingStyle _editingStyle;
         //NSLog(@"%@",);
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         if (![user objectForKey:@"english"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"调研已结束" message:@"" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"调研已过期或结束" message:@"" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
             [alert show];
         }else{
             
@@ -1390,7 +1770,7 @@ UITableViewCellEditingStyle _editingStyle;
     else{
         
         
-        [self post:sender];
+      //  [self post:sender];
         
         
         
@@ -1424,69 +1804,68 @@ UITableViewCellEditingStyle _editingStyle;
         
         
         NSLog(@"%@",[user objectForKey:@"diaoyan"]);
+        NSArray*arr11=[[NSMutableArray alloc] init];
+        arr11=[user objectForKey:@"diaoyan"];
+        
+        NSArray*department=[NSArray arrayWithArray: [user objectForKey:@"diaoyan"]];
+
+        NSMutableArray*depa=[NSMutableArray new];
         
         
-        
-        NSMutableArray*arr11=[[NSMutableArray alloc] init];
-        NSMutableArray*arr12=[[NSMutableArray alloc] init];
-        
-        for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
+        for (int i=0; i<department.count; i++) {
             
-            for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-            
-            
-                if ([_numberStr2 isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+          
+                if ([[[department objectAtIndex:i] objectForKey:@"number"]isEqual:_bianhao]) {
                     
-                    [arr11 addObject:[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]];
+                    NSArray*arr=[department objectAtIndex:i];
+                               [depa addObject:arr];
                     
-                }
                 
+               
+            }
+        }
+        
+        
+        
+        _add3=0;
+        
+        for (NSDictionary*str in depa) {
             
+            if ([_chooseStr isEqualToString:[str objectForKey:@"keshi"]]) {
+                ++_add3;
             }
             
         }
+
         
-        _add3=0;
+        
+        
+        
+        
+        NSMutableArray*arr12=[[NSMutableArray alloc] init];
+        
+//        for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
+//
+//            for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
+//
+//
+//                if ([_numberStr2 isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
+//
+//                    [arr11 addObject:[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0]];
+//
+//                }
+//
+//
+//            }
+//
+//        }
+        
+        
         
         NSLog(@"%@",_chooseStr);
         
        
-        
-       
-        
-        for (int i=0; i<[arr11 count]; i++) {
-            
-            
-            
-            for (int j=0; j<[[arr11 objectAtIndex:i]  count]; j++) {
-                
-                if ([[[[arr11 objectAtIndex:i]  objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]) {
-                    [arr12 addObject:[[[[arr11 objectAtIndex:i]  objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]];
-                }
-                
-//                [arr12 addObject:[[[[arr11 objectAtIndex:i]  objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]];
-                
-                
-//                if ([_chooseStr isEqualToString:[NSString stringWithFormat:@"%@",[[[[arr11 objectAtIndex:i]  objectAtIndex:j] objectForKey:@"keshi"] objectForKey:@"keshi"]]]) {
-//                    
-//                    ++_add3;
-//                    
-                  
-//
-//                    
-//                   
-//                    
-//                     
-//                 }
-                
-            }
-            
-        }
-        
-//        
-//            Department ICU Emergency Anesthesiology Respiratory  Other
-//        
-//         _oneArray=[[NSMutableArray alloc] initWithObjects:@"检验科",@"重症",@"急诊",@"呼吸",@"麻醉",@"其他",nil];
+
         
         
         
@@ -1586,7 +1965,7 @@ UITableViewCellEditingStyle _editingStyle;
     
     //[self viewDidLoad];
    // [super viewWillAppear:animated];
-     NSString *dataString = [@"http://netkq.webbsn.com/BD/admin.php/Nurse/index/number/" stringByAppendingString:_numberStr2];
+     NSString *dataString = [@"https://paqcabg.chinacloudsites.cn/BD/admin.php/Nurse/index/number/" stringByAppendingString:_numberStr2];
     NSLog(@"hhhhhhhhhhhh");
     _add3=0;
    
@@ -1598,12 +1977,12 @@ UITableViewCellEditingStyle _editingStyle;
 //    NSLog(@"%@",_bianhao);
 //    for (int i=0; i<[[user objectForKey:@"wenjuan"]  count]; i++) {
 //        if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[user objectForKey:@"wenjuan"]objectAtIndex:i]objectAtIndex:65]valueForKey:@"bianhao"]]]) {
-//            
+//
 //            _add2++;
 //        }
 //        //        NSLog(@"%@",[NSString stringWithFormat:@"%@",[[[user objectForKey:@"wenjuan"] valueForKey:@"bianhao"] objectAtIndex:i]]);
-//        
-//        
+//
+//
 //    }
 //    NSLog(@"add=========%ld",(long)_add2);
 //    _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add2] stringByAppendingString:@"份"];
@@ -1618,203 +1997,7 @@ UITableViewCellEditingStyle _editingStyle;
     
     
     
-    
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
-//
-//    if (![shiyanshi objectForKey:@"shiyanshi"]&&![user objectForKey:@"diaoyan"]) {
-//        
-//        AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-//        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//        NSDictionary *parameters =@{@"number":_numberStr2};
-//        //        NSLog(@"%@",_numberStr2);
-//        NSLog(@"%@",[user objectForKey:@"diaoyan"]);
-//        
-//        
-//        [sessionManager POST:@"http://netkq.webbsn.com/BD/admin.php/Survey/tongbu" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-//            //  NSLog(@"%lld", downloadProgress.totalUnitCount);
-//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            NSLog(@"%@",responseObject);
-//            
-//            NSMutableArray*arr=[[NSMutableArray alloc] initWithArray:responseObject];
-//            NSMutableArray*arr2=[[NSMutableArray alloc] init];
-//            for (int i=0; i<arr.count; i++) {
-//                
-//                for (int j=0; j<[[arr objectAtIndex:i] count]; j++) {
-//                    
-//                    //NSLog(@"%@",[arr objectAtIndex:i]);
-//                    // NSLog(@"%@",[[arr objectAtIndex:i] objectAtIndex:j]);
-//                    
-//                    
-//                    for (NSString*key in [[[arr objectAtIndex:i] objectAtIndex:j] allKeys]) {
-//                        
-//                        NSArray* arr3=[[arr objectAtIndex:i] objectAtIndex:j][key];
-//                        
-//                        // NSLog(@"%@",arr3);
-//                        
-//                        [arr2 addObject:arr3 ];
-//                        
-//                    }
-//                    
-//                    
-//                }
-//                
-//                
-//            }
-//            NSArray*arr4=[NSArray arrayWithArray:arr2];
-//            
-//            [user setObject:arr4 forKey:@"diaoyan"];
-//            [user synchronize];
-//            
-//            
-//            for (int i=0; i<[[user objectForKey:@"diaoyan"]  count]; i++) {
-//                
-//                for (int j=0; j<[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-//                    
-//                    //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-//                    
-//                    if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-//                        
-//                        ++_add;
-//                        
-//                        
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
-//            _fen.text=[[NSString stringWithFormat:@"%ld",(long)_add ] stringByAppendingString:@"份"];
-//            
-//            
-//            
-//            NSLog(@"%ld",(long)[[user objectForKey:@"diaoyan"] count]);
-//            NSLog(@"%ld",(long)[[shiyanshi objectForKey:@"shiyanshi"] count]);
-//            
-//            
-//            
-//            
-//            
-//            
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"%@",error);
-//        }];
-//        
-//        
-//        AFHTTPSessionManager *sessionManager2 = [AFHTTPSessionManager manager];
-//        sessionManager2.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//        NSDictionary *parameters2 =@{@"number":_numberStr2};
-//        //        NSLog(@"%@",_numberStr2);
-//        NSLog(@"%@",[shiyanshi objectForKey:@"shiyanshi"]);
-//        
-//        [sessionManager POST:@"http://netkq.webbsn.com/BD/admin.php/Survey/tongbusys" parameters:parameters2 progress:^(NSProgress * _Nonnull downloadProgress) {
-//            //  NSLog(@"%lld", downloadProgress.totalUnitCount);
-//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            // NSLog(@"%@",responseObject);
-//            NSMutableArray*arr=[[NSMutableArray alloc] initWithArray:responseObject];
-//            NSMutableArray*arr2=[[NSMutableArray alloc] init];
-//            for (int i=0; i<arr.count; i++) {
-//                
-//                for (int j=0; j<[[arr objectAtIndex:i] count]; j++) {
-//                    
-//                    //NSLog(@"%@",[arr objectAtIndex:i]);
-//                    // NSLog(@"%@",[[arr objectAtIndex:i] objectAtIndex:j]);
-//                    
-//                    
-//                    for (NSString*key in [[[arr objectAtIndex:i] objectAtIndex:j] allKeys]) {
-//                        
-//                        NSArray* arr3=[[arr objectAtIndex:i] objectAtIndex:j][key];
-//                        
-//                        // NSLog(@"%@",arr3);
-//                        
-//                        [arr2 addObject:arr3 ];
-//                        
-//                    }
-//                    
-//                    
-//                }
-//                
-//                
-//            }
-//            NSArray*arr4=[NSArray arrayWithArray:arr2];
-//            
-//            [shiyanshi setObject:arr4 forKey:@"shiyanshi"];
-//            [shiyanshi synchronize];
-//            
-//            
-//            for (int i=0; i<[[shiyanshi objectForKey:@"shiyanshi"]  count]; i++) {
-//                
-//                for (int j=0; j<[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] count]; j++) {
-//                    
-//                    //            NSLog(@"%@",[[[[user objectForKey:@"diaoyan"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j]);
-//                    
-//                    if ([_bianhao isEqualToString:[NSString stringWithFormat:@"%@",[[[[[[shiyanshi objectForKey:@"shiyanshi"] objectAtIndex:i] objectAtIndex:0] objectAtIndex:j] objectForKey:@"number"] objectForKey:@"number"]]]) {
-//                        
-//                        ++_add2;
-//                        
-//                        
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
-//            
-//            //             _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)[[shiyanshi objectForKey:@"shiyanshi"]count] ] stringByAppendingString:@"份"];
-//            //
-//            //            _add2=[[shiyanshi objectForKey:@"shiyanshi"] count];
-//            
-//            _shiyanLb.text=[[NSString stringWithFormat:@"%ld",(long)_add2 ] stringByAppendingString:@"份"];
-//            
-//            
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"%@",error);
-//        }];
-//        
-//        
-//        
-//        
-//        
-//        
-//        
-//        UIColor *color = [UIColor cyanColor];
-//        
-//        _hud = [[MBProgressHUD alloc] initWithView:self.view];
-//        _hud.mode = MBProgressHUDModeText;
-//       
-//        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//        if (![user objectForKey:@"english"]) {
-//             _hud.labelText = @"同步成功";
-//        }else{
-//            _hud.labelText = @"Synchronization succeeded";
-//            
-//        }
-//
-//        
-//        _hud.labelFont = [UIFont systemFontOfSize:17];
-//        _hud.labelColor = color; //设置文本颜色；默认为白色
-//        _hud.detailsLabelText = @"^_^";
-//        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-//        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-//        [self.view addSubview:_hud];
-//        
-//        [_hud showAnimated:YES
-//       whileExecutingBlock:^{
-//           [self taskOfText];
-//       } completionBlock:^{
-//           NSLog(@"showHUDByText 执行完成");
-//       }];
-//        
-//        
-//        
-//    }
-//    
-//    
-//    
+  
     if (_add==0) {
         
         
@@ -1883,176 +2066,16 @@ UITableViewCellEditingStyle _editingStyle;
             
         }
         
-        //else{
-//
-//            
-//            NSMutableArray*allArr2=[[NSMutableArray alloc] init];
-//            
-//            NSEnumerator *enumerator = [[user objectForKey:@"shiyanshi"] reverseObjectEnumerator];
-//            
-//            NSArray*array=[[NSArray alloc] initWithArray:[enumerator allObjects]];
-//            NSLog(@"%@",[enumerator allObjects]);
-//            
-//            int i=0;
-//            
-//            
-//            for (NSArray*arr in array) {
-//                
-//                NSDictionary*dict=@{[NSString stringWithFormat:@"%d",++i]:arr};
-//                
-//                [allArr2 addObject:dict];
-//                
-//            }
-//            NSLog(@"%@",allArr2);
-//            
-//            
-//            
-//            AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-//            sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//            sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
-//            
-//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allArr2 options:NSJSONWritingPrettyPrinted error:nil];
-//            
-//            NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//            NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//            //        NSDictionary *parameters=[[NSDictionary alloc]init];
-//            //        [parameters setValue:[NSString JSONStringWithNSDictionary:self.orderModel.cartCids] forKey:@"cids"];
-//            //    NSDictionary *parameters2=@{@"1":[user objectForKey:@"wenjuan"][0],@"2":[user objectForKey:@"wenjuan"][1],@"3":[user objectForKey:@"wenjuan"][2],@"4":[user objectForKey:@"wenjuan"][3],@"5":[user objectForKey:@"wenjuan"][4]};
-//            
-//            params[@"wenjuan"] = str;
-//            
-//            
-//            [sessionManager POST:@"http://netkq.webbsn.com/BD/main.php/AcceptData/sys" parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-//                NSLog(@"%lld", downloadProgress.totalUnitCount);
-//            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                NSLog(@"%@", responseObject);
-//                
-//                
-//                
-//                
-//                
-//                
-//                
-//            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//                NSLog(@"%@",error);
-//            }];
-//            
-//        }
-//        
-//        
-//        
-//        _allArr=[[NSMutableArray alloc] init];
-//        
-//        
-//        
-//        NSEnumerator *enumerator = [[user objectForKey:@"diaoyan"] reverseObjectEnumerator];
-//        
-//        NSArray*array=[[NSArray alloc] initWithArray:[enumerator allObjects]];
-//        NSLog(@"%@",[enumerator allObjects]);
-//        
-//        
-//        
-//        int i=0;
-//        
-//        
-//        for (NSArray*arr in array) {
-//            
-//            NSDictionary*dict=@{[NSString stringWithFormat:@"%d",++i]:arr};
-//            
-//            [_allArr addObject:dict];
-//            
-//        }
-//        NSLog(@"%@",_allArr);
-//        
-//        
-//        
-//        AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-//        sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
-//        
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_allArr options:NSJSONWritingPrettyPrinted error:nil];
-//        
-//        NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//        //        NSDictionary *parameters=[[NSDictionary alloc]init];
-//        //        [parameters setValue:[NSString JSONStringWithNSDictionary:self.orderModel.cartCids] forKey:@"cids"];
-//        //    NSDictionary *parameters2=@{@"1":[user objectForKey:@"wenjuan"][0],@"2":[user objectForKey:@"wenjuan"][1],@"3":[user objectForKey:@"wenjuan"][2],@"4":[user objectForKey:@"wenjuan"][3],@"5":[user objectForKey:@"wenjuan"][4]};
-//        
-//        params[@"wenjuan"] = str;
-//        
-//        
-//        [sessionManager POST:@"http://netkq.webbsn.com/BD/main.php/AcceptData" parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-//            NSLog(@"%lld", downloadProgress.totalUnitCount);
-//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            NSLog(@"%@", responseObject);
-//            
-//            
-//            
-//            UIColor *color = [UIColor cyanColor];
-//            
-//            _hud = [[MBProgressHUD alloc] initWithView:self.view];
-//            _hud.mode = MBProgressHUDModeText;
-//           
-//            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//            if (![user objectForKey:@"english"]) {
-//                _hud.labelText = @"上传成功";
-//            }else{
-//                _hud.labelText = @"uploaded";
-//                
-//            }
-//
-//            
-//            
-//            _hud.labelFont = [UIFont systemFontOfSize:17];
-//            _hud.labelColor = color; //设置文本颜色；默认为白色
-//            _hud.detailsLabelText = @"^_^";
-//            _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-//            _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-//            [self.view addSubview:_hud];
-//            
-//            [_hud showAnimated:YES
-//           whileExecutingBlock:^{
-//               [self taskOfText];
-//           } completionBlock:^{
-//               NSLog(@"showHUDByText 执行完成");
-//           }];
-//            
-//            
-//            
-//            
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"%@",error);
-//        }];
-//        
-//    }
-    
-//上传结束后
+     
     
     
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
-    NSDictionary *parameters =@{@"number":_bianhao};
-
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您确定结束本次调研吗?" delegate:self cancelButtonTitle:@"是" otherButtonTitles:@"否",nil];
+    [alertView show];
+    alertView.tag=1;
     
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Hissurvey/isok/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"%lld", downloadProgress.totalUnitCount);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
-        
-        
-        
-        
-        InfoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"listPage"];
-        
-        [self.navigationController pushViewController:receive animated:YES];
-
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
-
+    
+    
+    
     
     
     
@@ -2062,6 +2085,100 @@ UITableViewCellEditingStyle _editingStyle;
     
     
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag==1) {
+        if (buttonIndex==0) {
+            
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+             [self networking];
+             
+
+             AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+            sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+               [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+             
+             NSDictionary *parameters =@{@"research_id":_research_id};
+             NSLog(@"%@",parameters);
+             
+             [sessionManager POST:[url stringByAppendingString:endResearch] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+               //  NSLog(@"%lld", downloadProgress.totalUnitCount);
+             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+                 if ([[responseObject objectForKey:@"code"] intValue]==1) {
+                     
+                     _zhuangtai=@"结束";
+                     UIColor *color = [UIColor cyanColor];
+                                                        
+                    _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                    _hud.mode = MBProgressHUDModeText;
+                  
+                     _hud.labelText = [responseObject objectForKey:@"msg"];
+                    
+                    _hud.labelFont = [UIFont systemFontOfSize:17];
+                    _hud.labelColor = color; //设置文本颜色；默认为白色
+                    _hud.detailsLabelText = @"^_^";
+                    _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                    _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                    [self.view addSubview:_hud];
+                    
+                    [_hud showAnimated:YES
+                   whileExecutingBlock:^{
+                       [self taskOfText];
+                   } completionBlock:^{
+                       NSLog(@"showHUDByText 执行完成");
+                   }];
+                                 
+                 }else{
+                     UIColor *color = [UIColor cyanColor];
+
+                     _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                       _hud.mode = MBProgressHUDModeText;
+                     
+                        _hud.labelText = [responseObject objectForKey:@"msg"];
+                       
+                       _hud.labelFont = [UIFont systemFontOfSize:17];
+                       _hud.labelColor = color; //设置文本颜色；默认为白色
+                       _hud.detailsLabelText = @"^_^";
+                       _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                       _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                       [self.view addSubview:_hud];
+                       
+                       [_hud showAnimated:YES
+                      whileExecutingBlock:^{
+                          [self taskOfText];
+                      } completionBlock:^{
+                          NSLog(@"showHUDByText 执行完成");
+                      }];
+                     
+                 }
+                 
+                        
+                 
+                 
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+             }];
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
 - (IBAction)clear:(id)sender {
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -2070,6 +2187,7 @@ UITableViewCellEditingStyle _editingStyle;
      [shiyanshi removeObjectForKey:@"shiyanshi"];
     [user synchronize];
     [shiyanshi synchronize];
+    
 }
 
 
@@ -2082,7 +2200,7 @@ UITableViewCellEditingStyle _editingStyle;
     NSDictionary *parameters =@{@"number":_numberStr2};
     NSLog(@"%@",parameters);
     
-    [sessionManager POST:@"http://netkq.webbsn.com/BD/admin.php/Nurse/nursecount" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager POST:@"https://paqcabg.chinacloudsites.cn/BD/admin.php/Nurse/nursecount" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         //  NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject );
@@ -2135,7 +2253,7 @@ UITableViewCellEditingStyle _editingStyle;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
     // 在parameters里存放照片以外的对象
-    [manager POST:@"http://netkq.webbsn.com/BD/main.php/Image/index" parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:@"https://paqcabg.chinacloudsites.cn/BD/main.php/Image/index" parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         // formData: 专门用于拼接需要上传的数据,在此位置生成一个要上传的数据体
         // 这里的_photoArr是你存放图片的数组
         for (int i = 0; i < _photoArr.count; i++) {
@@ -2177,27 +2295,27 @@ UITableViewCellEditingStyle _editingStyle;
         
         
 //        UIColor *color = [UIColor cyanColor];
-//        
+//
 //        _hud = [[MBProgressHUD alloc] initWithView:self.view];
 //        _hud.mode = MBProgressHUDModeText;
 //        //_hud.labelText = @"图片上传成功";
-//        
+//
 //        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
 //        if (![user objectForKey:@"english"]) {
 //            _hud.labelText = @"图片上传成功";
 //        }else{
 //            _hud.labelText = @"Image uploaded";
-//            
+//
 //        }
 //
-//        
+//
 //        _hud.labelFont = [UIFont systemFontOfSize:17];
 //        _hud.labelColor = color; //设置文本颜色；默认为白色
 //        _hud.detailsLabelText = @"^_^";
 //        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
 //        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
 //        [self.view addSubview:_hud];
-//        
+//
 //        [_hud showAnimated:YES
 //       whileExecutingBlock:^{
 //           [self taskOfText];
@@ -2207,6 +2325,8 @@ UITableViewCellEditingStyle _editingStyle;
 
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        
         
         NSLog(@"xxx上传失败xxx %@", error);
         
@@ -2266,5 +2386,151 @@ UITableViewCellEditingStyle _editingStyle;
     }
     //设置动画结束
     [UIView commitAnimations];
+}
+- (IBAction)zhuxiao:(id)sender {
+    
+    
+    [self networking];
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+
+    
+    
+    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+    //sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+       [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+    
+//    NSUserDefaults *email = [NSUserDefaults standardUserDefaults];
+//    NSLog(@"%@",[email objectForKey:@"email"]);
+//
+//
+//
+//    NSString *openUDID = [LXF_OpenUDID value];
+
+    
+    //NSDictionary *parameters =@{@"email":[email objectForKey:@"email"],@"deviceId":openUDID};
+    
+    //NSLog(@"%@",parameters);
+
+    
+    [sessionManager POST:[url stringByAppendingString:loginOut] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"%lld", downloadProgress.totalUnitCount);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+      
+        
+        
+        [self performSegueWithIdentifier:@"goback" sender:self];
+
+        
+        
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        
+        
+    }];
+    
+    
+    
+}
+-(void)networking{
+    AFNetworkReachabilityManager *manger = [AFNetworkReachabilityManager sharedManager];
+    //开启监听，记得开启，不然不走block
+    [manger startMonitoring];
+    //2.监听改变
+    [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        /*
+         AFNetworkReachabilityStatusUnknown = -1,
+         AFNetworkReachabilityStatusNotReachable = 0,
+         AFNetworkReachabilityStatusReachableViaWWAN = 1,
+         AFNetworkReachabilityStatusReachableViaWiFi = 2,
+         */
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"未知");
+                
+            {
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                UIColor *color = [UIColor cyanColor];
+                
+                _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                _hud.mode = MBProgressHUDModeText;
+                if ([user objectForKey:@"english"]) {
+                    
+                    _hud.labelText = @"live without the Internet";
+                    
+                }else{
+                    _hud.labelText = @"当前网络状态不佳,请稍后再试哦";
+                }
+                
+                _hud.labelFont = [UIFont systemFontOfSize:17];
+                _hud.labelColor = color; //设置文本颜色；默认为白色
+                // _hud.detailsLabelText = @"^_^";
+                _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                [self.view addSubview:_hud];
+                
+                [_hud showAnimated:YES
+               whileExecutingBlock:^{
+                   [self taskOfText];
+               } completionBlock:^{
+                   NSLog(@"showHUDByText 执行完成");
+               }];
+                
+                
+            }
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"没有网络");
+            {
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                UIColor *color = [UIColor cyanColor];
+                
+                _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                _hud.mode = MBProgressHUDModeText;
+                if ([user objectForKey:@"english"]) {
+                    
+                    _hud.labelText = @"live without the Internet";
+                    
+                }else{
+                    _hud.labelText = @"当前网络状态不佳,请稍后再试哦";
+                }
+                
+                _hud.labelFont = [UIFont systemFontOfSize:17];
+                _hud.labelColor = color; //设置文本颜色；默认为白色
+                // _hud.detailsLabelText = @"^_^";
+                _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                [self.view addSubview:_hud];
+                
+                [_hud showAnimated:YES
+               whileExecutingBlock:^{
+                   [self taskOfText];
+               } completionBlock:^{
+                   NSLog(@"showHUDByText 执行完成");
+               }];
+                
+                
+            }
+                
+                
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"3G|4G");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+            {
+                NSLog(@"WiFi");
+
+            }
+                
+                break;
+            default:
+                break;
+        }
+    }];
+
 }
 @end

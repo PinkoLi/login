@@ -173,6 +173,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 */
 
 - (IBAction)nextBtn:(id)sender {
+    NSUserDefaults *shiyan = [NSUserDefaults standardUserDefaults];
+    [shiyan removeObjectForKey:@"shiyan"];
+     [shiyan synchronize];
     
     int isok1=0;
     
@@ -181,6 +184,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
     NSString*str=[[NSString alloc] init];
+    NSString*str2=[[NSString alloc] init];
+
 
     for(int i=0;i<[_chooseArray1 count];i++)
     {
@@ -200,6 +205,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             isok1=1;
             [Q1 addObject:pp.textLabel.text];
+            str2=pp.textLabel.text;
             
             
         }
@@ -210,8 +216,18 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             str=[[pp.textLabel.text stringByAppendingString:@"(" ] stringByAppendingString:_text3.text];
             [Q1 addObject:str];
+            str2=pp.textLabel.text;
+
         }
     }
+    if (isok1==1) {
+           if ([str2 isEqualToString:[_oneArray lastObject]]) {
+               if (_text3.text==nil||[_text3.text isEqualToString:@""]) {
+                   isok1=0;
+               }
+           }
+       }
+    
     
     if (isok1==0||_text2.text==nil||[_text2.text isEqualToString:@""]||_text1.text==nil||[_text1.text isEqualToString:@""]) {
         
@@ -233,11 +249,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
     }
     else{
-        
-        
-        NSUserDefaults *choose = [NSUserDefaults standardUserDefaults];
-        
-        
+
         NSDictionary *q1 =@{@"choose":Q1};
         NSDictionary *q2 =@{@"text":_text1.text};
         NSDictionary *q3 =@{@"text":_text2.text};
@@ -248,7 +260,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         NSUserDefaults *shiyan = [NSUserDefaults standardUserDefaults];
         if ([[shiyan objectForKey:@"shiyan"]count]==0) {
-            NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2, nil];
+            NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,num3, nil];
             
             NSArray*arr1=[NSArray arrayWithArray:arr];
             [shiyan setObject:arr1 forKey:@"shiyan"];
@@ -256,17 +268,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             
         }
-        else{
-
-
+       
         
-        
-        NSMutableArray*lex=[NSMutableArray arrayWithArray:[choose objectForKey:@"choose"]];
+        NSMutableArray*lex=[NSMutableArray arrayWithArray:[shiyan objectForKey:@"shiyan"]];
         
         
         
         
-        NSLog(@"%@",[choose objectForKey:@"choose"]);
         NSMutableArray *discardedItems = [NSMutableArray array];
         
         for (NSDictionary*kk in lex) {
@@ -293,9 +301,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
             }
             
-            
-            
-            
+  
             
         }
         
@@ -304,10 +310,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSArray*arr2=[NSArray arrayWithArray:lex];
             [shiyan setObject:arr2 forKey:@"shiyan"];
             [shiyan synchronize];
-        
-        
-        
-        
+
         NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,num3,nil];
         
             [arr addObjectsFromArray:[shiyan objectForKey:@"shiyan"]];
@@ -320,19 +323,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     FourViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"27Page"];
     
     [self.navigationController pushViewController:receive animated:YES];
-        
-//        if (!_five) {
-//            
-//            _five= [self.storyboard instantiateViewControllerWithIdentifier:@"27Page"];
-//        }
-//        
-//        
-//        
-//        [self.navigationController pushViewController:_five animated:YES];
-        
+
     }
         
-}
+
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -434,9 +428,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     //指定新建文件夹路径
     NSString *imageDocPath = [createPath stringByAppendingPathComponent:str];
-    
-    
-    
+
     return imageDocPath;
 }
 
@@ -505,6 +497,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [UIView beginAnimations:nil context:nil];
         // 动画时间
         [UIView setAnimationDuration:1];
+        
         
         if (_isFullScreen) {
             // 放大尺寸

@@ -612,11 +612,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
   
-    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
     
-    
-    NSString*str=[[@"36_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *date = [formatter stringFromDate:[NSDate date]];
+    NSString*str=[[@"36_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [path objectAtIndex:0];
     

@@ -727,7 +727,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         //NSDictionary *q2 =@{@"text":_textLb2.text};
-        NSDictionary *q1 =@{@"choose":Q1,@"text1":_text.text};
+        NSString*str2=[[NSString alloc] init];
+               NSString*str=[[NSString alloc] init];
+               
+               str2=@"抽查样本总数";
+                           str=[[str2 stringByAppendingString:@"("] stringByAppendingString:_text.text];
+               
+                           [Q1 addObject:str];
+        NSDictionary *q1 =@{@"choose":Q1};
        
         
         NSDictionary*num1=@{@"67":q1};
@@ -839,11 +846,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
     
-    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList2"] integerValue]];
+//    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList2"] integerValue]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *date = [formatter stringFromDate:[NSDate date]];
     
-    
-     NSString*str=[[@"67_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+     NSString*str=[[@"67_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     
     
     

@@ -30,6 +30,8 @@
 @property (strong, nonatomic)NSMutableArray*xinXiArr;
 @property (strong, nonatomic)NSMutableArray*pianshaoArr;
 @property (strong, nonatomic)NSMutableArray*shijianArr;
+@property (strong, nonatomic)NSMutableArray*zongshu;
+
 
 
 @end

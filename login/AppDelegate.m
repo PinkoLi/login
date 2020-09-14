@@ -41,6 +41,11 @@
 //        
 //    }
     //Required
+    
+//     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//    [user removeObjectForKey:@"diaoyan"];
+    
+    
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
@@ -85,19 +90,22 @@
    
     
     
-    [sessionManager GET:@"http://netkq.webbsn.com/BD/getvison.php" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/BD/getvison.php" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
 
-        NSLog(@"%@",[responseObject objectForKey:@"version"]);
+        NSLog(@"%@",responseObject );
+        
+        
         NSUserDefaults*version=[NSUserDefaults standardUserDefaults];
+        
 
         [version setObject:[responseObject objectForKey:@"version"] forKey:@"version"];
         [version synchronize];
         
         
-        if (![[responseObject objectForKey:@"version"]isEqualToString:@"1.170217"]) {
+        if (![[responseObject objectForKey:@"version"]isEqualToString:@"20200601.1"]) {
             
             _plistName=[responseObject objectForKey:@"plistname"];
             
@@ -120,7 +128,7 @@
     
     if (alertView.tag==1) {
         if (buttonIndex==0) {
-            NSString *urlString = [NSString stringWithFormat:@"itms-services://?action=download-manifest&url=https://o5x2lhij5.qnssl.com/%@", _plistName];
+            NSString *urlString = [NSString stringWithFormat:@"itms-services://?action=download-manifest&url=https://b.webbsn.com/download/app/%@", _plistName];
             
             NSURL *url = [NSURL URLWithString:urlString];
             

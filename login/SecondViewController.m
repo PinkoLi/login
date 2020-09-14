@@ -9,9 +9,15 @@
 #import "SecondViewController.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
-@interface SecondViewController ()@property (strong, nonatomic) MBProgressHUD *hud;
+#import "LXF_OpenUDID.h"
+#import "ChangePwViewController.h"
+@interface SecondViewController ()
+@property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic)NSString*pw;
 @property (strong, nonatomic)NSString*name;
+@property(strong,nonnull)NSDictionary*parameters;
+@property(nonatomic,strong)ChangePwViewController*changePwVC;
+
 
 @end
 
@@ -35,30 +41,31 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //    NSLog(@"%@",[version objectForKey:@"version"]);
     
     
-    
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    
-    
-    
-    [sessionManager GET:@"http://netkq.webbsn.com/BD/getvison.php" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"%lld", downloadProgress.totalUnitCount);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        
-        NSLog(@"%@",[responseObject objectForKey:@"version"]);
-        
-        
-        _versionLb.text=[@"版本号:" stringByAppendingString:[responseObject objectForKey:@"version"]];
-        [_versionLb setTextColor:UIColorFromRGB(0x848484)];
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
+//    
+//    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+//    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    
+//    
+//    
+//    [sessionManager GET:@"https://netkq.webbsn.com/BD/getvison.php" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+//        NSLog(@"%lld", downloadProgress.totalUnitCount);
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        
+//        
+//        NSLog(@"%@",[responseObject objectForKey:@"version"]);
+//        
+//        
+//        _versionLb.text=[@"版本号:" stringByAppendingString:@"1.170705"];
+//        [_versionLb setTextColor:UIColorFromRGB(0x848484)];
+//        
+//        
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"%@",error);
+//    }];
 
     
-    
+    _versionLb.text=[@"版本号:" stringByAppendingString:@"202000915"];
+    [_versionLb setTextColor:UIColorFromRGB(0x848484)];
     
    
     
@@ -69,7 +76,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //    [_l_timeButton.layer setMasksToBounds:YES];
 //    [_l_timeButton.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
 //    [_l_timeButton.layer setBorderWidth:1.0]; //边框宽度
-    [_l_timeButton setBackgroundColor:UIColorFromRGB(0xd0d0d0)];
+   // [_l_timeButton setBackgroundColor:UIColorFromRGB(0xd0d0d0)];
+    [_l_timeButton setBackgroundColor:UIColorFromRGB(0xec6606)];
+
+    
     
 //    [_loginBtn.layer setMasksToBounds:YES];
 //    [_loginBtn.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
@@ -124,7 +134,28 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _userName.text=@"登录邮箱";
         _passWord.text=@"登录密码";
         _switchLb.text=@"切换英文";
-        [_l_timeButton setTitle:@"获取密码" forState:UIControlStateNormal];
+        
+        
+        
+        
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"1"]){
+           
+            //第一次启动
+            
+            NSLog(@"第一次启动");
+            
+           [_l_timeButton setTitle:@"忘记/修改密码" forState:UIControlStateNormal];
+            
+        }else{
+            //不是第一次启动了
+            NSLog(@"不是第一次启动");
+            
+            [_l_timeButton setTitle:@"忘记/修改密码" forState:UIControlStateNormal];
+        }
+
+        
+        
+       
         [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
         _changeBtn.selected=YES;
         [_changeBtn setImage:[UIImage imageNamed:@"zhong.png"] forState:UIControlStateNormal];
@@ -234,160 +265,299 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
    
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    
-    if (![self  isValidateEmail:_email.text]) {
-        UIColor *color = [UIColor cyanColor];
-        
-        _hud = [[MBProgressHUD alloc] initWithView:self.view];
-        _hud.mode = MBProgressHUDModeText;
-        if ([user objectForKey:@"english"]) {
-            
-            _hud.labelText = @"Your email format is wrong";
-        
-        }else{
-        _hud.labelText = @"您的邮箱格式有误";
-        }
-        _hud.labelFont = [UIFont systemFontOfSize:17];
-        _hud.labelColor = color; //设置文本颜色；默认为白色
-        _hud.detailsLabelText = @"^_^";
-        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-        [self.view addSubview:_hud];
-        
-        [_hud showAnimated:YES
-       whileExecutingBlock:^{
-           [self taskOfText];
-       } completionBlock:^{
-           NSLog(@"showHUDByText 执行完成");
-       }];
-        
-        return;
-        
-    }
-    
-    else{
-        AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        
-        NSDictionary *parameters =@{@"email":_email.text};
-        [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Mail/sendMail/" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-            NSLog(@"%lld", downloadProgress.totalUnitCount);
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
-            
-            
-            if ([[responseObject objectForKey:@"ok"] intValue]==0) {
-                UIColor *color = [UIColor cyanColor];
-                
-                _hud = [[MBProgressHUD alloc] initWithView:self.view];
-                _hud.mode = MBProgressHUDModeText;
-                if ([user objectForKey:@"english"]) {
-                    
-                    _hud.labelText = @"Please make sure your email";
-                    
-                }else{
-                    _hud.labelText = @"请确认您的邮箱";
-                }
-
-                _hud.labelFont = [UIFont systemFontOfSize:17];
-                _hud.labelColor = color; //设置文本颜色；默认为白色
-                _hud.detailsLabelText = @"^_^";
-                _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
-                _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
-                [self.view addSubview:_hud];
-                
-                [_hud showAnimated:YES
-               whileExecutingBlock:^{
-                   [self taskOfText];
-               } completionBlock:^{
-                   NSLog(@"showHUDByText 执行完成");
-               }];
-                return ;
-            }
-            
-            else{
-                
-                _pw=[NSString stringWithFormat:@"%d",[[[responseObject objectForKey:@"0"]objectForKey:@"pw"]intValue]];
-                _name=[[responseObject objectForKey:@"0"] objectForKey:@"name"];
-                
-                NSLog(@"%@",_pw);
-                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-                [user setObject:_email.text forKey:@"email"];
-                [user setObject:_name forKey:@"name"];
-                [user setObject:_pw forKey:@"pw"];
-                [user synchronize];
-                
-                
-            }
-            
-            
-            
-            
-            
-            
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
-        
-    }
+    [self performSegueWithIdentifier:@"push" sender:self];
 
     
-    __block int timeout=30; //倒计时时间
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
-    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
-    dispatch_source_set_event_handler(_timer, ^{
-        if(timeout<=0){ //倒计时结束，关闭
-            dispatch_source_cancel(_timer);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //设置界面的按钮显示 根据自己需求设置
-                
-                 // [_l_timeButton setBackgroundColor:[UIColor clearColor]];
-                if ([user objectForKey:@"english"]) {
-                    
-                    [_l_timeButton setTitle:@"Obtain password" forState:UIControlStateNormal];
-                    
-                }else{
-                    [_l_timeButton setTitle:@"获取密码" forState:UIControlStateNormal];
-                }
-                //[_l_timeButton setTitle:@"忘记密码" forState:UIControlStateNormal];
-                _l_timeButton.userInteractionEnabled = YES;
-               // _l_timeButton.hidden=NO;
-            });
-        }else{
-            
-            //_l_timeButton.hidden=YES;
-            int seconds = timeout % 60;
-            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //设置界面的按钮显示 根据自己需求设置
-                //NSLog(@"____%@",strTime);
-                //[_l_timeButton setBackgroundColor:[UIColor grayColor]];
-                [UIView beginAnimations:nil context:nil];
-                [UIView setAnimationDuration:1];
-                if ([user objectForKey:@"english"]) {
-                    
-                    [_l_timeButton setTitle:[NSString stringWithFormat:@"%@re-send30secondslater",strTime] forState:UIControlStateNormal];
-                    
-                }else{
-                    [_l_timeButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateNormal];
-                }
-                
-                [UIView commitAnimations];
-                _l_timeButton.userInteractionEnabled = NO;
-                
-            });
-            timeout--;
-        }
-    });
-    dispatch_resume(_timer);
+    
+//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//
+//    if (![self  isValidateEmail:_email.text]) {
+//        UIColor *color = [UIColor cyanColor];
+//
+//        _hud = [[MBProgressHUD alloc] initWithView:self.view];
+//        _hud.mode = MBProgressHUDModeText;
+//        if ([user objectForKey:@"english"]) {
+//
+//            _hud.labelText = @"Your email format is wrong";
+//
+//        }else{
+//        _hud.labelText = @"您的邮箱格式有误";
+//        }
+//        _hud.labelFont = [UIFont systemFontOfSize:17];
+//        _hud.labelColor = color; //设置文本颜色；默认为白色
+//        _hud.detailsLabelText = @"^_^";
+//        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+//        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+//        [self.view addSubview:_hud];
+//
+//        [_hud showAnimated:YES
+//       whileExecutingBlock:^{
+//           [self taskOfText];
+//       } completionBlock:^{
+//           NSLog(@"showHUDByText 执行完成");
+//       }];
+//
+//        return;
+//
+//    }
+//
+//    else{
+//
+//        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您确定要发送重置验证码到您的邮箱?" delegate:self cancelButtonTitle:@"是" otherButtonTitles:@"否",nil];
+//        [alertView show];
+//        alertView.tag=1;
+//
+//
+//
+//
+//
+//
+//    }
+
+    
+   
     
     
 
     
     
 }
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag==1) {
+        if (buttonIndex==0) {
+            AFNetworkReachabilityManager *manger = [AFNetworkReachabilityManager sharedManager];
+            //开启监听，记得开启，不然不走block
+            [manger startMonitoring];
+            //2.监听改变
+            [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+                /*
+                 AFNetworkReachabilityStatusUnknown = -1,
+                 AFNetworkReachabilityStatusNotReachable = 0,
+                 AFNetworkReachabilityStatusReachableViaWWAN = 1,
+                 AFNetworkReachabilityStatusReachableViaWiFi = 2,
+                 */
+                switch (status) {
+                    case AFNetworkReachabilityStatusUnknown:
+                        NSLog(@"未知");
+                        break;
+                    case AFNetworkReachabilityStatusNotReachable:
+                        NSLog(@"没有网络");
+                    {
+                        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                        UIColor *color = [UIColor cyanColor];
+                        
+                        _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                        _hud.mode = MBProgressHUDModeText;
+                        if ([user objectForKey:@"english"]) {
+                            
+                            _hud.labelText = @"live without the Internet";
+                            
+                        }else{
+                            _hud.labelText = @"没有网络";
+                        }
+                        
+                        _hud.labelFont = [UIFont systemFontOfSize:17];
+                        _hud.labelColor = color; //设置文本颜色；默认为白色
+                        // _hud.detailsLabelText = @"^_^";
+                        _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                        _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                        [self.view addSubview:_hud];
+                        
+                        [_hud showAnimated:YES
+                       whileExecutingBlock:^{
+                           [self taskOfText];
+                       } completionBlock:^{
+                           NSLog(@"showHUDByText 执行完成");
+                       }];
+                        
+                        
+                    }
+                        
+                        
+                        break;
+                    case AFNetworkReachabilityStatusReachableViaWWAN:
+                        NSLog(@"3G|4G");
+                        break;
+                    case AFNetworkReachabilityStatusReachableViaWiFi:
+                        NSLog(@"WiFi");
+                    {
+                        
+                        
+  
+                        
+                    }
+                        
+                        break;
+                    default:
+                        break;
+                }
+            }];
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+
+            AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+            sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+            
+            NSDictionary *parameters =@{@"email":_email.text};
+            [sessionManager POST:[url stringByAppendingString:sendEmil] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+                NSLog(@"%lld", downloadProgress.totalUnitCount);
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                NSLog(@"%@", responseObject);
+                
+                
+                if (!([[responseObject objectForKey:@"ok"] intValue]==1)) {
+                   // _zhuangtai=@"结束";
+                    
+                    UIColor *color = [UIColor cyanColor];
+                    
+                    _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                    _hud.mode = MBProgressHUDModeText;
+                    if ([user objectForKey:@"english"]) {
+                        
+                        _hud.labelText = @"Please make sure your email";
+                        
+                    }else{
+                        _hud.labelText = @"请确认您的邮箱";
+                    }
+                    
+                    _hud.labelFont = [UIFont systemFontOfSize:17];
+                    _hud.labelColor = color; //设置文本颜色；默认为白色
+                    _hud.detailsLabelText = @"^_^";
+                    _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                    _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                    [self.view addSubview:_hud];
+                    
+                    [_hud showAnimated:YES
+                   whileExecutingBlock:^{
+                       [self taskOfText];
+                   } completionBlock:^{
+                       NSLog(@"showHUDByText 执行完成");
+                   }];
+                    return ;
+                }
+                
+                else if ([[responseObject objectForKey:@"ok"] intValue]==1){
+                    
+                    _pw=[NSString stringWithFormat:@"%d",[[[responseObject objectForKey:@"0"]objectForKey:@"pw"]intValue]];
+                    _name=[[responseObject objectForKey:@"0"] objectForKey:@"name"];
+                    
+                    NSLog(@"%@",_pw);
+                    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                    [user setObject:_email.text forKey:@"email"];
+                    [user setObject:_name forKey:@"name"];
+                    [user setObject:_pw forKey:@"pw"];
+                    
+                    
+                    [user setBool:YES forKey:@"2"];
+                    [user synchronize];
+                    
+                    UIColor *color = [UIColor cyanColor];
+                    
+                    _hud = [[MBProgressHUD alloc] initWithView:self.view];
+                    _hud.mode = MBProgressHUDModeText;
+                    if ([user objectForKey:@"english"]) {
+                        
+                        _hud.labelText = @"Please make sure your email";
+                        
+                    }else{
+                        _hud.labelText = @"发送验证码成功,请注意查收";
+                    }
+                    
+                    _hud.labelFont = [UIFont systemFontOfSize:17];
+                    _hud.labelColor = color; //设置文本颜色；默认为白色
+                    _hud.detailsLabelText = @"^_^";
+                    _hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+                    _hud.detailsLabelColor = color; //设置详细文本颜色；默认为白色
+                    [self.view addSubview:_hud];
+                    
+                    [_hud showAnimated:YES
+                   whileExecutingBlock:^{
+                       [self taskOfText];
+                   } completionBlock:^{
+                       NSLog(@"showHUDByText 执行完成");
+                   }];
+                    
+                    
+                    __block int timeout=30; //倒计时时间
+                    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+                    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+                    dispatch_source_set_event_handler(_timer, ^{
+                        if(timeout<=0){ //倒计时结束，关闭
+                            dispatch_source_cancel(_timer);
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                //设置界面的按钮显示 根据自己需求设置
+                                
+                                // [_l_timeButton setBackgroundColor:[UIColor clearColor]];
+                                if ([user objectForKey:@"english"]) {
+                                    
+                                    [_l_timeButton setTitle:@"Obtain password" forState:UIControlStateNormal];
+                                    
+                                }else{
+                                    [_l_timeButton setTitle:@"忘记/修改密码" forState:UIControlStateNormal];
+                                }
+                                //[_l_timeButton setTitle:@"忘记密码" forState:UIControlStateNormal];
+                                _l_timeButton.userInteractionEnabled = YES;
+                                // _l_timeButton.hidden=NO;
+                            });
+                        }else{
+                            
+                            //_l_timeButton.hidden=YES;
+                            int seconds = timeout % 60;
+                            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                //设置界面的按钮显示 根据自己需求设置
+                                //NSLog(@"____%@",strTime);
+                                //[_l_timeButton setBackgroundColor:[UIColor grayColor]];
+                                [UIView beginAnimations:nil context:nil];
+                                [UIView setAnimationDuration:1];
+                                if ([user objectForKey:@"english"]) {
+                                    
+                                    [_l_timeButton setTitle:[NSString stringWithFormat:@"%@re-send30secondslater",strTime] forState:UIControlStateNormal];
+                                    
+                                }else{
+                                    [_l_timeButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateNormal];
+                                }
+                                
+                                [UIView commitAnimations];
+                                _l_timeButton.userInteractionEnabled = NO;
+                                
+                            });
+                            timeout--;
+                        }
+                    });
+                    dispatch_resume(_timer);
+                    
+                    
+                }
+                
+                
+                
+                
+                
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                NSLog(@"%@",error);
+            }];
+            
+        }
+    }
+    
+}
+
+
+
+
 
 - (IBAction)login:(id)sender {
     
@@ -451,17 +621,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 NSLog(@"WiFi");
             {
                 
-                
-                    
-                    
-                    
-                    
-                    
-                    
-                
-                
-                
-                
+      
                 
             }
                 
@@ -507,16 +667,41 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
     else{
         AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
         
-        NSDictionary *parameters =@{@"email":_email.text,@"code":[NSString stringWithFormat:@"%d",_password.text.intValue]};
-        [sessionManager POST:@"http://netkq.webbsn.com/BD/index.php/Mail/checkmail" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+        
+        NSLog(@"%@",_password.text);
+        
+        
+
+        if([[NSUserDefaults standardUserDefaults] boolForKey:@"2"]){
+            
+            NSString *openUDID = [LXF_OpenUDID value];
+
+             _parameters =@{@"email":_email.text,@"code":[NSString stringWithFormat:@"%d",_password.text.intValue],@"deviceId":openUDID};
+            
+        
+        }else{
+            
+            NSString *openUDID = [LXF_OpenUDID value];
+
+        
+         _parameters =@{@"email":_email.text,@"password":_password.text,@"device_id":openUDID};
+        
+        }
+        
+        
+        
+        
+//        NSDictionary *parameters =@{@"email":_email.text,@"code":[NSString stringWithFormat:@"%d",_password.text.intValue]};
+        [sessionManager POST:[url stringByAppendingString:login] parameters:_parameters progress:^(NSProgress * _Nonnull downloadProgress) {
             NSLog(@"%lld", downloadProgress.totalUnitCount);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"%@", responseObject);
             
             
-            if ([[responseObject objectForKey:@"ok"] intValue]==0) {
+            if ([[responseObject objectForKey:@"code"] intValue]!=1) {
                 UIColor *color = [UIColor cyanColor];
                 
                 _hud = [[MBProgressHUD alloc] initWithView:self.view];
@@ -526,7 +711,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     _hud.labelText = @"Password or email address does not match";
                     
                 }else{
-                    _hud.labelText = @"您的密码或邮箱不匹配";
+                    _hud.labelText = [responseObject objectForKey:@"msg"];
                 }
                 
                 _hud.labelFont = [UIFont systemFontOfSize:17];
@@ -551,12 +736,30 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
 
                 if (_foge.hidden==NO||_reme2.hidden==NO) {
-                                    _pw=[NSString stringWithFormat:@"%d",[_password.text intValue]];
+                    
+                    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"1"]){
+                        
+                        _pw=[NSString stringWithFormat:@"%d",[_password.text intValue]];
+                        
+                    }else{
+                        
+                        
+                        _pw=_password.text ;
+                        
+                    }
+
+                    
+                    
+                    
                     
                                     [user setObject:_email.text forKey:@"email"];
                     
                                     [user setObject:_pw forKey:@"pw"];
+                    
+                    NSLog(@"%@,    %@",[user objectForKey:@"email"],[user objectForKey:@"pw"]);
                                     [user synchronize];
+                    
+                    
                 }
                 else{
                     
@@ -566,22 +769,49 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     
                     
                 }
-                 [user setObject:[[responseObject objectForKey:@"0"] objectForKey:@"msd"] forKey:@"msd"];
-                 [user setObject:[[responseObject objectForKey:@"0"] objectForKey:@"name"] forKey:@"name"];
+                
+                NSLog(@"%@",responseObject);
+                
+               
+                 [user setObject:[[responseObject objectForKey:@"data"] objectForKey:@"username"] forKey:@"name"];
+                [user setObject:[[responseObject objectForKey:@"data"] objectForKey:@"token"] forKey:@"token"];
+                [user setObject:[[responseObject objectForKey:@"data"] objectForKey:@"userid"] forKey:@"userid"];
+
                 
                 
-                if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]){
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+                  if([[NSUserDefaults standardUserDefaults] boolForKey:@"2"]){
                     //第一次启动
                     
-                    NSLog(@"第一次启动");
+                   // NSLog(@"第一次启动");
+                    NSUserDefaults *email = [NSUserDefaults standardUserDefaults];
+
                     
-                    [self performSegueWithIdentifier:@"goto" sender:self];
+                    
+                    [email setObject:_email.text forKey:@"email"];
+                    [email synchronize];
+                    
+                    
+                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"2"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [self performSegueWithIdentifier:@"change" sender:self];
+                    
+                    
                 }else{
                     //不是第一次启动了
                     NSLog(@"不是第一次启动");
                     
+                    NSUserDefaults *email = [NSUserDefaults standardUserDefaults];
+                    
+                    
+                    
+                    [email setObject:_email.text forKey:@"email"];
+                    [email synchronize];
+                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"2"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
                      [self performSegueWithIdentifier:@"go" sender:self];
+                    
                 }
 
                 
@@ -692,7 +922,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     //设置动画的名字
-    [_l_timeButton setBackgroundColor:UIColorFromRGB(0xd0d0d0)];
+   // [_l_timeButton setBackgroundColor:UIColorFromRGB(0xd0d0d0)];
     [UIView beginAnimations:@"Animation" context:nil];
     //设置动画的间隔时间
     [UIView setAnimationDuration:0.20];
@@ -761,7 +991,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [_loginBtn setTitle:@"Log in" forState:UIControlStateNormal];
         
         [user setBool:YES forKey:@"english"];
-        [user synchronize];
+        [user synchronize]; 
         [_changeBtn setImage:[UIImage imageNamed:@"ying.png"] forState:UIControlStateNormal];
         
         
@@ -780,7 +1010,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _userName.text=@"登录邮箱";
         _passWord.text=@"登录密码";
         _switchLb.text=@"切换英文";
-        [_l_timeButton setTitle:@"获取密码" forState:UIControlStateNormal];
+        [_l_timeButton setTitle:@"忘记/修改密码" forState:UIControlStateNormal];
         [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
         
         [user removeObjectForKey:@"english"];

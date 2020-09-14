@@ -449,6 +449,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [discardedItems addObject:kk];
                     
                 }
+                if ([kk objectForKey:@"21"]) {
+                    
+                    NSLog(@"%@",kk);
+                    
+                    [discardedItems addObject:kk];
+                    
+                }
                 
                 
                 

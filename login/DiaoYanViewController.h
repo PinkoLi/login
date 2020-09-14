@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *pinlv;
 @property (strong, nonatomic)NSMutableArray*keshi;
 @property (strong, nonatomic)NSMutableArray*keshi2;
+@property (strong, nonatomic)NSMutableArray*keshi3;
+
 @property (strong, nonatomic)NSMutableArray*dongmaiArr;
 @property (strong, nonatomic)NSMutableArray*dongmaiArr2;
 @property (strong, nonatomic)NSMutableArray*dongmaiArr3;
@@ -23,6 +25,8 @@
 @property (strong, nonatomic)NSMutableArray*zhusheArr2;
 @property (strong, nonatomic)NSMutableArray*zhusheArr3;
 @property (strong, nonatomic)NSMutableArray*zhusheArr4;
+@property (strong, nonatomic)NSMutableArray*ksArr;
+
 
 
 

@@ -15,16 +15,22 @@
 @property (weak, nonatomic) IBOutlet UIButton *next;
 @property (weak, nonatomic) IBOutlet UILabel *lb1;
 @property (weak, nonatomic) IBOutlet UILabel *lb2;
+@property (weak, nonatomic) IBOutlet UILabel *lb3;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIButton *photoBtn;
+@property (strong, nonatomic) IBOutlet UIButton *photoBtn2;
 @property (weak, nonatomic) IBOutlet UILabel *uilb;
+@property (strong, nonatomic) IBOutlet UITextField *text1;
 
 - (IBAction)takePhoto:(id)sender;
+- (IBAction)takePhoto2:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *img1;
 
+@property (strong, nonatomic) IBOutlet UIImageView *img2;
 
 - (IBAction)nextBtn:(id)sender;
+@property(strong ,nonatomic )NSString*str;
 
 
 @property (weak, nonatomic) IBOutlet UIView *view2;
@@ -36,5 +42,9 @@
 @property(strong ,nonatomic )NSMutableArray*chooseArray1;
 
 @property(strong ,nonatomic )NSMutableArray*oneArray;
+
+@property(strong ,nonatomic )NSMutableArray*chooseArray2;
+
+@property(strong ,nonatomic )NSMutableArray*twoArray;
 
 @end

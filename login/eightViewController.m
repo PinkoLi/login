@@ -201,7 +201,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+80, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+80, Button_Width, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_threeArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -528,9 +528,18 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [choose synchronize];
                 NSLog(@"111111111111111%@",arr);
                 
-                eightViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"ninePage"];
+//                eightViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"ninePage"];
+//                
+//                [self.navigationController pushViewController:receive animated:YES];
                 
-                [self.navigationController pushViewController:receive animated:YES];
+                if (!_nine) {
+                    
+                    _nine= [self.storyboard instantiateViewControllerWithIdentifier:@"ninePage"];
+                }
+                
+                
+                
+                [self.navigationController pushViewController:_nine animated:YES];
                 
                 
                 
@@ -570,6 +579,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [discardedItems addObject:kk];
                     
                 }
+                if ([kk objectForKey:@"18"]) {
+                    
+                    NSLog(@"%@",kk);
+                    
+                    [discardedItems addObject:kk];
+                    
+                }
+
                 if ([kk objectForKey:@"19"]) {
                     
                     NSLog(@"%@",kk);

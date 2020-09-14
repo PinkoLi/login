@@ -104,12 +104,7 @@
     
     
     NSLog(@"%@",_bigArr);
-    
- 
-    
-    
-    
-    
+  
     
     _barChart = [[ZFBarChart alloc] initWithFrame:CGRectMake(188, 208, 500, 200)];
     _barChart.topicLabel.text = @"穿刺采血手法";

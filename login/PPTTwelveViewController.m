@@ -54,7 +54,8 @@
     NSUserDefaults *thisArr = [NSUserDefaults standardUserDefaults];
     
     NSLog(@"%@",[thisArr objectForKey:@"thisArr"]);
-    
+    NSArray*department=[NSArray arrayWithArray: [thisArr objectForKey:@"thisArr"]];
+
     
     
     _a=0;
@@ -96,46 +97,47 @@
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"48"] objectForKey:@"choose"]containsObject:@">4天"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"48"] objectForKey:@"choose"]containsObject:@">4days"]  ) {
                 ++_d;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"是"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"YES"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"49"] objectForKey:@"choose"]containsObject:@"是"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"49"] objectForKey:@"choose"]containsObject:@"YES"] ) {
                 ++_e;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"NO"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"49"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"49"] objectForKey:@"choose"]containsObject:@"NO"] ) {
                 ++_f;
             }
             
           
             
-             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"导管采血"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"By catheter"] ) {
+//             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"导管采血"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"39"] objectForKey:@"choose"]containsObject:@"By catheter"] ) {
                  
                
                  
                  
                  
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"桡动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Radial artery"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"桡动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Radial artery"] ) {
                 ++_g;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"肱动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Brachial artery"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"肱动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Brachial artery"] ) {
                 ++_h;
             }
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"股动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Femoral artery"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"股动脉"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Femoral artery"] ) {
                 ++_i;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"足背动脉"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Arteria dorsalis pedis"]) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"足背动脉"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"]containsObject:@"Arteria dorsalis pedis"]) {
                 ++_j;
             }
-            if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"其他"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j-1] objectForKey:@"38"] objectForKey:@"choose"]lastObject]containsString:@"Other"] ) {
+            if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"其他部位"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"头皮动脉"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"股静脉"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"PICC"] ||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"38"] objectForKey:@"choose"] lastObject]containsString:@"静脉留置针"]  ) {
                 ++_k;
             }
+
             
-}
+//}
             
             
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"52"] objectForKey:@"choose"]containsObject:@"是"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"YES"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"52"] objectForKey:@"choose"]containsObject:@"是"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"52"] objectForKey:@"choose"]containsObject:@"YES"] ) {
                 ++_o;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"52"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"NO"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"52"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"52"] objectForKey:@"choose"]containsObject:@"NO"] ) {
                 ++_p;
             }
             
@@ -143,13 +145,13 @@
             
             
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"51"] objectForKey:@"choose"]containsObject:@"<5ml"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"<5ml"] ) {
                 ++_a1;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"51"] objectForKey:@"choose"]containsObject:@"5-10ml"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@"5-10ml"] ) {
                 ++_a2;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"51"] objectForKey:@"choose"]containsObject:@">10ml"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"50"] objectForKey:@"choose"]containsObject:@">10ml"] ) {
                 ++_a3;
             }
 
@@ -304,7 +306,7 @@
     a4=_a1+_a2+_a3;
     
     if (a4==0) {
-        str=@"";
+        str=@"<15ml";
     }else{
     
     if (MAX(_a1, _a2, _a3)==_a1) {
@@ -430,6 +432,7 @@
 
 
     _shuomingLb.text=[[[[[id12 stringByAppendingString:@"采血后对导管进行冲洗。"]stringByAppendingString:@"\n如有弃去稀释液，大部分的操作人员("]stringByAppendingString:id13 ] stringByAppendingString:@")选择弃去的废液容量为"] stringByAppendingString:str];
+    
     _shuomingLb.lineBreakMode = UILineBreakModeWordWrap;
     _shuomingLb.numberOfLines = 0;
     

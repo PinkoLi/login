@@ -50,4 +50,8 @@
 - (IBAction)xzPost:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *xztext;
 @property(nonatomic,copy)NSString*keshiStr2;
+- (IBAction)zhuxiaoAct:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *typeText;
+
+
 @end

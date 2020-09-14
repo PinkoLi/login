@@ -11,12 +11,19 @@
 #import "SSCheckBoxView.h"
 #import "seventeenViewController.h"
 #import "TwentyOneViewController.h"
+#import "TwentyThreeViewController.h"
+#import "TwentyFourViewController.h"
+
 @interface sixteenViewController ()
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn2;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn3;
 @property(nonatomic,strong)seventeenViewController*seventeen;
 @property(nonatomic,strong)TwentyOneViewController*twentyone;
+@property(nonatomic,strong)TwentyThreeViewController*twentythree;
+@property(nonatomic,strong)TwentyFourViewController*twentyfour;
+
+
 @end
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -105,9 +112,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     else{
         
-        _twoArray=[[NSMutableArray alloc] initWithObjects:@"桡动脉",@"肱动脉",@"股动脉",@"足背动脉",@"其他部位",nil];
-        _threeArray=[[NSMutableArray alloc] initWithObjects:@"穿刺采血",@"导管采血",nil];
-        _oneArray=[[NSMutableArray alloc] initWithObjects:@"有推到底，再拉到正确位置",@"有推到底，未拉到正确位置",@"未推到底，有拉到正确位置",@"未推到底，未拉到正确位置",nil];
+        _twoArray=[[NSMutableArray alloc] initWithObjects:@"桡动脉",@"肱动脉",@"股动脉",@"足背动脉",@"头皮动脉",@"股静脉",@"PICC",@"CVC",@"静脉留置针",@"其他部位",nil];
+        _threeArray=[[NSMutableArray alloc] initWithObjects:@"动脉穿刺采血",@"动脉导管采血",@"静脉穿刺采血",@"静脉导管采血",nil];
+        _oneArray=[[NSMutableArray alloc] initWithObjects:@"未推到底，有拉到正确位置",@"未推到底，未拉到正确位置",@"有推到底，未拉到正确位置",@"有推到底，再拉到正确位置",nil];
+        
         
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"TAB3"ofType:@"png"];
@@ -195,11 +203,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         //        float y = i/5;
         
         
-        NSInteger index = i % 3;
-        NSInteger page = i / 3;
+        NSInteger index = i % 4;
+        NSInteger page = i / 4;
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width + Width_Space) + Start_X,  page*(Button_Height + Height_Space)+Start_Y+30, Button_Width, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width + Width_Space-30) + Start_X,  page*(Button_Height + Height_Space)+Start_Y+30, Button_Width-30, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_twoArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -236,7 +244,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-80 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+130, Button_Width-80, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-80 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+170, Button_Width-80, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_threeArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -374,6 +382,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (IBAction)nextBtn:(id)sender {
     NSUserDefaults *map = [NSUserDefaults standardUserDefaults];
     NSUserDefaults *BD = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults*zhushe=[NSUserDefaults standardUserDefaults];
+    NSUserDefaults*anquan=[NSUserDefaults standardUserDefaults];
+
+
     NSLog(@"%@",[map objectForKey:@"map"]);
     
     NSLog(@"%@",[BD objectForKey:@"BD"]);
@@ -391,6 +403,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSMutableArray*Q2=[[NSMutableArray alloc] init];
     NSMutableArray*Q3=[[NSMutableArray alloc] init];
      NSString*str=[[NSString alloc] init];
+        NSString*str2=[[NSString alloc] init];
+
     
     for(int i=0;i<[_chooseArray1 count];i++)
     {
@@ -418,6 +432,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             isok2=1;
             
             str=[[pp.textLabel.text stringByAppendingString:@"(" ] stringByAppendingString:_text1.text];
+            str2=pp.textLabel.text;
+
             [Q2 addObject:str];
         }
         
@@ -426,6 +442,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             isok2=1;
             [Q2 addObject:pp.textLabel.text];
+            str2=pp.textLabel.text;
             
         }
         
@@ -433,6 +450,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
         
     }
+        
+        if (isok2==1) {
+            if ([str2 isEqualToString:[_twoArray lastObject]]) {
+                if (_text1.text==nil||[_text1.text isEqualToString:@""]) {
+                    isok2=0;
+                }
+            }
+        }
         
         
     
@@ -452,7 +477,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray firstObject]]) {
               NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
-            [caixue setObject:@"1" forKey:@"caixue"];
+            [caixue setObject:@"chuanci" forKey:@"caixue"];
+            [caixue synchronize];
+        }
+        else if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray objectAtIndex:1]]) {
+              NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
+            [caixue setObject:@"daoguan" forKey:@"caixue"];
             [caixue synchronize];
         }
         else if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray lastObject]]){
@@ -554,7 +584,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSLog(@"111111111111111%@",arr);
 
          NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
-        if ([caixue objectForKey:@"caixue"]) {
+       // NSUserDefaults *gongju = [NSUserDefaults standardUserDefaults];
+
+        if ([[caixue objectForKey:@"caixue"] isEqualToString:@"chuanci"]) {
 //            sixteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"seventeenPage"];
 //            
 //            [self.navigationController pushViewController:receive animated:YES];
@@ -565,24 +597,62 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 _seventeen= [self.storyboard instantiateViewControllerWithIdentifier:@"seventeenPage"];
             }
             
-            
+            [caixue removeObjectForKey:@"caixue"];
+            [caixue synchronize];
             
             [self.navigationController pushViewController:_seventeen animated:YES];
 }
+        else if ([[caixue objectForKey:@"caixue"] isEqualToString:@"daoguan"]) {
+        //            sixteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"seventeenPage"];
+        //
+        //            [self.navigationController pushViewController:receive animated:YES];
+
+                if (!_twentyone) {
+                        
+                        _twentyone= [self.storyboard instantiateViewControllerWithIdentifier:@"21Page"];
+                    }
+                    
+                    [caixue removeObjectForKey:@"caixue"];
+                    [caixue synchronize];
+                    
+                    [self.navigationController pushViewController:_twentyone animated:YES];
+        }
         else{
         
 //        sixteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"21Page"];
 //        
 //        [self.navigationController pushViewController:receive animated:YES];
-
-            if (!_twentyone) {
+            
+            
+            NSLog(@"%@",[zhushe objectForKey:@"zhushe"]);
+            
+            
+            
+            if ([[zhushe objectForKey:@"zhushe"]isEqualToString:@"0"]||[anquan objectForKey:@"anquan"]) {
+                if (!_twentythree) {
+                    
+                    _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+                }
                 
-                _twentyone= [self.storyboard instantiateViewControllerWithIdentifier:@"21Page"];
+                [caixue removeObjectForKey:@"caixue"];
+                [caixue synchronize];
+                
+                [self.navigationController pushViewController:_twentythree animated:YES];
+                
+            }else{
+                if (!_twentyfour) {
+                    
+                    _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+                }
+                
+                [caixue removeObjectForKey:@"caixue"];
+                [caixue synchronize];
+                
+                [self.navigationController pushViewController:_twentyfour animated:YES];
+                
             }
+
             
-            
-            
-            [self.navigationController pushViewController:_twentyone animated:YES];
         }
         
     }
@@ -599,6 +669,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSMutableArray*Q3=[[NSMutableArray alloc] init];
         
          NSString*str=[[NSString alloc] init];
+        NSString*str2=[[NSString alloc] init];
+
         
         
         
@@ -611,7 +683,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_twoArray lastObject]]) {
                 
                 isok2=1;
-                
+                str2=pp.textLabel.text;
+
                 str=[[pp.textLabel.text stringByAppendingString:@"(" ] stringByAppendingString:_text1.text];
                 [Q2 addObject:str];
             }
@@ -621,13 +694,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
                 isok2=1;
                 [Q2 addObject:pp.textLabel.text];
-                
+                str2=pp.textLabel.text;
+
             }
             
-            
+           
             
             
         }
+            if (isok2==1) {
+        if ([str2 isEqualToString:[_twoArray lastObject]]) {
+            if (_text1.text==nil||[_text1.text isEqualToString:@""]) {
+                isok2=0;
+            }
+        }
+    }
         
         for(int i=0;i<[_chooseArray3 count];i++)
         {
@@ -645,9 +726,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray firstObject]]) {
                 NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
-                [caixue setObject:@"1" forKey:@"caixue"];
+                [caixue setObject:@"chuanci" forKey:@"caixue"];
                 [caixue synchronize];
             }
+         else if (pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray objectAtIndex:1]]) {
+                           NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
+                           [caixue setObject:@"daoguan" forKey:@"caixue"];
+                           [caixue synchronize];
+                       }
             else if(pp.checked==1&&[pp.textLabel.text isEqualToString:[_threeArray lastObject]]){
                 NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
                 [caixue removeObjectForKey:@"caixue"];
@@ -747,7 +833,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSLog(@"111111111111111%@",arr);
             
             NSUserDefaults *caixue = [NSUserDefaults standardUserDefaults];
-            if ([caixue objectForKey:@"caixue"]) {
+            NSLog(@"caixue:%@",caixue);
+            if ([[caixue objectForKey:@"caixue"] isEqual:@"chuanci"]) {
 //                sixteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"seventeenPage"];
 //                
 //                [self.navigationController pushViewController:receive animated:YES];
@@ -758,11 +845,29 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     
                     _seventeen= [self.storyboard instantiateViewControllerWithIdentifier:@"seventeenPage"];
                 }
-                
+                [caixue removeObjectForKey:@"caixue"];
+                [caixue synchronize];
                 
                 
                 [self.navigationController pushViewController:_seventeen animated:YES];
 }
+            else if ([[caixue objectForKey:@"caixue"] isEqual:@"daoguan"]) {
+            //                sixteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"seventeenPage"];
+            //
+            //                [self.navigationController pushViewController:receive animated:YES];
+
+                        
+                            
+                            if (!_twentyone) {
+                                
+                                _twentyone= [self.storyboard instantiateViewControllerWithIdentifier:@"21Page"];
+                            }
+                            
+                            [caixue removeObjectForKey:@"caixue"];
+                            [caixue synchronize];
+                            
+                            [self.navigationController pushViewController:_twentyone animated:YES];
+            }
             else{
                 
 //                sixteenViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"21Page"];
@@ -770,15 +875,42 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //                [self.navigationController pushViewController:receive animated:YES];
 
                 
-                if (!_twentyone) {
-                    
-                    _twentyone= [self.storyboard instantiateViewControllerWithIdentifier:@"21Page"];
-                }
-                
-                
-                
-                [self.navigationController pushViewController:_twentyone animated:YES];
+//                if (!_twentythree) {
+//
+//                    _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+//                }
+//
+//
+//                [caixue removeObjectForKey:@"caixue"];
+//                [caixue synchronize];
+//
+//                [self.navigationController pushViewController:_twentythree animated:YES];
 
+                NSLog(@"%@",[zhushe objectForKey:@"zhushe"]);
+                
+                if ([[zhushe objectForKey:@"zhushe"]isEqualToString:@"0"]||[anquan objectForKey:@"anquan"]) {
+                               if (!_twentythree) {
+                                   
+                                   _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+                               }
+                               
+                               [caixue removeObjectForKey:@"caixue"];
+                               [caixue synchronize];
+                               
+                               [self.navigationController pushViewController:_twentythree animated:YES];
+                               
+                           }else{
+                               if (!_twentyfour) {
+                                   
+                                   _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+                               }
+                               
+                               [caixue removeObjectForKey:@"caixue"];
+                               [caixue synchronize];
+                               
+                               [self.navigationController pushViewController:_twentyfour animated:YES];
+                               
+                           }
             }
             
         }

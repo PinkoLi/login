@@ -94,7 +94,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     else{
          [_photoBtn setImage:[UIImage imageNamed:@"建议拍照.png"] forState:UIControlStateNormal];
          [_photoBtn2 setImage:[UIImage imageNamed:@"建议拍照.png"] forState:UIControlStateNormal];
-        _twoArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+        _twoArray=[[NSMutableArray alloc] initWithObjects:@"未检查",@"检查，无气泡",@"检查，有气泡，正确排空",@"检查，有气泡，未正确排空",nil];
         
         _threeArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否，有混匀，但不达标",@"否，无混匀",nil];
         
@@ -157,10 +157,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         //        float y = i/5;
         
         
+        NSInteger index = i % 2;
+        NSInteger page = i / 2;
         
         
-        
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y-100, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( index*(Button_Width+100 + Width_Space) + Start_X,  page*(Button_Height + Height_Space)+Start_Y-80, Button_Width+50, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_twoArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -494,18 +495,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
     if (_a==0) {
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
         
-        
-        _str=[[@"60_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        _str=[[@"60_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
         else{
-            NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-            NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//            NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//            NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyyMMddHHmmss";
+            NSString *date = [formatter stringFromDate:[NSDate date]];
             
-            
-            _str=[[@"62_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+            _str=[[@"62_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     
     

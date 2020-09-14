@@ -10,10 +10,16 @@
 #import "MBProgressHUD.h"
 #import "SSCheckBoxView.h"
 #import "TwentyViewController.h"
+#import "TwentyThreeViewController.h"
+#import "TwentyFourViewController.h"
 @interface nineteenViewController ()
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn2;
+@property(nonatomic,strong)SSCheckBoxView *tmpBtn3;
+
 @property(nonatomic,strong)TwentyViewController*twenty;
+@property(nonatomic,strong)TwentyThreeViewController*twentythree;
+@property(nonatomic,strong)TwentyFourViewController*twentyfour;
 
 @end
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -52,6 +58,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
     [_lb1 setTextColor:UIColorFromRGB(0x034f9a)];
     [_lb2 setTextColor:UIColorFromRGB(0x034f9a)];
+    [_lb3 setTextColor:UIColorFromRGB(0x034f9a)];
+
    
     
     
@@ -61,6 +69,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     _chooseArray1=[[NSMutableArray alloc] init];
     _chooseArray2=[[NSMutableArray alloc] init];
+    _chooseArray3=[[NSMutableArray alloc] init];
+
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     if ([user objectForKey:@"english"]) {
@@ -76,6 +86,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
             _twoArray=[[NSMutableArray alloc] initWithObjects:@"YES",@"NO",nil];
                 _oneArray=[[NSMutableArray alloc] initWithObjects:@"YES",@"NO",nil];
+        _threeArray=[[NSMutableArray alloc] initWithObjects:@"YES",@"NO",nil];
+
         
         
         [_next setImage:[UIImage imageNamed:@"继续答题英文.png"] forState:UIControlStateNormal];
@@ -94,6 +106,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _twoArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
         
         _oneArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+        _threeArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+
         
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"TAB3"ofType:@"png"];
@@ -175,8 +189,47 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
     }
     
-    
+    #pragma 第三个问题
+        
+        
+        
+        
+        
+        for (int i=0; i<_threeArray.count; i++) {
+            
+            //        float x = i%5;
+            //
+            //        float y = i/5;
+            
+            
+            
+            
+            
+            SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+80, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+            NSString *a1 = [_threeArray objectAtIndex:i];
+            
+            [cb setText:a1];
+            
+            
+            [cb setStateChangedTarget:self selector:@selector(change46:)];
+            
+            [_chooseArray3 addObject:cb];
+            [_view2 addSubview:cb];
+            
+    //        _lb3.hidden=YES;
+    //        cb.hidden=YES;
+    //        _btn1.hidden=YES;
+    //        _img1.hidden=YES;
+            
+            
+            
+            
+            
+        }
+        
 }
+
+
 
 -(void)change44:(SSCheckBoxView*)cbv{
     
@@ -207,6 +260,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _tmpBtn2.checked=NO;
     }
     _tmpBtn2= cbv;
+    
+}
+-(void)change46:(SSCheckBoxView*)cbv{
+    
+    NSLog(@"复选框状态: %@",cbv.checked ? @"选中" : @"没选中");
+    
+    if(_tmpBtn3== cbv) {
+        //上次点击过的按钮，不做处理
+    } else{
+        //本次点击的按钮设为红色
+        cbv.checked=YES;
+        //将上次点击过的按钮设为黑色
+        _tmpBtn3.checked=NO;
+    }
+    _tmpBtn3= cbv;
     
 }
 
@@ -270,12 +338,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     int isok1=0;
     int isok2=0;
+    int isok3=0;
+
    
     
     
     
     NSMutableArray*Q1=[[NSMutableArray alloc] init];
     NSMutableArray*Q2=[[NSMutableArray alloc] init];
+    NSMutableArray*Q3=[[NSMutableArray alloc] init];
+
     
     
     for(int i=0;i<[_chooseArray1 count];i++)
@@ -307,8 +379,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
         }
     }
+    for(int i=0;i<[_chooseArray3 count];i++)
+    {
+        
+        SSCheckBoxView* pp=[_chooseArray3 objectAtIndex:i];
+        
+        if(pp.checked==1)
+        {
+            
+            isok3=1;
+            [Q3 addObject:pp.textLabel.text];
+            
+        }
+    }
     
-        if (!isok2) {
+        if (!isok1||!isok2||!isok3) {
         
         
         //||_radioGroup1.sValue==nil||_radioGroup2.sValue==nil||_radioGroup3.sValue==nil||_radioGroup4.sValue==nil||_radioGroup5.sValue==nil||_radioGroup6.sValue==nil
@@ -334,10 +419,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         NSDictionary *q1 =@{@"choose":Q1};
         NSDictionary *q2 =@{@"choose":Q2};
+        NSDictionary *q3 =@{@"choose":Q3};
+
     
         
         NSDictionary*num1=@{@"44":q1};
         NSDictionary*num2=@{@"45":q2};
+        NSDictionary*num3=@{@"46":q3};
+
       
         
         
@@ -367,6 +456,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [discardedItems addObject:kk];
                 
             }
+            if ([kk objectForKey:@"46"]) {
+                
+                NSLog(@"%@",kk);
+                
+                [discardedItems addObject:kk];
+                
+            }
             
             
             
@@ -384,7 +480,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,nil];
+        NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,num3,nil];
         
         [arr addObjectsFromArray:[choose objectForKey:@"choose"]];
         
@@ -400,16 +496,56 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //        
 //        [self.navigationController pushViewController:receive animated:YES];
 
-        if (!_twenty) {
-            
-            _twenty= [self.storyboard instantiateViewControllerWithIdentifier:@"20Page"];
-        }
+//        if (!_twenty) {
+//
+//            _twenty= [self.storyboard instantiateViewControllerWithIdentifier:@"20Page"];
+//        }
+//
+//
+//
+//        [self.navigationController pushViewController:_twenty animated:YES];
+//
+//    }
         
+        NSUserDefaults*zhushe=[NSUserDefaults standardUserDefaults];
+               NSUserDefaults*anquan=[NSUserDefaults standardUserDefaults];
         
+        NSLog(@"%@,%@",[zhushe objectForKey:@"dongmai"],[anquan objectForKey:@"anquan"]);
         
-        [self.navigationController pushViewController:_twenty animated:YES];
+       if ([zhushe objectForKey:@"dongmai"]&&![anquan objectForKey:@"anquan"]) {
+    //            TwentyViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+    //
+    //            [self.navigationController pushViewController:receive animated:YES];
 
+                if (!_twentyfour) {
+                    
+                    _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+                }
+                
+                
+                
+                [self.navigationController pushViewController:_twentyfour animated:YES];
+            }
+            else{
+                
+    //            TwentyViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+    //
+    //            [self.navigationController pushViewController:receive animated:YES];
+            
+                if (!_twentythree) {
+                    
+                    _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+                }
+                
+                
+                
+                [self.navigationController pushViewController:_twentythree animated:YES];
+            
+            }
     }
+    
+    
+    
     
 }
 @end

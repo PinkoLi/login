@@ -24,6 +24,8 @@
 @property (nonatomic, assign)NSInteger j;
 @property (nonatomic, assign)NSInteger k;
 @property (nonatomic, assign)NSInteger l;
+@property (nonatomic, assign)NSInteger n;
+
 
 @property (nonatomic, assign)NSInteger m;
 
@@ -50,6 +52,7 @@
     _j=0;
     _k=0;
     _l=0;
+    _n=0;
     _z=0;
     
     
@@ -81,33 +84,35 @@
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"43"] objectForKey:@"choose"]containsObject:@"≥10分钟"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"43"] objectForKey:@"choose"]containsObject:@"≥10minutes"]) {
                 ++_d;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"淤青"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Bruise"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"淤青"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Bruise"] ) {
                 ++_e;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"皮下血肿"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Bleeding"]) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"皮下血肿"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Bleeding"]) {
                 ++_f;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"出血"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Local infection"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"出血"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Local infection"] ) {
                 ++_g;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"动脉血管痉挛"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Thrombus"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"动脉血管痉挛"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Thrombus"] ) {
                 ++_h;
             }
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"局部感染"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Pseudoaneurysm"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"局部感染"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Pseudoaneurysm"] ) {
                 ++_i;
             }
             
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"血栓"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Subcutaneous hematoma"]) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"血栓"] ||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Subcutaneous hematoma"]) {
                 ++_j;
             }
-            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"假性动脉瘤"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Arterial vasospasm"] ) {
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"假性动脉瘤"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Arterial vasospasm"] ) {
                 ++_k;
             }
-            if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"] lastObject]containsString:@"其他"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]lastObject]containsString:@"Other"] ) {
+            if ([[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"] lastObject]containsString:@"其他"]||[[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]lastObject]containsString:@"Other"] ) {
                 ++_l;
             }
-            
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"64"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"46"] objectForKey:@"choose"]containsObject:@"Bruise"] ) {
+                ++_n;
+            }
             
            
             
@@ -117,6 +122,12 @@
         
         
     }
+    
+    if (_n!=0) {
+           
+           NSString*aa=[[@"否" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)_e]] stringByAppendingFormat:@"例"];
+           [_guanchaArr addObject:aa];
+       }
     if (_e!=0) {
         
         NSString*aa=[[@"淤青" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)_e]] stringByAppendingFormat:@"例"];
@@ -194,7 +205,7 @@
     
     
     _barChart2 = [[ZFBarChart alloc] initWithFrame:CGRectMake(160, 420, 500, 206)];
-    _barChart2.topicLabel.text = @"如当场观察到有并发症";
+    _barChart2.topicLabel.text = @"当场是否出现并发症及后续的处理";
     
     _barChart2.dataSource = self;
     _barChart2.delegate = self;
@@ -245,7 +256,7 @@
     long a2=0;
     
     a1=_a+_b+_c+_d;
-    a2=_e+_f+_g+_h+_i+_j+_k+_l;
+    a2=_n+_e+_f+_g+_h+_i+_j+_k+_l;
     
     if (a1==0) {
         _a=0;
@@ -269,6 +280,7 @@
         _j=0;
         _k=0;
         _l=0;
+        _n=0;
     }
     else{
         
@@ -280,6 +292,8 @@
         _j=_j*1.0/a2*100;
         _k=_k*1.0/a2*100;
         _l=_l*1.0/a2*100;
+        _n=_n*1.0/a2*100;
+
         
     }
 
@@ -300,6 +314,8 @@
     NSString*id10=[[NSString stringWithFormat:@"%ld",(long)_j] stringByAppendingString:@"%"];
     NSString*id11=[[NSString stringWithFormat:@"%ld",(long)_k] stringByAppendingString:@"%"];
     NSString*id12=[[NSString stringWithFormat:@"%ld",(long)_l] stringByAppendingString:@"%"];
+    NSString*id14=[[NSString stringWithFormat:@"%ld",(long)_n] stringByAppendingString:@"%"];
+
     
     
     if (_a+_b+_c+_d==0) {
@@ -337,7 +353,7 @@
         
         NSLog(@"%ld",(long)chart.tag);
         
-        return @[id5,id6,id7,id8,id9,id10,id11,id12];
+        return @[id14,id5,id6,id7,id8,id9,id10,id11,id12];
     }
     
     
@@ -350,7 +366,7 @@
     }
     else{
         
-        return @[@"淤青",@"皮下血肿",@"出血",@"动脉血管痉挛",@"局部感染",@"血栓",@"假性动脉瘤",@"其他"];
+        return @[@"否",@"淤青",@"皮下血肿",@"出血",@"动脉血管痉挛",@"局部感染",@"血栓",@"假性动脉瘤",@"其他"];
     }
 }
 

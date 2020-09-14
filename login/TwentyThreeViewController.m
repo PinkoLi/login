@@ -37,6 +37,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     // Do any additional setup after loading the view.
     NSUserDefaults *keshi = [NSUserDefaults standardUserDefaults];
     NSUserDefaults*zhushe=[NSUserDefaults standardUserDefaults];
+    NSUserDefaults*gongju=[NSUserDefaults standardUserDefaults];
+
     NSUserDefaults*anquan=[NSUserDefaults standardUserDefaults];
     _keshi.text=[keshi objectForKey:@"keshi"];
     
@@ -151,7 +153,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [_chooseArray1 addObject:cb];
         [_view2 addSubview:cb];
         
-        if (![zhushe objectForKey:@"zhushe"]) {
+        if ([[zhushe objectForKey:@"zhushe"]isEqualToString:@"1"]) {
             cb.hidden=YES;
             _lb1.hidden=YES;
             _btn1.hidden=YES;
@@ -370,7 +372,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     NSUserDefaults *zhushe = [NSUserDefaults standardUserDefaults];
     
-    if ([[zhushe objectForKey:@"zhushe"] isEqualToString:@"1"]) {
+    if ([[zhushe objectForKey:@"zhushe"] isEqualToString:@"0"]) {
     
     int isok1=0;
     
@@ -730,26 +732,32 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     if (_a==0) {
        
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
         
-        
-        _str=[[@"53_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
+        _str=[[@"53_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     else if(_a==1){
     
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
         
-        
-        _str=[[@"54_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
+        _str=[[@"54_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     else{
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
         
-        
-        _str=[[@"55_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        _str=[[@"55_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
    
     

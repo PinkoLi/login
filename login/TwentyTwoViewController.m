@@ -11,12 +11,18 @@
 #import "SSCheckBoxView.h"
 #import "TwentyThreeViewController.h"
 #import "TwentyFourViewController.h"
+#import "TwentyTwo2ViewController.h"
+
 @interface TwentyTwoViewController ()
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn2;
 @property(nonatomic,strong)SSCheckBoxView *tmpBtn3;
+@property(nonatomic,strong)SSCheckBoxView *tmpBtn4;
+
 @property(nonatomic,strong)TwentyThreeViewController*twentythree;
 @property(nonatomic,strong)TwentyFourViewController*twentyfour;
+@property(nonatomic,strong)TwentyTwo2ViewController*twentytwo2;
+
 @property(nonatomic)bool isFullScreen;
 @end
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -56,6 +62,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [_lb1 setTextColor:UIColorFromRGB(0x034f9a)];
     [_lb2 setTextColor:UIColorFromRGB(0x034f9a)];
     [_lb3 setTextColor:UIColorFromRGB(0x034f9a)];
+    [_lb4 setTextColor:UIColorFromRGB(0x034f9a)];
+
     
     
   
@@ -63,6 +71,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     _chooseArray1=[[NSMutableArray alloc] init];
     _chooseArray2=[[NSMutableArray alloc] init];
     _chooseArray3=[[NSMutableArray alloc] init];
+    _chooseArray4=[[NSMutableArray alloc] init];
+
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     if ([user objectForKey:@"english"]) {
@@ -97,9 +107,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         _twoArray=[[NSMutableArray alloc] initWithObjects:@"<5ml",@"5-10ml",@">10ml",nil];
 
-        _threeArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+        _threeArray=[[NSMutableArray alloc] initWithObjects:@"回输",@"废弃",nil];
 
         _oneArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+        _fourArray=[[NSMutableArray alloc] initWithObjects:@"是",@"否",nil];
+
         
         [_next setImage:[UIImage imageNamed:@"继续答题.png"] forState:UIControlStateNormal];
         NSString *path = [[NSBundle mainBundle]pathForResource:@"TAB3"ofType:@"png"];
@@ -177,7 +189,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y-100, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y-110, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_twoArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -213,7 +225,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+80, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+        SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+20, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
         NSString *a1 = [_threeArray objectAtIndex:i];
         
         [cb setText:a1];
@@ -229,11 +241,64 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //        _btn1.hidden=YES;
 //        _img1.hidden=YES;
         
-        
+       NSUserDefaults *fengbi = [NSUserDefaults standardUserDefaults];
+                   if (![[fengbi objectForKey:@"fengbi"]isEqualToString:@"1"]) {
+                       cb.hidden=YES;
+                       _lb3.hidden=YES;
+                        _img1.hidden=YES;
+                       _btn1.hidden=YES;
+
+                       
+                   }
+                   else{
+                       
+                       cb.hidden=NO;
+                       _lb3.hidden=NO;
+                        _img1.hidden=NO;
+                       _btn1.hidden=NO;
+
+                      
+                   }
         
         
         
     }
+    
+    #pragma 第四个问题
+     
+    
+     
+     
+     
+     
+     for (int i=0; i<_fourArray.count; i++) {
+         
+         //        float x = i%5;
+         //
+         //        float y = i/5;
+         
+         
+         
+         
+         
+          SSCheckBoxView*cb = [[SSCheckBoxView alloc] initWithFrame:CGRectMake( i*(Button_Width-100 + Width_Space) + Start_X,  (Button_Height + Height_Space)+Start_Y+160, Button_Width-100, Button_Height) style:kSSCheckBoxViewStyleMono checked:NO];
+         NSString *a1 = [_fourArray objectAtIndex:i];
+         
+         [cb setText:a1];
+         
+         
+         [cb setStateChangedTarget:self selector:@selector(change49:)];
+         
+         [_chooseArray4 addObject:cb];
+         [_view2 addSubview:cb];
+      
+         
+         
+         
+         
+         
+         
+     }
     
 }
 
@@ -339,6 +404,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     _tmpBtn3= cbv;
     
 }
+-(void)change49:(SSCheckBoxView*)cbv{
+    
+    NSLog(@"复选框状态: %@",cbv.checked ? @"选中" : @"没选中");
+    
+    if(_tmpBtn4== cbv) {
+        //上次点击过的按钮，不做处理
+    } else{
+        //本次点击的按钮设为红色
+        cbv.checked=YES;
+        //将上次点击过的按钮设为黑色
+        _tmpBtn4.checked=NO;
+    }
+    _tmpBtn4= cbv;
+    
+}
 
 
 - (void)didReceiveMemoryWarning {
@@ -401,6 +481,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     int isok1=0;
     int isok2=0;
     int isok3=0;
+    int isok4=0;
+
     
     
     
@@ -408,6 +490,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSMutableArray*Q1=[[NSMutableArray alloc] init];
     NSMutableArray*Q2=[[NSMutableArray alloc] init];
     NSMutableArray*Q3=[[NSMutableArray alloc] init];
+    NSMutableArray*Q4=[[NSMutableArray alloc] init];
+
     
     
     for(int i=0;i<[_chooseArray1 count];i++)
@@ -437,29 +521,42 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
         }
     }
+    for(int i=0;i<[_chooseArray4 count];i++)
+       {
+           
+           SSCheckBoxView* pp=[_chooseArray4 objectAtIndex:i];
+           
+           if(pp.checked==1)
+           {
+               
+               isok4=1;
+               [Q4 addObject:pp.textLabel.text];
+               
+           }
+       }
     
     
-        if (!isok3) {
-        
-        
-        //||_radioGroup1.sValue==nil||_radioGroup2.sValue==nil||_radioGroup3.sValue==nil||_radioGroup4.sValue==nil||_radioGroup5.sValue==nil||_radioGroup6.sValue==nil
-        
-        //NSLog(@"%@",);
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            if (![user objectForKey:@"english"]) {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请填写完整" message:@"请选择对应的选项" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-                [alert show];
-            }else{
-                
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Please complete the form" message:@"Please select the option" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
-            }
-
-        
-        
-    }
+//        if (!isok3) {
+//
+//
+//        //||_radioGroup1.sValue==nil||_radioGroup2.sValue==nil||_radioGroup3.sValue==nil||_radioGroup4.sValue==nil||_radioGroup5.sValue==nil||_radioGroup6.sValue==nil
+//
+//        //NSLog(@"%@",);
+////            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+////            if (![user objectForKey:@"english"]) {
+////                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请填写完整" message:@"请选择对应的选项" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+////                [alert show];
+////            }else{
+////
+////                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Please complete the form" message:@"Please select the option" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+////                [alert show];
+////            }
+//
+//
+//
+//    }
     
-        else{
+      //  else{
             int a=0;
     
     for (SSCheckBoxView*pp in _chooseArray1) {
@@ -489,7 +586,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             if (a==1) {
                 
             
-    if (!isok2) {
+                if (!isok2||!isok4) {
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         if (![user objectForKey:@"english"]) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请填写完整" message:@"请选择对应的选项" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
@@ -508,10 +605,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSDictionary *q1 =@{@"choose":Q1};
         NSDictionary *q2 =@{@"choose":Q2};
         NSDictionary *q3 =@{@"choose":Q3};
+        NSDictionary *q4 =@{@"choose":Q4};
+
         
-        NSDictionary*num1=@{@"50":q1};
-        NSDictionary*num2=@{@"51":q2};
-        NSDictionary*num3=@{@"52":q3};
+        NSDictionary*num1=@{@"49":q1};
+        NSDictionary*num2=@{@"50":q2};
+        NSDictionary*num3=@{@"51":q3};
+        NSDictionary*num4=@{@"52":q4};
+
         
         
         
@@ -547,6 +648,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [discardedItems addObject:kk];
                 
             }
+            if ([kk objectForKey:@"49"]) {
+                          
+                          NSLog(@"%@",kk);
+                          
+                          [discardedItems addObject:kk];
+                          
+                      }
             
             
             
@@ -563,7 +671,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         
         
-        NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,num3,nil];
+        NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,num3,num4,nil];
         
         [arr addObjectsFromArray:[choose objectForKey:@"choose"]];
         
@@ -573,41 +681,47 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [choose synchronize];
         NSLog(@"111111111111111%@",arr);
     
-        NSUserDefaults*zhushe=[NSUserDefaults standardUserDefaults];
-        NSUserDefaults*anquan=[NSUserDefaults standardUserDefaults];
         
         
-        if ([zhushe objectForKey:@"zhushe"]||[anquan objectForKey:@"anquan"]) {
-//            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
-//            
-//            [self.navigationController pushViewController:receive animated:YES];
-
         
-            if (!_twentythree) {
-                
-                _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
-            }
-            
-            
-            
-            [self.navigationController pushViewController:_twentythree animated:YES];
-        }
-        else{
-//            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
-//            
-//            [self.navigationController pushViewController:receive animated:YES];
+//        if ([zhushe objectForKey:@"zhushe"]||[anquan objectForKey:@"anquan"]) {
+////            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+////
+////            [self.navigationController pushViewController:receive animated:YES];
+//
+//
+//            if (!_twentythree) {
+//
+//                _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+//            }
+//
+//
+//
+//            [self.navigationController pushViewController:_twentythree animated:YES];
+//        }
+//        else{
+////            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+////
+////            [self.navigationController pushViewController:receive animated:YES];
+//
+//            if (!_twentyfour) {
+//
+//                _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+//            }
+//
+//
+//
+//            [self.navigationController pushViewController:_twentyfour animated:YES];
+//        }
 
-            if (!_twentyfour) {
-                
-                _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
-            }
-            
-            
-            
-            [self.navigationController pushViewController:_twentyfour animated:YES];
-        }
-
+    if (!_twentytwo2) {
+        
+        _twentytwo2= [self.storyboard instantiateViewControllerWithIdentifier:@"22-1Page"];
+    }
     
+    
+    
+    [self.navigationController pushViewController:_twentytwo2 animated:YES];
     }
         
 }
@@ -619,10 +733,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSDictionary *q1 =@{@"choose":Q1};
             //NSDictionary *q2 =@{@"choose":Q2};
             NSDictionary *q3 =@{@"choose":Q3};
+        NSDictionary *q4 =@{@"choose":Q4};
+
             
-            NSDictionary*num1=@{@"50":q1};
+            NSDictionary*num1=@{@"49":q1};
             //NSDictionary*num2=@{@"51":q2};
-            NSDictionary*num3=@{@"52":q3};
+            NSDictionary*num3=@{@"51":q3};
+            NSDictionary*num4=@{@"52":q4};
+        
             
             
             
@@ -637,7 +755,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             for (NSDictionary*kk in lex) {
                 
-                if ([kk objectForKey:@"50"]) {
+                if ([kk objectForKey:@"51"]) {
                     
                     NSLog(@"%@",kk);
                     
@@ -645,6 +763,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     
                 }
                                 if ([kk objectForKey:@"52"]) {
+                    
+                    NSLog(@"%@",kk);
+                    
+                    [discardedItems addObject:kk];
+                    
+                }
+                if ([kk objectForKey:@"49"]) {
                     
                     NSLog(@"%@",kk);
                     
@@ -667,7 +792,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             
             
-            NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num3,nil];
+            NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num3,num4,nil];
             
             [arr addObjectsFromArray:[choose objectForKey:@"choose"]];
             
@@ -678,53 +803,59 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSLog(@"111111111111111%@",arr);
         
         
-        NSUserDefaults*zhushe=[NSUserDefaults standardUserDefaults];
-        NSUserDefaults*anquan=[NSUserDefaults standardUserDefaults];
+    
         
         
-        if ([zhushe objectForKey:@"zhushe"]||[anquan objectForKey:@"anquan"]) {
-//            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
-//            
-//            [self.navigationController pushViewController:receive animated:YES];
+//        if ([zhushe objectForKey:@"zhushe"]||[anquan objectForKey:@"anquan"]) {
+////            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+////
+////            [self.navigationController pushViewController:receive animated:YES];
+//
+//
+//            if (!_twentythree) {
+//
+//                _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
+//            }
+//
+//
+//
+//            [self.navigationController pushViewController:_twentythree animated:YES];
+//        }
+//        else{
+////            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+////
+////            [self.navigationController pushViewController:receive animated:YES];
+//
+//
+//            if (!_twentyfour) {
+//
+//                _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
+//            }
+//
+//
+//
+//            [self.navigationController pushViewController:_twentyfour animated:YES];
+//        }
 
         
-            if (!_twentythree) {
-                
-                _twentythree= [self.storyboard instantiateViewControllerWithIdentifier:@"23Page"];
-            }
+        if (!_twentytwo2) {
             
-            
-            
-            [self.navigationController pushViewController:_twentythree animated:YES];
-        }
-        else{
-//            TwentyTwoViewController *receive = [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
-//            
-//            [self.navigationController pushViewController:receive animated:YES];
-
-        
-            if (!_twentyfour) {
-                
-                _twentyfour= [self.storyboard instantiateViewControllerWithIdentifier:@"24Page"];
-            }
-            
-            
-            
-            [self.navigationController pushViewController:_twentyfour animated:YES];
-        }
-
-        
-        
-            
-            
-            
-        
-        
+            _twentytwo2= [self.storyboard instantiateViewControllerWithIdentifier:@"22-1Page"];
         }
         
         
+        
+        [self.navigationController pushViewController:_twentytwo2 animated:YES];
+            
+            
+            
+        
+        
+        }
+        
+        
 
-            }
+            
         
         
 }
@@ -753,11 +884,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //获取Documents文件夹目录
     NSUserDefaults *number = [NSUserDefaults standardUserDefaults];
     
-    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//    NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//    NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
     
-    
-    NSString*str=[[@"52_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *date = [formatter stringFromDate:[NSDate date]];
+    NSString*str=[[@"52_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [path objectAtIndex:0];

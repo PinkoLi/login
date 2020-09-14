@@ -36,6 +36,9 @@
 @property (weak, nonatomic)NSString*numberStr2;
 @property (strong, nonatomic)NSString*chooseStr;
 @property (strong, nonatomic)NSString*bianhao;
+@property (strong, nonatomic)NSString*research_id;
+
+
 @property (strong, nonatomic)NSString*bianhao2;
 @property (strong, nonatomic) IBOutlet UILabel *fen;
 - (IBAction)post:(id)sender;
@@ -53,6 +56,8 @@
 @property (strong, nonatomic)NSMutableArray*chooseArray1;
 @property (strong, nonatomic)NSMutableArray*thisArr;
 @property (strong, nonatomic)NSMutableArray*thisArr2;
+@property (strong, nonatomic)NSMutableArray*ksArr;
+
 
 @property (strong, nonatomic)NSMutableArray*allArr;
 - (IBAction)postWenJuan:(id)sender;
@@ -68,6 +73,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *hushiErweimaLb;
 @property (weak, nonatomic) IBOutlet UILabel *chooseKeshi;
 @property (weak, nonatomic) IBOutlet UILabel *fuzhuNumberLb;
+- (IBAction)zhuxiao:(id)sender;
 
 @property (strong, nonatomic)NSMutableArray*photoArr;
 @end

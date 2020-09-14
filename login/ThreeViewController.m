@@ -553,9 +553,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         NSDictionary *q2 =@{@"choose":Q2};
         NSDictionary *q3 =@{@"choose":Q3};
         
-        NSDictionary*num1=@{@"5-1":q1};
-         NSDictionary*num2=@{@"5-2":q2};
-         NSDictionary*num3=@{@"5-3":q3};
+        NSDictionary*num1=@{@"5.1":q1};
+         NSDictionary*num2=@{@"5.2":q2};
+         NSDictionary*num3=@{@"5.3":q3};
         
         
         
@@ -570,21 +570,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         for (NSDictionary*kk in lex) {
             
-            if ([kk objectForKey:@"5-1"]) {
+            if ([kk objectForKey:@"5.1"]) {
                 
                 NSLog(@"%@",kk);
                 
                 [discardedItems addObject:kk];
                 
             }
-            if ([kk objectForKey:@"5-2"]) {
+            if ([kk objectForKey:@"5.2"]) {
                 
                 NSLog(@"%@",kk);
                 
                 [discardedItems addObject:kk];
                 
             }
-            if ([kk objectForKey:@"5-3"]) {
+            if ([kk objectForKey:@"5.3"]) {
                 
                 NSLog(@"%@",kk);
                 
@@ -739,20 +739,24 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (_a==0) {
        
         
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
         
-        
-        _str=[[@"5-1_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
+        _str=[[@"5-1_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     else{
        
         
-        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
-        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
+//        NSUserDefaults *photoList = [NSUserDefaults standardUserDefaults];
+//        NSString*photoName=[NSString stringWithFormat:@"%d",[[photoList objectForKey:@"photoList"] integerValue]];
         
-        
-        _str=[[@"5-2_" stringByAppendingString:photoName] stringByAppendingString:@".jpg"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *date = [formatter stringFromDate:[NSDate date]];
+        _str=[[@"5-2_" stringByAppendingString:date] stringByAppendingString:@".jpg"];
     }
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [path objectAtIndex:0];

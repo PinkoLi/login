@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lb1;
 @property (weak, nonatomic) IBOutlet UILabel *lb2;
 @property (weak, nonatomic) IBOutlet UILabel *lb3;
+@property (strong, nonatomic) IBOutlet UILabel *lb4;
 
 @property (weak, nonatomic) IBOutlet UIButton *btn1;
 - (IBAction)takePhoto:(id)sender;
@@ -35,8 +36,12 @@
 @property(strong ,nonatomic )NSMutableArray*chooseArray1;
 @property(strong ,nonatomic )NSMutableArray*chooseArray2;
 @property(strong ,nonatomic )NSMutableArray*chooseArray3;
+@property(strong ,nonatomic )NSMutableArray*chooseArray4;
+
 @property(strong ,nonatomic )NSMutableArray*oneArray;
 @property(strong ,nonatomic )NSMutableArray*twoArray;
 @property(strong ,nonatomic )NSMutableArray*threeArray;
+@property(strong ,nonatomic )NSMutableArray*fourArray;
+
 
 @end

@@ -324,15 +324,20 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             //NSDictionary *q2 =@{@"text":_textLb2.text};
             NSDictionary *q1 =@{@"choose":Q1};
             NSDictionary *q2 =@{@"choose":Q2};
-            NSDictionary *q3 =@{@"name":[user objectForKey:@"name"]};
-            NSDictionary *q4 =@{@"keshi":[keshi objectForKey:@"keshi"]};
-            NSDictionary *q5 =@{@"number":[number objectForKey:@"number"]};
+//            NSDictionary *q3 =@{@"name":[user objectForKey:@"name"]};
+//            NSDictionary *q4 =@{@"keshi":[keshi objectForKey:@"keshi"]};
+//            NSDictionary *q5 =@{@"number":[number objectForKey:@"number"]};
+            
+            NSString*b=[self shuffledAlphabet];
+           // NSDictionary *q6 =@{@"pid":b};
+            
             
             NSDictionary*num1=@{@"71":q1};
             NSDictionary*num2=@{@"72":q2};
-            NSDictionary*num3=@{@"name":q3};
-            NSDictionary*num4=@{@"keshi":q4};
-            NSDictionary*num5=@{@"number":q5};
+//            NSDictionary*num3=@{@"name":q3};
+//            NSDictionary*num4=@{@"keshi":q4};
+//            NSDictionary*num5=@{@"number":q5};
+//            NSDictionary*num6=@{@"pid":q6};
             
             
             //        NSMutableArray*arr=[[NSMutableArray alloc] init];
@@ -343,7 +348,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSUserDefaults *shiyan = [NSUserDefaults standardUserDefaults];
             NSUserDefaults *shiyanshi = [NSUserDefaults standardUserDefaults];
             if ([[shiyan objectForKey:@"shiyan"]count]==0) {
-                NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2,num3,num4,num5, nil];
+                NSMutableArray*arr=[NSMutableArray arrayWithObjects:num1,num2, nil];
                 
                 NSArray*arr1=[NSArray arrayWithArray:arr];
                 [shiyan setObject:arr1 forKey:@"shiyan"];
@@ -390,7 +395,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
                 
                 
-                NSMutableArray*arr=[NSMutableArray arrayWithObjects: num1,num2,num3,num4,num5,nil];
+                NSMutableArray*arr=[NSMutableArray arrayWithObjects: num1,num2,nil];
                 
                 [arr addObjectsFromArray:[shiyan objectForKey:@"shiyan"]];
                 
@@ -399,18 +404,41 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [shiyan setObject:arr1 forKey:@"shiyan"];
                 [shiyan synchronize];
                 
-                
+                //[shiyanshi removeObjectForKey:@"shiyanshi"];
+
                 
                 
                 
                 if ([[shiyanshi objectForKey:@"shiyanshi"]count]==0) {
-                    NSMutableArray* allArr=[NSMutableArray arrayWithObject:arr];
-                    NSMutableArray* allArr2=[NSMutableArray arrayWithObject:allArr];
+//                    NSMutableArray* allArr=[NSMutableArray arrayWithObject:arr];
+//                    NSMutableArray* allArr2=[NSMutableArray arrayWithObject:allArr];
+//
+//                    NSArray*arr=[NSArray arrayWithArray:allArr2];
+//                    // NSArray*arr=[NSArray arrayWithArray:[choose objectForKey:@"choose"]];
+//                    [shiyanshi setObject:arr forKey:@"shiyanshi"];
+//                     [shiyan removeObjectForKey:@"shiyan"];
+//                    [shiyanshi synchronize];
+//                    [shiyan synchronize];
                     
-                    NSArray*arr=[NSArray arrayWithArray:allArr2];
-                    // NSArray*arr=[NSArray arrayWithArray:[choose objectForKey:@"choose"]];
-                    [shiyanshi setObject:arr forKey:@"shiyanshi"];
-                     [shiyan removeObjectForKey:@"shiyan"];
+                    
+                    
+                 
+                    
+                    
+                    NSString*local=@"0";
+                    NSString*userid=[user objectForKey:@"userid"];
+                    NSDictionary*data=@{@"number":[number objectForKey:@"number"],@"keshi":[keshi objectForKey:@"keshi"],@"uino":b,@"local":local,@"userid":userid,@"survey_data":arr1};
+                    
+                    
+                   // NSArray*department=[shiyanshi objectForKey:@"shiyanshi"];
+                     NSMutableArray* allArr=[NSMutableArray new];
+                   // [allArr addObject:department];
+                    [allArr addObject:data];
+                    
+                    
+                    NSArray*department2=[NSArray arrayWithArray:allArr];
+                    
+                    [shiyanshi setObject:department2 forKey:@"shiyanshi"];                    [shiyan removeObjectForKey:@"shiyan"];
                     [shiyanshi synchronize];
                     [shiyan synchronize];
 
@@ -420,23 +448,40 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 else{
                     
                     
-                    NSMutableArray* allArr=[NSMutableArray arrayWithObject:arr];
+//                    NSMutableArray* allArr=[NSMutableArray arrayWithObject:arr];
+//
+//                    NSMutableArray* allArr2=[NSMutableArray arrayWithObject:allArr];
+//
+//                    NSLog(@"%@",allArr);
+//
+//                    [allArr2 addObjectsFromArray:[shiyanshi objectForKey:@"shiyanshi"]];
+//
+//
+//
+//                    NSArray*arr=[NSArray arrayWithArray:allArr2];
+//                    [shiyanshi setObject:arr forKey:@"shiyanshi"];
+//                    [shiyan removeObjectForKey:@"shiyan"];
+//
+//                    [shiyanshi synchronize];
+//                    [shiyan synchronize];
+                 
+                   
+                    NSString*local=@"0";
+                    NSString*userid=[user objectForKey:@"userid"];
+                    NSDictionary*data=@{@"number":[number objectForKey:@"number"],@"keshi":[keshi objectForKey:@"keshi"],@"uino":b,@"local":local,@"userid":userid,@"survey_data":arr1};
+                    NSArray*department=[shiyanshi objectForKey:@"shiyanshi"];
+                     NSMutableArray* allArr=[NSMutableArray new];
+                    [allArr addObjectsFromArray:department];
+                    [allArr addObject:data];
+                    NSArray*department2=[NSArray arrayWithArray:allArr];
                     
-                    NSMutableArray* allArr2=[NSMutableArray arrayWithObject:allArr];
-                    
-                    NSLog(@"%@",allArr);
-                    
-                    [allArr2 addObjectsFromArray:[shiyanshi objectForKey:@"shiyanshi"]];
+                    [shiyanshi setObject:department2 forKey:@"shiyanshi"];
                     
                     
-                    
-                    NSArray*arr=[NSArray arrayWithArray:allArr2];
-                    [shiyanshi setObject:arr forKey:@"shiyanshi"];
                     [shiyan removeObjectForKey:@"shiyan"];
-                    
                     [shiyanshi synchronize];
                     [shiyan synchronize];
-                   
+                    
                     
                     
                 }
@@ -453,6 +498,30 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [self.navigationController pushViewController:receive animated:YES];
             
         }
+}
+
+
+
+- (NSString *)shuffledAlphabet {
+    NSString *alphabet = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+    // Get the characters into a C array for efficient shuffling
+    NSUInteger numberOfCharacters = [alphabet length];
+    unichar *characters = calloc(numberOfCharacters, sizeof(unichar));
+    [alphabet getCharacters:characters range:NSMakeRange(0, numberOfCharacters)];
+    
+    // Perform a Fisher-Yates shuffle
+    for (NSUInteger i = 0; i < numberOfCharacters; ++i) {
+        NSUInteger j = (arc4random_uniform(numberOfCharacters - i) + i);
+        unichar c = characters[i];
+        characters[i] = characters[j];
+        characters[j] = c;
+    }
+    
+    // Turn the result back into a string
+    NSString *result = [NSString stringWithCharacters:characters length:numberOfCharacters];
+    free(characters);
+    return result;
 }
 
 /*

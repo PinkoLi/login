@@ -12,6 +12,8 @@
 @property (nonatomic, strong) ZFBarChart * barChart;
 @property (nonatomic, strong) ZFBarChart * barChart2;
 @property (nonatomic, strong) ZFBarChart * barChart3;
+@property (nonatomic, strong) ZFBarChart * barChart4;
+
 @property (nonatomic, assign)NSInteger a;
 @property (nonatomic, assign)NSInteger b;
 @property (nonatomic, assign)NSInteger c;
@@ -29,6 +31,14 @@
 @property (nonatomic, assign)NSInteger m;
 @property (nonatomic, assign)NSInteger n;
 @property (nonatomic, assign)NSInteger o;
+
+@property (nonatomic, assign)NSInteger a1;
+
+@property (nonatomic, assign)NSInteger a2;
+@property (nonatomic, assign)NSInteger a3;
+@property (nonatomic, assign)NSInteger b2;
+@property (nonatomic, assign)NSInteger b3;
+
 @end
 
 @implementation PPTtwoViewController
@@ -46,6 +56,10 @@
     _i=0;
     _j=0;
     _k=0;
+    _a2=0;
+    _a3=0;
+    _b2=0;
+    _b3=0;
      NSUserDefaults *thisArr = [NSUserDefaults standardUserDefaults];
     _cishu.text=[[NSString stringWithFormat:@"%lu",[[thisArr objectForKey:@"thisArr"] count]] stringByAppendingString:@"份"];
     
@@ -95,6 +109,13 @@
             if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"14"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"14"] objectForKey:@"choose"]containsObject:@"NO"] ) {
                 ++_f;
             }
+            
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"15"] objectForKey:@"choose"]containsObject:@"是"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"14"] objectForKey:@"choose"]containsObject:@"NO"] ) {
+                           ++_a2;
+                       }
+            if ([[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"15"] objectForKey:@"choose"]containsObject:@"否"]||[[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"14"] objectForKey:@"choose"]containsObject:@"NO"] ) {
+                           ++_a3;
+                       }
 
 
 
@@ -109,7 +130,7 @@
     NSLog(@"%ld",(long)_k);
     
     
-    _barChart = [[ZFBarChart alloc] initWithFrame:CGRectMake(420, 220, 262, 146)];
+    _barChart = [[ZFBarChart alloc] initWithFrame:CGRectMake(118, 220, 262, 146)];
    // barChart.topicLabel.text = @"xx小学各年级人数";
     
     _barChart.dataSource = self;
@@ -159,7 +180,7 @@
     [_barChart2 strokePath];
     
     
-    _barChart3 = [[ZFBarChart alloc] initWithFrame:CGRectMake(418, 456, 200, 146)];
+    _barChart3 = [[ZFBarChart alloc] initWithFrame:CGRectMake(418, 220, 200, 146)];
      _barChart3.topicLabel.text = @"是否获取最低限度要求";
     
     _barChart3.dataSource = self;
@@ -181,6 +202,30 @@
     //barChart.yLineSectionCount = 10;
     [self.view addSubview:_barChart3];
     [_barChart3 strokePath];
+    
+    
+    _barChart4 = [[ZFBarChart alloc] initWithFrame:CGRectMake(418, 456, 230, 146)];
+      _barChart4.topicLabel.text = @"是否测量并记录患者的体温";
+     
+     _barChart4.dataSource = self;
+     _barChart4.delegate = self;
+     
+    // barChart3.unit = @"人";
+     //    barChart.xLineValueArray = [NSMutableArray arrayWithObjects:@"50", @"30", nil];
+     //    barChart.xLineTitleArray = [NSMutableArray arrayWithObjects:@"医生", @"护士", nil];
+     // barChart.yLineMaxValue = 500;
+     _barChart4.isAnimated = NO;
+     
+     //    self.barChart.isResetAxisLineMinValue = YES;
+     _barChart4.isResetAxisLineMaxValue = NO;
+     //    self.barChart.isShowAxisLineValue = NO;
+     //    self.barChart.valueLabelPattern = kPopoverLabelPatternBlank;
+     _barChart4.isShowSeparate = YES;
+     
+      _barChart4.tag=104;
+     //barChart.yLineSectionCount = 10;
+     [self.view addSubview:_barChart4];
+     [_barChart4 strokePath];
 
     
     
@@ -207,12 +252,26 @@
     _i=0;
     _j=0;
     _l=0;
+    _a1=0;
+    
 
     
     _i=_c+_d;
     _j=_e+_f;
     _l=_a+_b+_k;
+    _a1=_a2+_a3;
     NSLog(@"%ld",(long)_i);
+    
+    
+    if (_a1==0) {
+        _b2=0;
+        _b3=0;
+    }
+    else{
+        _b2=_a2*1.0/_a1*100;
+        _b3=_a3*1.0/_a1*100;
+    
+    }
     
     
     if (_l==0) {
@@ -268,6 +327,10 @@
     NSString*id7=[[NSString stringWithFormat:@"%ld",(long)_m] stringByAppendingString:@"%"];
     NSString*id8=[[NSString stringWithFormat:@"%ld",(long)_n] stringByAppendingString:@"%"];
     NSString*id9=[[NSString stringWithFormat:@"%ld",(long)_o] stringByAppendingString:@"%"];
+    
+    NSString*id10=[[NSString stringWithFormat:@"%ld",(long)_b2] stringByAppendingString:@"%"];
+    NSString*id11=[[NSString stringWithFormat:@"%ld",(long)_b3] stringByAppendingString:@"%"];
+
    
     
     
@@ -290,10 +353,15 @@
         
     return @[id5,id6];
     }
-      else{
+    else if(chart.tag==103){
    
    return @[id3,id4];
-   }
+    }
+    else {
+        return @[id10,id11];
+
+        
+    }
     
   
 }
