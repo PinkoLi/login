@@ -3845,7 +3845,7 @@
                                             <action selector="nextBtn:" destination="GsG-GX-3oG" eventType="touchUpInside" id="5ov-wk-xXm"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="44、如未完全止血，是否重新按压直至止血 (单选)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="79x-iU-o1J">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="44、如未完全止血，是否重新按压直至止血 (单选非必选)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="79x-iU-o1J">
                                         <rect key="frame" x="35" y="39" width="852" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3860,7 +3860,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="46、如有并发症，是否立即进行正确处理" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9a-Gv-VUP">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="46、如有并发症，是否立即进行正确处理(单选非必选)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9a-Gv-VUP">
                                         <rect key="frame" x="35" y="346" width="803" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -7910,7 +7910,7 @@
         <segue reference="5eW-tW-9i6"/>
         <segue reference="phV-1a-vaP"/>
         <segue reference="cO9-x5-h75"/>
-        <segue reference="N8j-gA-ehG"/>
+        <segue reference="Rvv-Vi-PIJ"/>
         <segue reference="nyG-Mh-F4D"/>
     </inferredMetricsTieBreakers>
     <resources>

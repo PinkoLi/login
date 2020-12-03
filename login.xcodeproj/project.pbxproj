@@ -372,7 +372,7 @@
 		CB3FDA381DA1785D000F7AD7 /* SevenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SevenViewController.h; sourceTree = "<group>"; };
 		CB3FDA391DA1785D000F7AD7 /* SevenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SevenViewController.m; sourceTree = "<group>"; };
 		CB3FDA3B1DA18884000F7AD7 /* eightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eightViewController.h; sourceTree = "<group>"; };
-		CB3FDA3C1DA18884000F7AD7 /* eightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = eightViewController.m; sourceTree = "<group>"; };
+		CB3FDA3C1DA18884000F7AD7 /* eightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = eightViewController.m; sourceTree = "<group>"; tabWidth = 5; };
 		CB3FDA3E1DA234E9000F7AD7 /* nightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nightViewController.h; sourceTree = "<group>"; };
 		CB3FDA3F1DA234E9000F7AD7 /* nightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nightViewController.m; sourceTree = "<group>"; };
 		CB3FDA441DA24D57000F7AD7 /* tenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tenViewController.h; sourceTree = "<group>"; };

@@ -393,9 +393,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }
     }
     
-        if (!isok1||!isok2||!isok3) {
+       // if (!isok1||!isok2||!isok3) {
         
-        
+          if (!isok2) {
         //||_radioGroup1.sValue==nil||_radioGroup2.sValue==nil||_radioGroup3.sValue==nil||_radioGroup4.sValue==nil||_radioGroup5.sValue==nil||_radioGroup6.sValue==nil
         
         //NSLog(@"%@",);

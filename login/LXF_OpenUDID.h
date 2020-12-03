@@ -42,6 +42,9 @@ extern NSString *  syncData;
 extern NSString *  assistanceResearch;
 extern NSString *  endResearch;
 
+extern NSString *  checkNewVersion;
+
+
 
 
 

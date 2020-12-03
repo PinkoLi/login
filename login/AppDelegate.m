@@ -10,6 +10,8 @@
 #import "JPUSHService.h"
 #import "Application ViewController.h"
 #import "AFNetworking.h"
+#import "LXF_OpenUDID.h"
+
 @interface AppDelegate ()
 
 @end
@@ -85,12 +87,15 @@
     return YES;
 }
 -(void) checkvision{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-   
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
+    [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
+
     
     
-    [sessionManager GET:@"https://paqcabg.chinacloudsites.cn/BD/getvison.php" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [sessionManager POST:[url stringByAppendingString:checkNewVersion] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
@@ -101,13 +106,13 @@
         NSUserDefaults*version=[NSUserDefaults standardUserDefaults];
         
 
-        [version setObject:[responseObject objectForKey:@"version"] forKey:@"version"];
+        [version setObject:[responseObject objectForKey:@"data"] forKey:@"version"];
         [version synchronize];
         
         
-        if (![[responseObject objectForKey:@"version"]isEqualToString:@"20200601.1"]) {
+        if (![[[responseObject objectForKey:@"data"]objectForKey:@"version"]isEqualToString:@"20201117.1"]) {
             
-            _plistName=[responseObject objectForKey:@"plistname"];
+            _plistName=[[responseObject objectForKey:@"data"] objectForKey:@"plistname"];
             
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"更新只需1分钟。强烈建议您立即进行更新，如不更新将影响相关功能使用。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alertView show];

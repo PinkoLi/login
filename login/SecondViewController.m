@@ -64,7 +64,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //    }];
 
     
-    _versionLb.text=[@"版本号:" stringByAppendingString:@"202000915"];
+    _versionLb.text=[@"版本号:" stringByAppendingString:@"202001117"];
     [_versionLb setTextColor:UIColorFromRGB(0x848484)];
     
    

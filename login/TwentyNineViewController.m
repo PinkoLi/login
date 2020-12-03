@@ -785,19 +785,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
     
-    for(int i=0;i<[_chooseArray2 count];i++)
-    {
-        
-        SSCheckBoxView* pp=[_chooseArray2 objectAtIndex:i];
-        
-        if(pp.checked==1)
-        {
-            
-            isok2=1;
-            [Q2 addObject:pp.textLabel.text];
-            
-        }
-    }
+//    for(int i=0;i<[_chooseArray2 count];i++)
+//    {
+//        
+//        SSCheckBoxView* pp=[_chooseArray2 objectAtIndex:i];
+//        
+//        if(pp.checked==1)
+//        {
+//            
+//            isok2=1;
+//            [Q2 addObject:pp.textLabel.text];
+//            
+//        }
+//    }
     
     for(int i=0;i<[_chooseArray3 count];i++)
     {

@@ -47,6 +47,8 @@ NSString*   getResearchInfo=@"app/index/getResearchInfo";
 NSString*   syncData=@"app/index/syncData";
 NSString*   assistanceResearch=@"app/index/assistanceResearch";
 NSString*   endResearch=@"app/index/endResearch";
+NSString*   checkNewVersion=@"app/index/checkNewVersion";
+
 
 
 
