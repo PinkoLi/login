@@ -110,7 +110,7 @@
         [version synchronize];
         
         
-        if (![[[responseObject objectForKey:@"data"]objectForKey:@"version"]isEqualToString:@"20201117.1"]) {
+        if (![[[responseObject objectForKey:@"data"]objectForKey:@"version"]isEqualToString:@"20220105.1"]) {
             
             _plistName=[[responseObject objectForKey:@"data"] objectForKey:@"plistname"];
             

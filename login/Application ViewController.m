@@ -90,6 +90,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     _mutableArray2=[[NSMutableArray alloc]init];
     _arr1=[[NSMutableArray alloc]init];
     _arr3=[NSMutableArray arrayWithCapacity:10];
+    
 
     
     _start.delegate=self;
@@ -137,6 +138,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
    
    
+    
        AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
        sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:format];
        [sessionManager.requestSerializer setValue:[user objectForKey:@"token"] forHTTPHeaderField:@"authorization"];
@@ -156,8 +158,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
            
            _arr=[[responseObject objectForKey:@"data"] objectForKey:@"list"];
            
-            NSLog(@"%@",_arr);
-          
+           NSLog(@"%@",_arr);
+           
            [list setObject:_arr forKey:@"list"];
            [list synchronize];
            

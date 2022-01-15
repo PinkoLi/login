@@ -98,7 +98,7 @@
             
             
             if ([[[[[thisArr2 objectForKey:@"thisArr2"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"67"] objectForKey:@"text1"] ) {
-                [_yangbenArr addObject:[[[[[thisArr2 objectForKey:@"thisArr2"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"67"] objectForKey:@"text"]];
+                [_yangbenArr addObject:[[[[[thisArr2 objectForKey:@"thisArr2"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"67"] objectForKey:@"text1"]];
             }
             
            
@@ -213,6 +213,7 @@
   
     NSLog(@"%@",sum);
     _num1.text=[NSString stringWithFormat:@"%@",sum];
+    _num1.hidden=YES;
     
     
     NSNumber *sum2 = [_jingMaiArr valueForKeyPath:@"@sum.floatValue"];

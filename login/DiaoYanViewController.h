@@ -21,6 +21,8 @@
 @property (strong, nonatomic)NSMutableArray*dongmaiArr2;
 @property (strong, nonatomic)NSMutableArray*dongmaiArr3;
 @property (strong, nonatomic)NSMutableArray*dongmaiArr4;
+@property (strong, nonatomic)NSMutableArray*dongmaiArr5;
+
 @property (strong, nonatomic)NSMutableArray*zhusheArr;
 @property (strong, nonatomic)NSMutableArray*zhusheArr2;
 @property (strong, nonatomic)NSMutableArray*zhusheArr3;

@@ -306,11 +306,11 @@
     a4=_a1+_a2+_a3;
     
     if (a4==0) {
-        str=@"<15ml";
+        str=@"<5ml";
     }else{
     
     if (MAX(_a1, _a2, _a3)==_a1) {
-        str=@"<15ml";
+        str=@"<5ml";
         aa=_a1;
     }
     else if(MAX(_a1, _a2, _a3)==_a2){

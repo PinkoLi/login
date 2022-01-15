@@ -1020,10 +1020,16 @@ UITableViewCellEditingStyle _editingStyle;
                      NSArray*department2=[NSArray arrayWithArray:allArr];
                       [user setObject:department2 forKey:@"diaoyan"];
                      
+//              NSData *data = [NSJSONSerialization dataWithJSONObject:department2 options:NSJSONWritingPrettyPrinted error:nil];
+//              [user setObject:data forKey:@"diaoyan"];
+
                      
                  }else{
                      NSArray*department2=[NSArray arrayWithArray:allArr];
                      [user setObject:department2 forKey:@"diaoyan"];
+                     
+//                     NSData *data = [NSJSONSerialization dataWithJSONObject:department2 options:NSJSONWritingPrettyPrinted error:nil];
+//                                  [user setObject:data forKey:@"diaoyan"];
                      
                      
                  }

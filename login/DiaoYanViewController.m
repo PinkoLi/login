@@ -39,8 +39,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //NSUserDefaults *thisArr = [NSUserDefaults standardUserDefaults];
       NSUserDefaults *keshiArr = [NSUserDefaults standardUserDefaults];
      NSUserDefaults *thisArr = [NSUserDefaults standardUserDefaults];
-    //NSLog(@"%@",[thisArr objectForKey:@"thisArr"]);
+
     
+    
+    NSLog(@"%@",[thisArr objectForKey:@"thisArr"]);
+    
+
     
 
     _ksArr=[[NSMutableArray alloc] init];
@@ -53,6 +57,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     _dongmaiArr2=[[NSMutableArray alloc] init];
      _dongmaiArr3=[[NSMutableArray alloc] init];
      _dongmaiArr4=[[NSMutableArray alloc] init];
+    _dongmaiArr5=[[NSMutableArray alloc] init];
+
     _zhusheArr=[[NSMutableArray alloc] init];
     _zhusheArr2=[[NSMutableArray alloc] init];
     _zhusheArr3=[[NSMutableArray alloc] init];
@@ -66,6 +72,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
      _pinlvArr2=[[NSMutableArray alloc] init];
      _pinlvArr3=[[NSMutableArray alloc] init];
      _pinlvArr4=[[NSMutableArray alloc] init];
+    
+    
+    _dongmaiArr5=[thisArr objectForKey:@"thisArr"];
+    
+    NSLog(@"%@",[keshiArr objectForKey:@"keshi"]);
     
     _ksArr=[NSMutableArray arrayWithArray:[keshiArr objectForKey:@"keshiArr"]];
   //  [_ksArr addObject:@"其他"];
@@ -234,21 +245,38 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         for (int j=0; j<[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] count]; j++) {
             
             
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-2"] objectForKey:@"choose"]) {
+                
+                
+                
+                [_dongmaiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-2"] objectForKey:@"choose"]];
+            }
+            
             if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.2"] objectForKey:@"choose"]) {
                 
-                NSLog(@"%@",[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.2"] objectForKey:@"choose"]);
                 
                 
                 [_dongmaiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.2"] objectForKey:@"choose"]];
             }
             
             
-            
         }
         
         
     }
-    
+//    if (!_dongmaiArr) {
+//
+//
+//            [_dongmaiArr addObject:@"1ml"];
+//            [_dongmaiArr addObject:@"1.5ml"];
+//            [_dongmaiArr addObject:@"2ml"];
+//
+//            [_dongmaiArr addObject:@"2.5ml"];
+//            [_dongmaiArr addObject:@"3ml"];
+//
+//
+//    }
+//
     NSLog(@"%@",_dongmaiArr);
     
     
@@ -366,15 +394,31 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
                 [_zhusheArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3.1"] objectForKey:@"choose"]];
             }
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-1"] objectForKey:@"choose"]) {
+                           
+                           [_zhusheArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"3-1"] objectForKey:@"choose"]];
+                       }
             
             
             
         }
     }
     
-    NSLog(@"%@",_zhusheArr);
     
-    
+//        if(!_zhusheArr){
+//
+//
+//                [_zhusheArr addObject:@"1ml"];
+//                [_zhusheArr addObject:@"2ml"];
+//                [_zhusheArr addObject:@"3ml"];
+//
+//                [_zhusheArr addObject:@"5ml"];
+//                [_zhusheArr addObject:@"10ml"];
+//
+//
+//        }
+        
+        
     
     NSString*maoshengStr2;
     
@@ -446,11 +490,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
                 [_typeArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.1"] objectForKey:@"choose"]];
             }
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-1"] objectForKey:@"choose"]) {
+                
+                
+                
+                
+                [_typeArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-1"] objectForKey:@"choose"]];
+            }
+
             
             
             
         }
     }
+        
+        if (!_typeArr) {
+            [_typeArr addObject:@"肝素钠溶液"];
+        }
     
     
     NSString*maoshengStr3;
@@ -582,6 +638,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
                 [_fangshiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.2"] objectForKey:@"choose"]];
             }
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-2"] objectForKey:@"choose"]) {
+                
+                [_fangshiArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-2"] objectForKey:@"choose"]];
+            }
             
             
             
@@ -598,12 +658,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 
                 [_pinlvArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5.3"] objectForKey:@"choose"]];
             }
+            if ([[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-3"] objectForKey:@"choose"]) {
+                
+                [_pinlvArr addObject:[[[[[thisArr objectForKey:@"thisArr"] objectAtIndex:i] objectAtIndex:j] objectForKey:@"5-3"] objectForKey:@"choose"]];
+            }
             
             
             
         }
     }
     
+       
     
     
     
@@ -675,8 +740,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSString *string = [_dongmaiArr4  componentsJoinedByString:@","];
     NSString *string2 = [_zhusheArr4  componentsJoinedByString:@","];
      NSString *string3 = [_typeArr4 componentsJoinedByString:@","];
-    NSString *string4 = [[_fangshiArr objectAtIndex:0] componentsJoinedByString:@","];
- 
+    
+// NSString *string4 = [[_fangshiArr objectAtIndex:0] componentsJoinedByString:@","];
+
+    NSString*string4=[[NSString alloc] init];
+    if (!_fangshiArr) {
+        string4 = [[_fangshiArr objectAtIndex:0] componentsJoinedByString:@","];
+
+    }
     
     
     NSString *string5 = [_pinlvArr4  componentsJoinedByString:@","];

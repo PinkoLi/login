@@ -633,7 +633,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9so-P2-IqA">
-                                <rect key="frame" x="317" y="163" width="42" height="21"/>
+                                <rect key="frame" x="317" y="163" width="78" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -653,7 +653,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WXJ-S2-SNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3955.1999999999998" y="3130.434782608696"/>
+            <point key="canvasLocation" x="-3955.6640624999995" y="3129.6875"/>
         </scene>
         <!--BD PAQC ABG Digital Tool-->
         <scene sceneID="xkO-Hf-str">
@@ -6352,7 +6352,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sag-ce-L12">
-                                <rect key="frame" x="287" y="164" width="100" height="21"/>
+                                <rect key="frame" x="287" y="164" width="199" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -6371,7 +6371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="21a-i9-kmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3955.1999999999998" y="8883.9580209895066"/>
+            <point key="canvasLocation" x="-3955.6640624999995" y="8883.59375"/>
         </scene>
         <!--Ten View Controller-->
         <scene sceneID="E7K-aj-1jc">
@@ -6433,7 +6433,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ue-zE-23Z">
-                                <rect key="frame" x="329" y="164" width="66" height="21"/>
+                                <rect key="frame" x="329" y="164" width="116" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -6542,7 +6542,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsa-gG-9Yu">
-                                <rect key="frame" x="297" y="164" width="100" height="21"/>
+                                <rect key="frame" x="297" y="164" width="166" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -6561,7 +6561,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3NB-1o-uMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3955.1999999999998" y="10553.523238380811"/>
+            <point key="canvasLocation" x="-3955.6640624999995" y="10553.125"/>
         </scene>
         <!--Twelve View Controller-->
         <scene sceneID="M3t-Ez-aJK">
@@ -7186,7 +7186,7 @@
                                     <segue destination="W7o-qD-rAy" kind="modal" animates="NO" id="Vdo-Mn-Ulc"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="抽查样本总数：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhj-HT-pxg">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="抽查样本总数：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhj-HT-pxg">
                                 <rect key="frame" x="219" y="243" width="146" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -7896,22 +7896,22 @@
         <segue reference="Vdo-Mn-Ulc"/>
         <segue reference="DNd-EO-iuz"/>
         <segue reference="EhG-VE-wVf"/>
-        <segue reference="90B-2v-Z8L"/>
+        <segue reference="EKV-Qf-o6o"/>
         <segue reference="CC0-vH-xna"/>
         <segue reference="gZW-53-MHU"/>
-        <segue reference="qgu-FU-gjK"/>
+        <segue reference="gye-eq-EAh"/>
         <segue reference="EC7-MP-Sm6"/>
         <segue reference="6K9-7R-hac"/>
         <segue reference="Rxq-I9-SvV"/>
         <segue reference="fIt-RU-IKB"/>
         <segue reference="ZEh-El-gbu"/>
-        <segue reference="s3y-It-yyl"/>
+        <segue reference="a5z-Uz-dl4"/>
         <segue reference="B8I-T5-BwG"/>
-        <segue reference="5eW-tW-9i6"/>
-        <segue reference="phV-1a-vaP"/>
-        <segue reference="cO9-x5-h75"/>
-        <segue reference="Rvv-Vi-PIJ"/>
-        <segue reference="nyG-Mh-F4D"/>
+        <segue reference="1dR-Ln-z4K"/>
+        <segue reference="pWr-QY-Wff"/>
+        <segue reference="j1G-k8-II5"/>
+        <segue reference="N8j-gA-ehG"/>
+        <segue reference="s06-eL-iPW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="1.jpg" width="1024" height="768"/>
